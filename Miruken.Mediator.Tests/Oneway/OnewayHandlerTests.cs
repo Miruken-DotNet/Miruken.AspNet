@@ -1,8 +1,8 @@
-﻿namespace Miruken.Mediator.Tests
+﻿namespace Miruken.Mediator.Tests.Oneway
 {
     using System.Threading.Tasks;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Miruken.Mediator;
+    using Miruken.Mediator.Oneway;
 
     [TestClass]
     public class OnewayHandlerTests

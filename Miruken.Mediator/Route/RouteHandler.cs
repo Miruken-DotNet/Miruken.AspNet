@@ -40,7 +40,7 @@
         {
             var router = _routers.FirstOrDefault(r => r.CanRoute(routed));
             if (router != null) return router;
-            throw new NotSupportedException($"Unrecognized route '{routed.Route}'");
+                throw new NotSupportedException($"Unrecognized route '{routed.Route}'");
         }
     }
 }

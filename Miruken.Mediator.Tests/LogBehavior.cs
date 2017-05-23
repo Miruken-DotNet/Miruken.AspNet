@@ -10,7 +10,7 @@
         public int? Order { get; set; }
 
         public Promise<Res> Filter(Cb callback, MethodBinding binding,
-            IHandler composer, FilterDelegate<Promise<Res>> next)
+            IHandler composer, NextDelegate<Promise<Res>> next)
         {
             Console.WriteLine($"Handle {callback}");
             return next();

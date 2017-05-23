@@ -1,4 +1,4 @@
-﻿namespace Miruken.Mediator
+﻿namespace Miruken.Mediator.Oneway
 {
     using Callback;
     using Concurrency;
@@ -6,16 +6,15 @@
     public class OnewayHandler : Handler
     {
         [Mediates]
-        public Promise Oneway<TResponse>(
-            Oneway<TResponse> request, IHandler composer)
+        public Promise Oneway(Oneway request, IHandler composer)
         {
-            return composer.Send(request.Request);
+            return composer.Send(((IDecorator)request).Decoratee);
         }
     }
 
     public static class OnewayExtensions
     {
-        public static Oneway Oneway<TResp>(this IRequest<TResp> request)
+        public static Oneway<TResp> Oneway<TResp>(this IRequest<TResp> request)
         {
             return new Oneway<TResp>(request);
         }

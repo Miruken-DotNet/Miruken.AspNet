@@ -16,12 +16,12 @@
         {            
         }
 
-        protected override void VerifyFilterType(Type filterType)
+        protected override void VerifyFilterType(Type middlewareType)
         {
-            var conformance = filterType.GetOpenTypeConformance(typeof(IMiddleware<,>));
+            var conformance = middlewareType.GetOpenTypeConformance(typeof(IMiddleware<,>));
             if (conformance == null)
-                throw new ArgumentException($"{filterType.FullName} does not conform to IMiddleware<,>");
-            base.VerifyFilterType(filterType);
+                throw new ArgumentException($"{middlewareType.FullName} does not conform to IMiddleware<,>");
+            base.VerifyFilterType(middlewareType);
         }
     }
 }

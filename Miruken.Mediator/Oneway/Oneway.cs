@@ -1,26 +1,25 @@
-﻿namespace Miruken.Mediator
+﻿namespace Miruken.Mediator.Oneway
 {
     using System;
     using Callback;
 
-    public class Oneway : IRequest, IDecorator
+    public abstract class Oneway : IRequest, IDecorator
     {
-        public Oneway()
+        protected Oneway()
         {
         }
 
-        public Oneway(object request)
+        protected Oneway(object request)
         {
             if (request == null)
                 throw new ArgumentNullException(nameof(request));
-
             Decoratee = request;
         }
 
         public object Decoratee { get; protected set; }
     }
 
-    public class Oneway<TResp> : Oneway, IRequestDecorator<TResp>
+    public class Oneway<TResp> : Oneway
     {
         public Oneway()
         {
