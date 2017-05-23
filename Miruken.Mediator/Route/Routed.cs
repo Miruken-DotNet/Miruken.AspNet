@@ -8,9 +8,9 @@
         public string Route { get; set; }
         public string Tag   { get; set; }
 
-        object IDecorator.Decoratee => Decoratee;
+        public abstract object Message { get; }
 
-        protected abstract object Decoratee { get; }
+        object IDecorator.Decoratee => Message;
     }
 
     public class RoutedRequest<TResponse> : Routed,
@@ -30,7 +30,7 @@
 
         public IRequest<TResponse> Request { get; set; }
 
-        protected override object Decoratee => Request;
+        public override object Message => Request;
     }
 
     public class RoutedRequest : Routed, IRequestDecorator
@@ -49,7 +49,7 @@
 
         public IRequest Request { get; set; }
 
-        protected override object Decoratee => Request;
+        public override object Message => Request;
     }
 
     public class RoutedNotification : Routed, INotificationDecorator
@@ -68,6 +68,6 @@
 
         public INotification Notification { get; set; }
 
-        protected override object Decoratee => Notification;
+        public override object Message => Notification;
     }
 }

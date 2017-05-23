@@ -10,10 +10,9 @@
             return route.Route == "pass-through";
         }
 
-        public Promise Route(Routed route, IHandler composer)
+        public Promise Route(Routed routed, IHandler composer)
         {
-            var request = ((IDecorator)route).Decoratee;
-            return composer.Send(request);
+            return composer.Send(routed.Message);
         }
     }
 }
