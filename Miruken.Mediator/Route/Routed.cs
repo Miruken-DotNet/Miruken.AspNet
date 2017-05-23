@@ -3,20 +3,24 @@
     using System;
     using Callback;
 
-    public abstract class Routed
+    public abstract class Routed : IDecorator
     {
         public string Route { get; set; }
         public string Tag   { get; set; }
+
+        object IDecorator.Decoratee => Decoratee;
+
+        protected abstract object Decoratee { get; }
     }
 
-    public class Routed<TResponse> : Routed,
-        IRequestDecorator<TResponse>, IDecorator
+    public class RoutedRequest<TResponse> : Routed,
+        IRequestDecorator<TResponse>
     {
-        public Routed()
+        public RoutedRequest()
         {
         }
 
-        public Routed(IRequest<TResponse> request)
+        public RoutedRequest(IRequest<TResponse> request)
         {
             if (request == null)
                 throw new ArgumentNullException(nameof(request));
@@ -26,10 +30,10 @@
 
         public IRequest<TResponse> Request { get; set; }
 
-        object IDecorator.Decoratee => Request;
+        protected override object Decoratee => Request;
     }
 
-    public class RoutedRequest : Routed, IRequestDecorator, IDecorator
+    public class RoutedRequest : Routed, IRequestDecorator
     {
         public RoutedRequest()
         {
@@ -45,10 +49,10 @@
 
         public IRequest Request { get; set; }
 
-        object IDecorator.Decoratee => Request;
+        protected override object Decoratee => Request;
     }
 
-    public class RoutedNotification : Routed, INotificationDecorator, IDecorator
+    public class RoutedNotification : Routed, INotificationDecorator
     {
         public RoutedNotification()
         {
@@ -64,6 +68,6 @@
 
         public INotification Notification { get; set; }
 
-        object IDecorator.Decoratee => Notification;
+        protected override object Decoratee => Notification;
     }
 }

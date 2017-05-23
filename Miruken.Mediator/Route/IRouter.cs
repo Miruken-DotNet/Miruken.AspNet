@@ -5,8 +5,8 @@
 
     public interface IRouter
     {
-        bool CanRoute(Routed route, object message);
+        bool CanRoute(Routed route);
 
-        Promise Route(Routed route, object message, IHandler composer);
+        Promise Route(Routed route, IHandler composer);
     }
 }

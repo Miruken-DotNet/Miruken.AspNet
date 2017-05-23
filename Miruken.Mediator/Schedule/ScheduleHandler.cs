@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
     using Callback;
 
-    public class ScheduleHandler : Handler
+    public class ScheduleHandler : Mediator
     {
         [Mediates]
         public async Task<ScheduleResult> Concurrent(Concurrent concurrent, IHandler composer)
