@@ -16,7 +16,7 @@
         [TestMethod]
         public async Task Should_Send_Request_With_Response()
         {
-            var handler = new TeamHandler() + new PipelineBehaviorProvider();
+            var handler = new TeamHandler() + new MiddlewareProvider();
             var team    = await handler.Send(new CreateTeam
             {
                 Team = new Team
@@ -31,7 +31,7 @@
         [TestMethod]
         public async Task Should_Send_Request_With_Response_Async()
         {
-            var handler = new TeamHandler() + new PipelineBehaviorProvider();
+            var handler = new TeamHandler() + new MiddlewareProvider();
             var team    = await handler.Send(new CreateTeam
             {
                 Team = new Team
@@ -46,7 +46,7 @@
         [TestMethod]
         public async Task Should_Send_Request_Without_Response()
         {
-            var handler = new TeamHandler() + new PipelineBehaviorProvider();
+            var handler = new TeamHandler() + new MiddlewareProvider();
             var team    = new Team
             {
                 Id     = 1,
@@ -62,7 +62,7 @@
         public async Task Should_Publish_Notifiations()
         {
             var teams   = new TeamHandler();
-            var handler = teams + new PipelineBehaviorProvider();
+            var handler = teams + new MiddlewareProvider();
             var team    = await handler.Send(new CreateTeam
             {
                 Team = new Team
@@ -138,26 +138,14 @@
             }
         }
 
-        private class LogFilter<Cb, Res> : IPipelineBehavior<Cb, Res>
-        {
-            public int? Order { get; set; }
-
-            public Promise<Res> Filter(Cb callback, MethodBinding method,
-                IHandler composer, FilterDelegate<Promise<Res>> next)
-            {
-                Console.WriteLine($"Handle {callback}");
-                return next();
-            }
-        }
-
-        private class PipelineBehaviorProvider : Handler
+        private class MiddlewareProvider : Handler
         {
             [Provides]
-            public IPipelineBehavior<TRequest, TResponse>[] GetBehaviors<TRequest, TResponse>()
+            public IMiddleware<TRequest, TResponse>[] GetMiddleware<TRequest, TResponse>()
             {
                 return new[]
                 {
-                    new LogFilter<TRequest, TResponse>()
+                    new LogBehavior<TRequest, TResponse>()
                 };
             }
         }

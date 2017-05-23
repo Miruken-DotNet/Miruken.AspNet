@@ -60,6 +60,7 @@
     <Compile Include="Cache\CacheHandlerTests.cs" />
     <Compile Include="GetStockQuote.cs" />
     <Compile Include="HandlerTests.Mediator.cs" />
+    <Compile Include="LogBehavior.cs" />
     <Compile Include="OnewayHandlerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Route\PassThroughRouterTests.cs" />

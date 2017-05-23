@@ -2,6 +2,7 @@
 {
     using System;
     using System.Threading.Tasks;
+    using Callback;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Miruken.Mediator.Cache;
 
@@ -18,7 +19,8 @@
         public async Task Should_Make_Initial_Request()
         {
             var handler  = new StockQuoteHandler()
-                         + new CachedHandler();
+                         + new CachedHandler()
+                         + new MiddlewareProvider();
             Assert.AreEqual(0, StockQuoteHandler.Called);
             var getQuote = new GetStockQuote("AAPL");
             var quote    = await handler.Send(getQuote.Cached());
@@ -30,7 +32,8 @@
         public async Task Should_Cache_Initial_Response()
         {
             var handler  = new StockQuoteHandler()
-                         + new CachedHandler();
+                         + new CachedHandler()
+                         + new MiddlewareProvider();
             Assert.AreEqual(0, StockQuoteHandler.Called);
             var getQuote = new GetStockQuote("AAPL");
             var quote1   = await handler.Send(getQuote.Cached());
@@ -43,7 +46,8 @@
         public async Task Should_Refresh_Stale_Response()
         {
             var handler  = new StockQuoteHandler()
-                         + new CachedHandler();
+                         + new CachedHandler()
+                         + new MiddlewareProvider();
             Assert.AreEqual(0, StockQuoteHandler.Called);
             var getQuote = new GetStockQuote("AAPL");
             await handler.Send(getQuote.Cached());
@@ -56,7 +60,8 @@
         public async Task Should_Invalidate_Cache()
         {
             var handler  = new StockQuoteHandler()
-                         + new CachedHandler();
+                         + new CachedHandler()
+                         + new MiddlewareProvider();
             Assert.AreEqual(0, StockQuoteHandler.Called);
             var getQuote = new GetStockQuote("AAPL");
             var quote1   = await handler.Send(getQuote.Cached());
@@ -74,7 +79,8 @@
         public async Task Should_Not_Cache_Exceptions()
         {
             var handler = new StockQuoteHandler()
-                        + new CachedHandler();
+                        + new CachedHandler()
+                        + new MiddlewareProvider();
             Assert.AreEqual(0, StockQuoteHandler.Called);
             var getQuote = new GetStockQuote("EX");
             try
@@ -96,6 +102,18 @@
                 Assert.AreEqual("Stock Exchange is down", ex.Message);
             }
             Assert.AreEqual(2, StockQuoteHandler.Called);
+        }
+
+        private class MiddlewareProvider : Handler
+        {
+            [Provides]
+            public IMiddleware<TRequest, TResponse>[] GetMiddleware<TRequest, TResponse>()
+            {
+                return new[]
+                {
+                    new LogBehavior<TRequest, TResponse>()
+                };
+            }
         }
     }
 }

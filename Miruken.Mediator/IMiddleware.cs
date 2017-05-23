@@ -3,7 +3,7 @@
     using Callback;
     using Concurrency;
 
-    public interface IPipelineBehavior<in TRequest, TResponse>
+    public interface IMiddleware<in TRequest, TResponse>
         : IFilter<TRequest, Promise<TResponse>>
     {
     }

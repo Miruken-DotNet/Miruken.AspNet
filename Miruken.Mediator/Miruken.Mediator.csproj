@@ -50,7 +50,7 @@
     <Compile Include="Cache\CacheExtensions.cs" />
     <Compile Include="Handler.Mediator.cs" />
     <Compile Include="INotification.cs" />
-    <Compile Include="IPipelineBehavior.cs" />
+    <Compile Include="IMiddleware.cs" />
     <Compile Include="IRequest.cs" />
     <Compile Include="MediatesAttribute.cs" />
     <Compile Include="Mediator.cs" />
