@@ -15,7 +15,7 @@
         {
             var handler = new StockQuoteHandler()
                         + new RouteHandler(new TrashRouter());
-            var quote   = await handler.Send(new GetStockQuote("GOOGL").RouteTo("Trash"));
+            var quote = await handler.Send(new GetStockQuote("GOOGL").RouteTo("Trash"));
             Assert.IsNull(quote);
         }
 
@@ -41,20 +41,22 @@
                 Assert.AreEqual(ex.Message, "Unrecognized route 'NoWhere'");
             }
         }
-    }
 
-    internal class Pickup : IRequest { }
-
-    public class TrashRouter : IRouter
-    {
-        public bool CanRoute(Routed route)
+        public class Pickup : IRequest
         {
-            return route.Route == "Trash";
         }
 
-        public Promise Route(Routed route, IHandler composer)
+        public class TrashRouter : IRouter
         {
-            return Promise.Empty;
+            public bool CanRoute(Routed route)
+            {
+                return route.Route == "Trash";
+            }
+
+            public Promise Route(Routed route, IHandler composer)
+            {
+                return Promise.Empty;
+            }
         }
     }
 }

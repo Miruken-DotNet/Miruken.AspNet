@@ -29,6 +29,13 @@
             return router.Route(request, composer).Cast<TResponse>();
         }
 
+        [Mediates]
+        public Promise Route(RoutedNotification notification, IHandler composer)
+        {
+            var router = SelectRouter(notification);
+            return router.Route(notification, composer);
+        }
+
         private IRouter SelectRouter(Routed routed)
         {
             var router = _routers.FirstOrDefault(r => r.CanRoute(routed));
