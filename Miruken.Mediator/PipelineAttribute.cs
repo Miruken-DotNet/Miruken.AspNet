@@ -8,7 +8,8 @@
     {
         public PipelineAttribute()
             : base(typeof(IMiddleware<,>))
-        {         
+        {
+            Many = true;
         }
 
         public PipelineAttribute(params Type[] middleware)

@@ -5,9 +5,11 @@
 
     public class PassThroughRouter : IRouter
     {
+        public const string Scheme = "pass-through";
+
         public bool CanRoute(Routed route)
         {
-            return route.Route == "pass-through";
+            return route.Route == Scheme;
         }
 
         public Promise Route(Routed routed, IHandler composer)

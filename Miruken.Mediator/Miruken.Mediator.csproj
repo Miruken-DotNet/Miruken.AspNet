@@ -31,8 +31,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Miruken, Version=1.2.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Miruken.1.2.0.3\lib\net461\Miruken.dll</HintPath>
+    <Reference Include="FluentValidation, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.7.0.2\lib\net45\FluentValidation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Miruken, Version=1.2.0.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Miruken.1.2.0.9\lib\net461\Miruken.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Miruken.Validate, Version=0.0.0.15, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Miruken.Validate.0.0.0.15\lib\net461\Miruken.Validate.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -69,11 +77,13 @@
     <Compile Include="Schedule\Scheduled.cs" />
     <Compile Include="Schedule\ScheduleHandler.cs" />
     <Compile Include="Schedule\Sequential.cs" />
+    <Compile Include="Middleware\ValidationMiddleware.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Miruken.Mediator.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

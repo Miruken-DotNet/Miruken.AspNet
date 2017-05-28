@@ -5,14 +5,14 @@
     using Callback.Policy;
     using Concurrency;
 
-    public class LogBehavior<Cb, Res> : IMiddleware<Cb, Res>
+    public class LogMiddleware<Cb, Res> : IMiddleware<Cb, Res>
     {
         public int? Order { get; set; }
 
-        public Promise<Res> Filter(Cb callback, MethodBinding binding,
+        public Promise<Res> Next(Cb request, MethodBinding binding,
             IHandler composer, NextDelegate<Promise<Res>> next)
         {
-            Console.WriteLine($"Handle {callback}");
+            Console.WriteLine($"Middleware Log {request}");
             return next();
         }
     }

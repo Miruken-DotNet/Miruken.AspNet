@@ -4,27 +4,42 @@
     using System.Threading.Tasks;
     using Callback;
     using Concurrency;
+    using FluentValidation;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Miruken.Mediator.Middleware;
     using Miruken.Mediator.Route;
+    using Validate;
+    using Validate.DataAnnotations;
+    using Validate.FluentValidation;
 
     [TestClass]
     public class RouteHandlerTests
     {
+        private IHandler _handler;
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            _handler = new StockQuoteHandler()
+                     + new RouteHandler(new TrashRouter(), new PassThroughRouter())
+                     + new MiddlewareProvider()
+                     + new DataAnnotationsValidator()
+                     + new FluentValidationValidator()
+                     + new ValidationHandler();
+            StockQuoteHandler.Called = 0;
+        }
+
         [TestMethod]
         public async Task Should_Route_Requests()
         {
-            var handler = new StockQuoteHandler()
-                        + new RouteHandler(new TrashRouter());
-            var quote = await handler.Send(new GetStockQuote("GOOGL").RouteTo("Trash"));
+            var quote = await _handler.Send(new GetStockQuote("GOOGL").RouteTo("Trash"));
             Assert.IsNull(quote);
         }
 
         [TestMethod]
         public async Task Should_Route_Requests_With_No_Responses()
         {
-            var handler = new StockQuoteHandler()
-                        + new RouteHandler(new TrashRouter());
-            await handler.Send(new Pickup().RouteTo("Trash"));
+            await _handler.Send(new Pickup().RouteTo("Trash"));
         }
 
         [TestMethod]
@@ -42,6 +57,32 @@
             }
         }
 
+        [TestMethod]
+        public async Task Should_Route_Request_Through_Pipeline()
+        {
+            var quote = await _handler.Send(new GetStockQuote("MSFT")
+                .RouteTo(PassThroughRouter.Scheme));
+            Assert.AreSame("MSFT", quote.Symbol);
+        }
+
+        [TestMethod]
+        public async Task Should_Validate_Routed_Requests()
+        {
+            try
+            {
+                await _handler.Send(new GetStockQuote()
+                    .RouteTo(PassThroughRouter.Scheme));
+            }
+            catch (Validate.ValidationException vex)
+            {
+                var outcome = vex.Outcome;
+                Assert.IsNotNull(outcome);
+                CollectionAssert.AreEqual(new[] { "Symbol" }, outcome.Culprits);
+                Assert.AreEqual("'Symbol' should not be empty.", outcome["Symbol"]);
+
+            }
+        }
+
         public class Pickup : IRequest
         {
         }
@@ -56,6 +97,25 @@
             public Promise Route(Routed route, IHandler composer)
             {
                 return Promise.Empty;
+            }
+        }
+
+        private class MiddlewareProvider : Handler
+        {
+            [Provides]
+            public IMiddleware<TReq, TResp>[] GetMiddleware<TReq, TResp>()
+            {
+                return new IMiddleware<TReq, TResp>[]
+                {
+                    new LogMiddleware<TReq, TResp>(),
+                    new ValidationMiddleware<TReq, TResp>()
+                };
+            }
+
+            [Provides]
+            public IValidator<GetStockQuote>[] StockQuoteValidators()
+            {
+                return new[] { new GetStockQuoteIntegrity(),  };
             }
         }
     }

@@ -5,19 +5,34 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Callback;
-    using Callback.Policy;
     using Concurrency;
+    using FluentValidation;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Miruken.Mediator;
+    using Miruken.Mediator.Middleware;
+    using Validate;
+    using Validate.DataAnnotations;
+    using Validate.FluentValidation;
 
     [TestClass]
     public class HandlerMediatorTests
     {
+        private IHandler _handler;
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            _handler = new TeamHandler()
+                     + new MiddlewareProvider()
+                     + new DataAnnotationsValidator()
+                     + new FluentValidationValidator()
+                     + new ValidationHandler();
+        }
+
         [TestMethod]
         public async Task Should_Send_Request_With_Response()
         {
-            var handler = new TeamHandler() + new MiddlewareProvider();
-            var team    = await handler.Send(new CreateTeam
+            var team = await _handler.Send(new CreateTeam
             {
                 Team = new Team
                 { 
@@ -29,41 +44,24 @@
         }
 
         [TestMethod]
-        public async Task Should_Send_Request_With_Response_Async()
-        {
-            var handler = new TeamHandler() + new MiddlewareProvider();
-            var team    = await handler.Send(new CreateTeam
-            {
-                Team = new Team
-                {
-                    Name = "Liverpool Owen"
-                }
-            });
-            Assert.AreEqual(1, team.Id);
-            Assert.IsTrue(team.Active);
-        }
-
-        [TestMethod]
         public async Task Should_Send_Request_Without_Response()
         {
-            var handler = new TeamHandler() + new MiddlewareProvider();
-            var team    = new Team
+            var team = new Team
             {
                 Id     = 1,
                 Name   = "Liverpool Owen",
                 Active = true
             };
 
-            await handler.Send(new RemoveTeam { Team = team });
+            await _handler.Send(new RemoveTeam { Team = team });
             Assert.IsFalse(team.Active);
         }
 
         [TestMethod]
         public async Task Should_Publish_Notifiations()
         {
-            var teams   = new TeamHandler();
-            var handler = teams + new MiddlewareProvider();
-            var team    = await handler.Send(new CreateTeam
+            var teams = new TeamHandler();
+            var team  = await teams.Send(new CreateTeam
             {
                 Team = new Team
                 {
@@ -77,6 +75,23 @@
             Assert.AreEqual(team.Id, teamCreated.Team.Id);
         }
 
+        [TestMethod]
+        public async Task Should_Reject_Invalid_Request()
+        {
+            try
+            {
+                await _handler.Send(new CreateTeam());
+                Assert.Fail("Should have rejected request");
+            }
+            catch (Validate.ValidationException vex)
+            {
+                var outcome = vex.Outcome;
+                Assert.IsNotNull(outcome);
+                CollectionAssert.AreEqual(new [] {"Team"}, outcome.Culprits);
+                Assert.AreEqual("'Team' should not be empty.", outcome["Team"]);
+            }
+        }
+
         public class Team
         {
             public int    Id     { get; set; }
@@ -84,24 +99,33 @@
             public bool   Active { get; set; }
         }
 
-        public class CreateTeam : IRequest<Team>
+        public class TeamAction
         {
             public Team Team { get; set; }
         }
 
-        public class TeamCreated : INotification
+        public class TeamActionIntegrity : AbstractValidator<TeamAction>
         {
-            public Team Team { get; set; }
+            public TeamActionIntegrity()
+            {
+                RuleFor(ta => ta.Team).NotEmpty();
+            }
         }
 
-        public class RemoveTeam : IRequest
+        public class CreateTeam : TeamAction, IRequest<Team>
         {
-            public Team Team { get; set; }
         }
 
-        public class TeamRemoved : INotification
+        public class TeamCreated : TeamAction, INotification
         {
-            public Team Team { get; set; }
+        }
+
+        public class RemoveTeam : TeamAction, IRequest
+        {
+        }
+
+        public class TeamRemoved : TeamAction, INotification
+        {
         }
 
         public class TeamHandler : Mediator
@@ -141,12 +165,19 @@
         private class MiddlewareProvider : Handler
         {
             [Provides]
-            public IMiddleware<TRequest, TResponse>[] GetMiddleware<TRequest, TResponse>()
+            public IMiddleware<TReq, TResp>[] GetMiddleware<TReq, TResp>()
             {
-                return new[]
-                {
-                    new LogBehavior<TRequest, TResponse>()
-                };
+                return new IMiddleware<TReq, TResp>[]
+                 {
+                    new LogMiddleware<TReq, TResp>(),
+                    new ValidationMiddleware<TReq, TResp>()
+                 };
+            }
+
+            [Provides]
+            public IValidator<TeamAction>[] TeamActionValidators()
+            {
+                return new[] {new TeamActionIntegrity()};
             }
         }
     }

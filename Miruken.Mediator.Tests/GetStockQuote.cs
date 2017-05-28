@@ -1,6 +1,7 @@
 ﻿namespace Miruken.Mediator.Tests
 {
     using System;
+    using FluentValidation;
     using Miruken.Mediator;
 
     public class StockQuote
@@ -11,6 +12,10 @@
 
     public class GetStockQuote : IRequest<StockQuote>, IEquatable<GetStockQuote>
     {
+        public GetStockQuote()
+        {           
+        }
+
         public GetStockQuote(string symbol)
         {
             Symbol = symbol;
@@ -21,6 +26,14 @@
         public bool Equals(GetStockQuote other)
         {
             return Symbol == other?.Symbol;
+        }
+    }
+
+    public class GetStockQuoteIntegrity : AbstractValidator<GetStockQuote>
+    {
+        public GetStockQuoteIntegrity()
+        {
+            RuleFor(q => q.Symbol).NotEmpty();
         }
     }
 }
