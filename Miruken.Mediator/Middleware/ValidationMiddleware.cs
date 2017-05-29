@@ -5,11 +5,11 @@
     using Concurrency;
     using Validate;
 
-    public class ValidationMiddleware<Cb, Res> : IMiddleware<Cb, Res>
+    public class ValidationMiddleware<Req, Res> : IMiddleware<Req, Res>
     {
-        public int? Order { get; set; }
+        public int? Order { get; set; } = Stage.Validation;
 
-        public Promise<Res> Next(Cb request, MethodBinding method,
+        public Promise<Res> Next(Req request, MethodBinding method,
             IHandler composer, NextDelegate<Promise<Res>> next)
         {
             return Validate(request, composer)

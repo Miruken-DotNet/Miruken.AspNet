@@ -79,7 +79,6 @@
                 Assert.IsNotNull(outcome);
                 CollectionAssert.AreEqual(new[] { "Symbol" }, outcome.Culprits);
                 Assert.AreEqual("'Symbol' should not be empty.", outcome["Symbol"]);
-
             }
         }
 

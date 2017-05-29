@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{96B8AC46-CD2A-4C72-B8B8-FF6151552DF7}</ProjectGuid>
+    <ProjectGuid>{5FFD9BEE-9B56-4C8A-88E3-CCA10A5A0199}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Miruken.Mediator</RootNamespace>
-    <AssemblyName>Miruken.Mediator</AssemblyName>
+    <RootNamespace>Miruken.Mediator.Castle</RootNamespace>
+    <AssemblyName>Miruken.Mediator.Castle</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -31,16 +31,28 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentValidation, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentValidation.7.0.2\lib\net45\FluentValidation.dll</HintPath>
+    <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Castle.Facilities.Logging, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.LoggingFacility.3.3.0\lib\net45\Castle.Facilities.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Castle.Services.Logging.NLogIntegration, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core-NLog.3.3.3\lib\net45\Castle.Services.Logging.NLogIntegration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Windsor.3.3.0\lib\net45\Castle.Windsor.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Miruken, Version=1.2.0.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Miruken.1.2.0.9\lib\net461\Miruken.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Miruken.Validate, Version=0.0.0.15, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Miruken.Validate.0.0.0.15\lib\net461\Miruken.Validate.dll</HintPath>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.4.9\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -53,38 +65,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cache\Cached.cs" />
-    <Compile Include="Cache\CachedHandler.cs" />
-    <Compile Include="Cache\CacheExtensions.cs" />
-    <Compile Include="Handler.Mediator.cs" />
-    <Compile Include="INotification.cs" />
-    <Compile Include="IMiddleware.cs" />
-    <Compile Include="IRequest.cs" />
-    <Compile Include="MediatesAttribute.cs" />
-    <Compile Include="Mediator.cs" />
-    <Compile Include="Oneway\Oneway.cs" />
-    <Compile Include="Oneway\OnewayHandler.cs" />
-    <Compile Include="PipelineAttribute.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="LoggingMiddleware.cs" />
     <Compile Include="Properties\GlobalAssemblyInfo.cs" />
-    <Compile Include="Route\IRouter.cs" />
-    <Compile Include="Route\PassThroughRouter.cs" />
-    <Compile Include="Route\Routed.cs" />
-    <Compile Include="Route\RouteExtensions.cs" />
-    <Compile Include="Route\RouteHandler.cs" />
-    <Compile Include="Schedule\Concurrent.cs" />
-    <Compile Include="Schedule\Parallel.cs" />
-    <Compile Include="Schedule\Scheduled.cs" />
-    <Compile Include="Schedule\ScheduleHandler.cs" />
-    <Compile Include="Schedule\Sequential.cs" />
-    <Compile Include="Middleware\ValidationMiddleware.cs" />
-    <Compile Include="Stage.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Miruken.Mediator.nuspec" />
+    <ProjectReference Include="..\Miruken.Mediator\Miruken.Mediator.csproj">
+      <Project>{96b8ac46-cd2a-4c72-b8b8-ff6151552df7}</Project>
+      <Name>Miruken.Mediator</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Miruken.Mediator.Castle.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
