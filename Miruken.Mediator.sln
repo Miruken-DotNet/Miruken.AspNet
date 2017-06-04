@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miruken.Mediator", "Miruken.Mediator\Miruken.Mediator.csproj", "{96B8AC46-CD2A-4C72-B8B8-FF6151552DF7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miruken.Mediator", "Source\Miruken.Mediator\Miruken.Mediator.csproj", "{96B8AC46-CD2A-4C72-B8B8-FF6151552DF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miruken.Mediator.Tests", "Miruken.Mediator.Tests\Miruken.Mediator.Tests.csproj", "{D0385FE6-C412-4921-8A66-38166D208461}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miruken.Mediator.Tests", "Source\Miruken.Mediator.Tests\Miruken.Mediator.Tests.csproj", "{D0385FE6-C412-4921-8A66-38166D208461}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{132BDD75-1E42-41F9-B8FF-5598D9CC1E74}"
 	ProjectSection(SolutionItems) = preProject
@@ -13,11 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		NuGet.Config = NuGet.Config
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miruken.Mediator.Castle", "Miruken.Mediator.Castle\Miruken.Mediator.Castle.csproj", "{5FFD9BEE-9B56-4C8A-88E3-CCA10A5A0199}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miruken.Mediator.Castle", "Source\Miruken.Mediator.Castle\Miruken.Mediator.Castle.csproj", "{5FFD9BEE-9B56-4C8A-88E3-CCA10A5A0199}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{567E2030-C79E-45FD-A7A4-CF5EB98C28C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miruken.Mediator.Castle.Tests", "Miruken.Mediator.Castle.Tests\Miruken.Mediator.Castle.Tests.csproj", "{420FF40B-FE91-4290-90B4-2D2503F98228}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miruken.Mediator.Castle.Tests", "Source\Miruken.Mediator.Castle.Tests\Miruken.Mediator.Castle.Tests.csproj", "{420FF40B-FE91-4290-90B4-2D2503F98228}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
