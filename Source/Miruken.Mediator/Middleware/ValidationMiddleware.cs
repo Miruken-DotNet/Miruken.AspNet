@@ -10,12 +10,12 @@
     {
         public int? Order { get; set; } = Stage.Validation;
 
-        public async Task<Res> Next(Req request, MethodBinding method,
+        public Task<Res> Next(Req request, MethodBinding method,
             IHandler composer, NextDelegate<Task<Res>> next)
         {
-            await Validate(request, composer);
-            var response = await next();
-            return await Validate(response, composer);
+            return Validate(request, composer)
+                .Then((req, s) => next())
+                .Then((resp, s) => Validate(resp, composer));
         }
 
         private static Promise<T> Validate<T>(T message, IHandler composer)
