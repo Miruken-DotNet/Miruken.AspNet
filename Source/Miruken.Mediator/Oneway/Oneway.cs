@@ -3,7 +3,7 @@
     using System;
     using Callback;
 
-    public abstract class Oneway : IRequest, IDecorator
+    public abstract class Oneway : IDecorator
     {
         protected Oneway()
         {

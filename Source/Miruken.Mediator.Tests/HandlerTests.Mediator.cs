@@ -1,6 +1,5 @@
 ﻿namespace Miruken.Mediator.Tests
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -116,25 +115,24 @@
         {
         }
 
-        public class TeamCreated : TeamAction, INotification
+        public class TeamCreated : TeamAction
         {
         }
 
-        public class RemoveTeam : TeamAction, IRequest
+        public class RemoveTeam : TeamAction
         {
         }
 
-        public class TeamRemoved : TeamAction, INotification
+        public class TeamRemoved : TeamAction
         {
         }
 
         public class TeamHandler : Mediator
         {
             public int _teamId;
-            private readonly List<INotification> 
-                _notifications = new List<INotification>();
+            private readonly List<object>  _notifications = new List<object>();
 
-            public ICollection<INotification> Notifications => _notifications;
+            public ICollection<object> Notifications => _notifications;
 
             [Mediates]
             public Promise<Team> Create(CreateTeam create, IHandler composer)
@@ -156,7 +154,7 @@
             }
 
             [Mediates]
-            public void Notify(INotification notification)
+            public void Notify(object notification)
             {
                 _notifications.Add(notification);
             }
@@ -167,7 +165,7 @@
             [Provides]
             public IMiddleware<TReq, TResp>[] GetMiddleware<TReq, TResp>()
             {
-                return new IMiddleware<TReq, TResp>[]
+                 return new IMiddleware<TReq, TResp>[]
                  {
                     new LogMiddleware<TReq, TResp>(),
                     new ValidationMiddleware<TReq, TResp>()

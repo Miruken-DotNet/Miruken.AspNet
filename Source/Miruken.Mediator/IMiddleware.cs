@@ -1,10 +1,10 @@
 ﻿namespace Miruken.Mediator
 {
+    using System.Threading.Tasks;
     using Callback;
-    using Concurrency;
 
     public interface IMiddleware<in TRequest, TResponse>
-        : IFilter<TRequest, Promise<TResponse>>
+        : IFilter<TRequest, Task<TResponse>>
     {
     }
 }

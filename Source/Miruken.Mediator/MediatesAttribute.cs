@@ -18,15 +18,11 @@
 
         public static readonly CallbackPolicy Policy =
             ContravariantPolicy.Create<Command>(r => r.Callback,
-                x => x.MatchMethod(x.Target.OfType<IRequest>(),
-                                   x.Composer.Optional, x.Binding.Optional)
-                      .MatchMethod(Return.Is("resp"),
+                x => x.MatchMethod(Return.Is("resp"),
                                    x.Target.OfType(typeof(IRequest<>), "resp"),
                                    x.Composer.Optional, x.Binding.Optional)
-                      .MatchMethod(x.Target.OfType<INotification>(),
-                                   x.Composer.Optional, x.Binding.Optional)
+                      .MatchMethod(x.Target, x.Composer.Optional, x.Binding.Optional)
                       .MatchMethod(x.Callback, x.Composer.Optional, x.Binding.Optional)
-                      .UseTargetFilters()
             );
     }
 }

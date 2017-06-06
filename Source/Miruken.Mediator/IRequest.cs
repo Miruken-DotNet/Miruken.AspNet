@@ -3,56 +3,41 @@
     using System;
     using Callback;
 
-    public interface IRequest { }
-
     public interface IRequest<out TResponse> { }
 
-    public interface IRequestDecorator : IRequest
+    public class MessageDecorator : IDecorator
     {
-        IRequest Request { get; }
+        public MessageDecorator()
+        {
+        }
+
+        public MessageDecorator(object message)
+        {
+            if (message == null)
+                throw new ArgumentNullException(nameof(message));
+            Message = message;
+        }
+
+        public object Message { get; set; }
+
+        object IDecorator.Decoratee => Message;
     }
 
-    public interface IRequestDecorator<out TResponse> : IRequest<TResponse>
+    public class RequestDecorator<TResponse> : MessageDecorator, IRequest<TResponse>
     {
-        IRequest<TResponse> Request { get; }
-    }
-
-    public abstract class RequestDecorator : IRequestDecorator, IDecorator
-    {
-        protected RequestDecorator()
+        public RequestDecorator()
         {
         }
 
-        protected RequestDecorator(IRequest request)
-        {
-            if (request == null)
-                throw new ArgumentNullException(nameof(request));
-
-            Request = request;
-        }
-
-        public IRequest Request { get; set; }
-
-        object IDecorator.Decoratee => Request;
-    }
-
-    public abstract class RequestDecorator<TResponse>
-        : IRequestDecorator<TResponse>, IDecorator
-    {
-        protected RequestDecorator()
+        public RequestDecorator(IRequest<TResponse> request)
+            : base(request)
         {
         }
 
-        protected RequestDecorator(IRequest<TResponse> request)
+        public IRequest<TResponse> Request
         {
-            if (request == null)
-                throw new ArgumentNullException(nameof(request));
-
-            Request = request;
+            get { return (IRequest<TResponse>)Message; }
+            set { Message = value; }
         }
-
-        public IRequest<TResponse> Request { get; set; }
-
-        object IDecorator.Decoratee => Request;
     }
 }

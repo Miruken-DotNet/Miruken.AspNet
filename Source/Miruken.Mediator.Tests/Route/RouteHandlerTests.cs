@@ -82,7 +82,7 @@
             }
         }
 
-        public class Pickup : IRequest
+        public class Pickup
         {
         }
 

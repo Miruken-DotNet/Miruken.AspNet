@@ -1,19 +1,20 @@
 ﻿namespace Miruken.Mediator.Tests
 {
     using System;
+    using System.Threading.Tasks;
     using Callback;
     using Callback.Policy;
-    using Concurrency;
 
     public class LogMiddleware<Cb, Res> : IMiddleware<Cb, Res>
     {
         public int? Order { get; set; }
 
-        public Promise<Res> Next(Cb request, MethodBinding binding,
-            IHandler composer, NextDelegate<Promise<Res>> next)
+        public async Task<Res> Next(Cb request, MethodBinding binding,
+            IHandler composer, NextDelegate<Task<Res>> next)
         {
             Console.WriteLine($"Middleware Log {request}");
-            return next();
+            var response = await next();
+            return response;
         }
     }
 }

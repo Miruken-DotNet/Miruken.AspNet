@@ -1,5 +1,6 @@
 ﻿namespace Miruken.Mediator.Middleware
 {
+    using System.Threading.Tasks;
     using Callback;
     using Callback.Policy;
     using Concurrency;
@@ -9,12 +10,12 @@
     {
         public int? Order { get; set; } = Stage.Validation;
 
-        public Promise<Res> Next(Req request, MethodBinding method,
-            IHandler composer, NextDelegate<Promise<Res>> next)
+        public async Task<Res> Next(Req request, MethodBinding method,
+            IHandler composer, NextDelegate<Task<Res>> next)
         {
-            return Validate(request, composer)
-                .Then((req, s) => next())
-                .Then((resp, s) => Validate(resp, composer));
+            await Validate(request, composer);
+            var response = await next();
+            return await Validate(response, composer);
         }
 
         private static Promise<T> Validate<T>(T message, IHandler composer)

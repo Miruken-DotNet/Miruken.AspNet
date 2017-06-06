@@ -15,10 +15,10 @@
         }
 
         [Mediates]
-        public Promise Route(RoutedRequest request, IHandler composer)
+        public Promise Route(Routed message, IHandler composer)
         {
-            var router = SelectRouter(request);
-            return router.Route(request, composer);
+            var router = SelectRouter(message);
+            return router.Route(message, composer);
         }
 
         [Mediates]
@@ -27,13 +27,6 @@
         {
             var router = SelectRouter(request);
             return router.Route(request, composer).Cast<TResponse>();
-        }
-
-        [Mediates]
-        public Promise Route(RoutedNotification notification, IHandler composer)
-        {
-            var router = SelectRouter(notification);
-            return router.Route(notification, composer);
         }
 
         private IRouter SelectRouter(Routed routed)

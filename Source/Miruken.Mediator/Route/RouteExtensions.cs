@@ -2,10 +2,10 @@
 {
     public static class RouteExtensions
     {
-        public static RoutedRequest RouteTo(
-            this IRequest request, string route, string tag = null)
+        public static Routed RouteTo(
+            this object request, string route, string tag = null)
         {
-            return new RoutedRequest(request)
+            return new Routed(request)
             {
                 Route = route,
                 Tag   = tag
@@ -16,16 +16,6 @@
             this IRequest<TResponse> request, string route, string tag = null)
         {
             return new RoutedRequest<TResponse>(request)
-            {
-                Route = route,
-                Tag   = tag
-            };
-        }
-
-        public static RoutedNotification RouteTo(
-            this INotification notification, string route, string tag = null)
-        {
-            return new RoutedNotification(notification)
             {
                 Route = route,
                 Tag   = tag
