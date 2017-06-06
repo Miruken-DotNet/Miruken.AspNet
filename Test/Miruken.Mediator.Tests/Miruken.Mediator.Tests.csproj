@@ -37,7 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FluentValidation, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentValidation.7.0.2\lib\net45\FluentValidation.dll</HintPath>
+      <HintPath>..\..\packages\FluentValidation.7.0.2\lib\net45\FluentValidation.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Miruken, Version=1.2.1.6, Culture=neutral, processorArchitecture=MSIL">
@@ -80,7 +80,7 @@
     <Compile Include="StockQuoteHandler.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Miruken.Mediator\Miruken.Mediator.csproj">
+    <ProjectReference Include="..\..\Source\Miruken.Mediator\Miruken.Mediator.csproj">
       <Project>{96b8ac46-cd2a-4c72-b8b8-ff6151552df7}</Project>
       <Name>Miruken.Mediator</Name>
     </ProjectReference>
