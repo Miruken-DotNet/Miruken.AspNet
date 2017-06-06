@@ -43,6 +43,20 @@
         }
 
         [TestMethod]
+        public async Task Should_Send_Request_With_Response_Dynamic()
+        {
+            var team = await _handler.Send<Team>((object)new CreateTeam
+            {
+                Team = new Team
+                {
+                    Name = "Liverpool Owen"
+                }
+            });
+            Assert.AreEqual(1, team.Id);
+            Assert.IsTrue(team.Active);
+        }
+
+        [TestMethod]
         public async Task Should_Send_Request_Without_Response()
         {
             var team = new Team
