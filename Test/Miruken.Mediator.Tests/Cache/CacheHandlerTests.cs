@@ -20,10 +20,8 @@
         {
             _handler = new StockQuoteHandler()
                      + new CachedHandler()
-                     + new MiddlewareProvider()
-                     + new DataAnnotationsValidator()
-                     + new FluentValidationValidator()
-                     + new ValidationHandler();
+                     + new MiddlewareProvider();
+
             StockQuoteHandler.Called = 0;
         }
 
@@ -121,8 +119,7 @@
             {
                 return new IMiddleware<TReq, TResp>[]
                 {
-                    new LogMiddleware<TReq, TResp>(),
-                    new ValidationMiddleware<TReq, TResp>()
+                    new LogMiddleware<TReq, TResp>()
                 };
             }
         }

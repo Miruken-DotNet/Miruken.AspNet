@@ -105,46 +105,11 @@
             }
         }
 
-        public class Team
-        {
-            public int    Id     { get; set; }
-            public string Name   { get; set; }
-            public bool   Active { get; set; }
-        }
-
-        public class TeamAction
-        {
-            public Team Team { get; set; }
-        }
-
-        public class TeamActionIntegrity : AbstractValidator<TeamAction>
-        {
-            public TeamActionIntegrity()
-            {
-                RuleFor(ta => ta.Team).NotEmpty();
-            }
-        }
-
-        public class CreateTeam : TeamAction, IRequest<Team>
-        {
-        }
-
-        public class TeamCreated : TeamAction
-        {
-        }
-
-        public class RemoveTeam : TeamAction
-        {
-        }
-
-        public class TeamRemoved : TeamAction
-        {
-        }
 
         public class TeamHandler : Mediator
         {
             public int _teamId;
-            private readonly List<object>  _notifications = new List<object>();
+            private readonly List<object> _notifications = new List<object>();
 
             public ICollection<object> Notifications => _notifications;
 
@@ -162,7 +127,7 @@
             [Mediates]
             public void Remove(RemoveTeam remove, IHandler composer)
             {
-                var team = remove.Team;
+               var team = remove.Team;
                 team.Active = false;
                 composer.Publish(new TeamRemoved {Team = team});
             }
