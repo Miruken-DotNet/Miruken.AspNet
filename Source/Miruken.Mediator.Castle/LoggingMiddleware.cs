@@ -7,14 +7,15 @@
     using Callback.Policy;
     using global::Castle.Core.Logging;
 
-    public class LoggingMiddleware<Req, Res> : IMiddleware<Req, Res>
+    public class LoggingMiddleware<TRequest, TResponse> 
+        : IMiddleware<TRequest, TResponse>
     {
         public int? Order { get; set; } = Stage.Logging;
 
         public ILoggerFactory LoggerFactory { get; set; }
 
-        public async Task<Res> Next(Req request, MethodBinding method, 
-            IHandler composer, NextDelegate<Task<Res>> next)
+        public async Task<TResponse> Next(TRequest request, MethodBinding method, 
+            IHandler composer, NextDelegate<Task<TResponse>> next)
         {
             var start = Stopwatch.GetTimestamp();
 
@@ -29,10 +30,10 @@
                 // Never caught, because `LogException()` returns false.
             }
 
-            return default(Res);
+            return default(TResponse);
         }
 
-        private static void LogRequest(MethodBinding method, Req request)
+        private static void LogRequest(MethodBinding method, TRequest request)
         {
             
         }

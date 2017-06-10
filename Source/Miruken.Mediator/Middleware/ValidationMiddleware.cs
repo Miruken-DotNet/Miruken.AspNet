@@ -6,12 +6,13 @@
     using Concurrency;
     using Validate;
 
-    public class ValidationMiddleware<Req, Res> : IMiddleware<Req, Res>
+    public class ValidationMiddleware<TRequest, TResponse> 
+        : IMiddleware<TRequest, TResponse>
     {
         public int? Order { get; set; } = Stage.Validation;
 
-        public Task<Res> Next(Req request, MethodBinding method,
-            IHandler composer, NextDelegate<Task<Res>> next)
+        public Task<TResponse> Next(TRequest request, MethodBinding method,
+            IHandler composer, NextDelegate<Task<TResponse>> next)
         {
             return Validate(request, composer)
                 .Then((req, s) => next())

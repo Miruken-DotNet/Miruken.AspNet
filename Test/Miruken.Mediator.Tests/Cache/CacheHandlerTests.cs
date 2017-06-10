@@ -5,10 +5,6 @@
     using Callback;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Miruken.Mediator.Cache;
-    using Miruken.Mediator.Middleware;
-    using Validate;
-    using Validate.DataAnnotations;
-    using Validate.FluentValidation;
 
     [TestClass]
     public class CacheHandlerTests
