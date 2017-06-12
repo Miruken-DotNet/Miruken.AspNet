@@ -32,15 +32,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FluentValidation, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\FluentValidation.7.0.2\lib\net45\FluentValidation.dll</HintPath>
+      <HintPath>..\..\packages\FluentValidation.7.0.3\lib\net45\FluentValidation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Miruken, Version=1.2.1.19, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.1.2.1.19-prerelease\lib\net461\Miruken.dll</HintPath>
+    <Reference Include="Miruken, Version=1.2.1.20, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.1.2.1.20-prerelease\lib\net461\Miruken.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Miruken.Validate, Version=0.1.1.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.Validate.0.1.1.9-prerelease\lib\net461\Miruken.Validate.dll</HintPath>
+    <Reference Include="Miruken.Validate, Version=0.2.1.10, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.Validate.0.2.1.10-prerelease\lib\net461\Miruken.Validate.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
