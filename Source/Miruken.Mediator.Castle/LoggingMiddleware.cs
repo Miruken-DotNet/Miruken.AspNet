@@ -11,15 +11,16 @@
     using global::Castle.Core.Logging;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
+    using Validate;
 
-    public class LoggingMiddleware<TRequest, TResponse> 
+    public class LoggingMiddleware<TRequest, TResponse>
         : IMiddleware<TRequest, TResponse>
     {
         public int? Order { get; set; } = Stage.Logging;
 
         public ILoggerFactory LoggerFactory { get; set; }
 
-        public async Task<TResponse> Next(TRequest request, MethodBinding method, 
+        public async Task<TResponse> Next(TRequest request, MethodBinding method,
             IHandler composer, NextDelegate<Task<TResponse>> next)
         {
             var logger = GetLogger(method);
@@ -36,12 +37,13 @@
                 if (debug)
                 {
                     var elapsedMs = GetElapsedMilliseconds(start, Stopwatch.GetTimestamp());
-                    logger.DebugFormat("Completed {0} in {1} with {2}",
+                    logger.DebugFormat("Completed {0} in {1}{2}{3}",
                         PrettyName(request.GetType()),
                         FormatElapsedMilliseconds(elapsedMs),
+                        response != null ? " with " : "",
                         Describe(response));
                 }
-                   
+
                 return response;
             }
             catch (Exception ex) when (LogException(request, logger,
@@ -56,9 +58,17 @@
         private static bool LogException(TRequest request,
             ILogger logger, double elapsedMs, Exception ex)
         {
-            if (logger.IsErrorEnabled)
+            if (WarningExceptions.Any(wex => wex.IsInstanceOfType(ex)))
             {
-                logger.ErrorFormat(ex, "Failed {0}{1}", Describe(request),
+                if (logger.IsWarnEnabled)
+                {
+                    logger.WarnFormat(ex, "Failed {0} in {1}", Describe(request),
+                        FormatElapsedMilliseconds(elapsedMs));
+                }
+            }
+            else if (logger.IsErrorEnabled)
+            {
+                logger.ErrorFormat(ex, "Failed {0} in {1}", Describe(request),
                     FormatElapsedMilliseconds(elapsedMs));
             }
             ex.Data[Stage.Logging] = true;
@@ -94,14 +104,16 @@
             return LoggerFactory?.Create(type) ?? NullLogger.Instance;
         }
 
+        #region Formatting
+
         private static readonly JsonSerializerSettings JsonSettings =
             new JsonSerializerSettings
             {
-                Formatting            = Formatting.Indented,
-                DateFormatString      = "MM-dd-yyyy hh:mm:ss",
-                NullValueHandling     = NullValueHandling.Ignore,
+                Formatting = Formatting.Indented,
+                DateFormatString = "MM-dd-yyyy hh:mm:ss",
+                NullValueHandling = NullValueHandling.Ignore,
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                Converters            =  {
+                Converters =  {
                     new StringEnumConverter(),
                     new ByteArrayFormatter()
                 }
@@ -122,7 +134,7 @@
             return SimpleNames.TryGetValue(type, out name) ? name : type.Name;
         }
 
-        private static readonly Dictionary<Type, string> 
+        private static readonly Dictionary<Type, string>
             SimpleNames = new Dictionary<Type, string>
         {
             { typeof (bool),    "bool" },
@@ -139,6 +151,13 @@
             { typeof (uint),    "uint" },
             { typeof (ulong),   "ulong" },
             { typeof (ushort),  "ushort" }
+        };
+
+        private static readonly Type[] WarningExceptions =
+        {
+            typeof(ArgumentException),
+            typeof(InvalidOperationException),
+            typeof(ValidationException)
         };
 
         #region ByteArrayFormatter
@@ -163,6 +182,8 @@
                 throw new NotImplementedException("Unnecessary because CanRead is false.");
             }
         }
+
+        #endregion
 
         #endregion
     }

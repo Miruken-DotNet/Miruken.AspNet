@@ -3,9 +3,9 @@
     using System.Linq;
     using global::Castle.Windsor;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Middleware;
     using Miruken.Castle;
     using Miruken.Mediator.Tests;
+    using Validate.Castle;
 
     [TestClass]
     public class MediatorInstallerTests
@@ -19,7 +19,9 @@
             _container = new WindsorContainer()
                 .Install(Plugins.FromAssemblies(
                              typeof(LoggingMiddleware<,>).Assembly,
-                             typeof(ValidationMiddleware<,>).Assembly),
+                             typeof(ValidationMiddleware<,>).Assembly,
+                             typeof(Team).Assembly),
+                         new ValidationInstaller(),
                          new MediatorInstaller());
             _container.Kernel.AddHandlersFilter(new ContravariantFilter());
             _handler = new WindsorHandler(_container);

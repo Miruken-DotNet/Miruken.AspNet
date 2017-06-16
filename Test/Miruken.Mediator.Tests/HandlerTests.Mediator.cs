@@ -8,7 +8,6 @@
     using FluentValidation;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Miruken.Mediator;
-    using Miruken.Mediator.Middleware;
     using Validate;
     using Validate.DataAnnotations;
     using Validate.FluentValidation;
@@ -105,7 +104,6 @@
             }
         }
 
-
         public class TeamHandler : Mediator
         {
             public int _teamId;
@@ -127,7 +125,7 @@
             [Mediates]
             public void Remove(RemoveTeam remove, IHandler composer)
             {
-               var team = remove.Team;
+                var team = remove.Team;
                 team.Active = false;
                 composer.Publish(new TeamRemoved {Team = team});
             }

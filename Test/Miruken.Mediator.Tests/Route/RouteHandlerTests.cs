@@ -6,7 +6,6 @@
     using Concurrency;
     using FluentValidation;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Miruken.Mediator.Middleware;
     using Miruken.Mediator.Route;
     using Validate;
     using Validate.DataAnnotations;

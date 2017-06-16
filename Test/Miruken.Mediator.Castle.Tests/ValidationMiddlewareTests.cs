@@ -5,7 +5,6 @@
     using Concurrency;
     using global::Castle.Windsor;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Middleware;
     using Miruken.Castle;
     using Miruken.Mediator.Tests;
     using Validate;

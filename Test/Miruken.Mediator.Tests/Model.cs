@@ -11,7 +11,7 @@
         public bool   Active { get; set; }
     }
 
-    public class TeamAction : ValidationAware
+    public class TeamAction
     {
         public Team Team { get; set; }
     }

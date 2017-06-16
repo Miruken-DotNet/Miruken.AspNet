@@ -78,7 +78,7 @@
     <Compile Include="Schedule\Scheduled.cs" />
     <Compile Include="Schedule\ScheduleHandler.cs" />
     <Compile Include="Schedule\Sequential.cs" />
-    <Compile Include="Middleware\ValidationMiddleware.cs" />
+    <Compile Include="ValidationMiddleware.cs" />
     <Compile Include="Stage.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,4 @@
-﻿namespace Miruken.Mediator.Middleware
+﻿namespace Miruken.Mediator
 {
     using System.Threading.Tasks;
     using Callback;

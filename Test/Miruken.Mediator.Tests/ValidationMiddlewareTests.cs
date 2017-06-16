@@ -1,11 +1,10 @@
-﻿namespace Miruken.Mediator.Tests.Middleware
+﻿namespace Miruken.Mediator.Tests
 {
     using System.Threading.Tasks;
     using Callback;
     using Concurrency;
     using FluentValidation;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Miruken.Mediator.Middleware;
     using Validate;
     using Validate.DataAnnotations;
     using Validate.FluentValidation;
