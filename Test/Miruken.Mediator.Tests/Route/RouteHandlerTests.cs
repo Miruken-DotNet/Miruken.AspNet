@@ -106,7 +106,6 @@
             {
                 return new IMiddleware<TReq, TResp>[]
                 {
-                    new LogMiddleware<TReq, TResp>(),
                     new ValidationMiddleware<TReq, TResp>()
                 };
             }

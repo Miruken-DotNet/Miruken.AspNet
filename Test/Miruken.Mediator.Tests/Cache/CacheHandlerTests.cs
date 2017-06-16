@@ -15,8 +15,7 @@
         public void TestInitialize()
         {
             _handler = new StockQuoteHandler()
-                     + new CachedHandler()
-                     + new MiddlewareProvider();
+                     + new CachedHandler();
 
             StockQuoteHandler.Called = 0;
         }
@@ -106,18 +105,6 @@
                 Assert.AreEqual("Stock Exchange is down", ex.Message);
             }
             Assert.AreEqual(2, StockQuoteHandler.Called);
-        }
-
-        private class MiddlewareProvider : Handler
-        {
-            [Provides]
-            public IMiddleware<TReq, TResp>[] GetMiddleware<TReq, TResp>()
-            {
-                return new IMiddleware<TReq, TResp>[]
-                {
-                    new LogMiddleware<TReq, TResp>()
-                };
-            }
         }
     }
 }

@@ -14,21 +14,21 @@
         public Task<TResponse> Next(TRequest request, MethodBinding method,
             IHandler composer, NextDelegate<Task<TResponse>> next)
         {
-            return Validate(request, composer)
+            var validator = composer.P<IValidator>();
+            return Validate(request, validator)
                 .Then((req, s) => next())
-                .Then((resp, s) => Validate(resp, composer));
+                .Then((resp, s) => Validate(resp, validator));
         }
 
-        private static Promise<T> Validate<T>(T message, IHandler composer)
+        private static Promise<T> Validate<T>(T message, IValidating validator)
         {
             return message == null ? Promise<T>.Empty 
-                 : composer.P<IValidator>().ValidateAsync(message)
-                    .Then((outcome, s) =>
-                    {
-                        if (!outcome.IsValid)
-                            throw new ValidationException(outcome);
-                        return message;
-                    });
+                 : validator.ValidateAsync(message).Then((outcome, s) =>
+                   {
+                       if (!outcome.IsValid)
+                           throw new ValidationException(outcome);
+                       return message;
+                   });
         }
     }
 }
