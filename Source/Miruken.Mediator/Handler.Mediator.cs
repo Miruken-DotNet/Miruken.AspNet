@@ -21,6 +21,22 @@
                        $"{request.GetType()} not handled"));
         }
 
+        public static Promise<TResp> Send<TResp>(this IHandler handler, object request)
+        {
+            if (handler == null)
+                return Promise<TResp>.Empty;
+            var command = new Command(request)
+            {
+                WantsAsync = true,
+                Policy     = MediatesAttribute.Policy
+            };
+            return handler.Handle(command)
+                 ? (Promise<TResp>)((Promise)command.Result)
+                       .Coerce(typeof(Promise<TResp>))
+                 : Promise<TResp>.Rejected(new NotSupportedException(
+                       $"{request.GetType()} not handled"));
+        }
+
         public static Promise<TResp> Send<TResp>(this IHandler handler, IRequest<TResp> request)
         {
             if (handler == null)

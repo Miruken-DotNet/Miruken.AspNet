@@ -7,7 +7,7 @@
 
     public class CachedHandler : Mediator
     {
-        private static readonly
+        private readonly
             ConcurrentDictionary<object, CacheResponse> Cache
                 = new ConcurrentDictionary<object, CacheResponse>();
 

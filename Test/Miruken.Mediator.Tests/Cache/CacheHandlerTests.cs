@@ -5,10 +5,6 @@
     using Callback;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Miruken.Mediator.Cache;
-    using Miruken.Mediator.Middleware;
-    using Validate;
-    using Validate.DataAnnotations;
-    using Validate.FluentValidation;
 
     [TestClass]
     public class CacheHandlerTests
@@ -19,11 +15,8 @@
         public void TestInitialize()
         {
             _handler = new StockQuoteHandler()
-                     + new CachedHandler()
-                     + new MiddlewareProvider()
-                     + new DataAnnotationsValidator()
-                     + new FluentValidationValidator()
-                     + new ValidationHandler();
+                     + new CachedHandler();
+
             StockQuoteHandler.Called = 0;
         }
 
@@ -112,19 +105,6 @@
                 Assert.AreEqual("Stock Exchange is down", ex.Message);
             }
             Assert.AreEqual(2, StockQuoteHandler.Called);
-        }
-
-        private class MiddlewareProvider : Handler
-        {
-            [Provides]
-            public IMiddleware<TReq, TResp>[] GetMiddleware<TReq, TResp>()
-            {
-                return new IMiddleware<TReq, TResp>[]
-                {
-                    new LogMiddleware<TReq, TResp>(),
-                    new ValidationMiddleware<TReq, TResp>()
-                };
-            }
         }
     }
 }
