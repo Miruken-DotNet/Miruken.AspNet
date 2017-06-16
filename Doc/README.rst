@@ -1,8 +1,8 @@
-=============
+=====================
 Miruken.Mediator Docs
-=============
+=====================
 
-  View the docs `here <http://mirukenMediator.readthedocs.io/>`_
+  View the docs `here <http://miruken-dotnet-miruken-mediator.readthedocs.io/>`_
 
 reStructuredText (reST)
 -----------------------
