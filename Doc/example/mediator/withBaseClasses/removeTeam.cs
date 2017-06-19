@@ -1,4 +1,4 @@
-namespace Example.teams
+namespace Example.Mediator.WithBaseClasses
 {
     public class RemoveTeam
     {

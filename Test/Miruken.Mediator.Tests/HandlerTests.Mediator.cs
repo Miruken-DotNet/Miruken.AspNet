@@ -33,7 +33,7 @@
             var team = await _handler.Send(new CreateTeam
             {
                 Team = new Team
-                { 
+                {
                     Name = "Liverpool Owen"
                 }
             });

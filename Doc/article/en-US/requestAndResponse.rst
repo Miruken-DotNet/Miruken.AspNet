@@ -2,18 +2,17 @@
 Request And Response
 ====================
 
-A request is a message that you want mediator to handle.  Usually, a request has a response.  You can inherit from `IRequest<TResponse>` to delare what response the request expects.
+Create request and response objects
+====================================
 
-Here the CreateTeam request inherits from IRequest and  expects to receive back a Team object:
+If the request inherits from :code:`IRequest<TResponse>` mediator will know the type of object it is returning.
 
-.. literalinclude:: /example/teams/createTeam.cs
+.. literalinclude:: /example/mediator/withBaseClasses/createTeam.cs
 
-Requests do not have to inherit from IRequest.
+.. literalinclude:: /example/mediator/teamResult.cs
 
-Here RemoveTeam does not expect a response:
+Mediator can still handle your request even if you don't inherit from :code:`IRequest<TResponse>` you will just have to specify the return type when sending the message.
 
-.. literalinclude:: /example/teams/removeTeam.cs
+.. literalinclude:: /example/mediator/pureClasses/createTeam.cs
 
-
-
-
+Responses are optional.  You can send requests that have no response.

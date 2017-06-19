@@ -14,7 +14,7 @@
 
         public PipelineAttribute(params Type[] middleware)
             : base(middleware)
-        {            
+        {
         }
 
         protected override void VerifyFilterType(Type middlewareType)
