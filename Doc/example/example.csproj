@@ -42,6 +42,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="teams\createTeam.cs" />
+    <Compile Include="teams\removeTeam.cs" />
+    <Compile Include="teams\team.cs" />
+    <Compile Include="teams\teamHandler.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Source\Miruken.Mediator\Miruken.Mediator.csproj">
+      <Project>{96b8ac46-cd2a-4c72-b8b8-ff6151552df7}</Project>
+      <Name>Miruken.Mediator</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
