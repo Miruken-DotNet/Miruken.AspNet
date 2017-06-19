@@ -2,6 +2,8 @@
 Outline
 =======
 
+This is a high level documentation outline that is to be filled in as we progress.
+
 Request
 ========
 
