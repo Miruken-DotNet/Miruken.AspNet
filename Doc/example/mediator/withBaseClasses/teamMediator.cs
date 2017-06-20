@@ -1,8 +1,10 @@
 namespace Example.Mediator.WithBaseClasses
 {
+    using Miruken.Callback;
     using Miruken.Mediator;
 
-    public class TeamMediator: Mediator
+    [Pipeline]
+    public class TeamHandler : Handler
     {
         [Mediates]
         public TeamResult CreateTeam(CreateTeam request)

@@ -1,8 +1,8 @@
-﻿namespace Example.Tests.MediatorTests.PureClassesTests
+﻿namespace Example.Tests.MediatorTests.WithPureClassesTests
 {
     using System.Threading.Tasks;
     using Mediator;
-    using Mediator.PureClasses;
+    using Mediator.WithPureClasses;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
@@ -14,13 +14,6 @@
             var controller = new TeamController();
             var team = await controller.CreateTeam(new Team());
             Assert.IsNotNull(team);
-        }
-
-        [TestMethod]
-        public async Task CanRemoveTeam()
-        {
-            var controller = new TeamController();
-            await controller.RemoveTeam(new Team());
         }
     }
 }

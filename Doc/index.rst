@@ -6,7 +6,8 @@ Miruken.Mediator
 Miruken handle()'s your application!
 
 Mediator
-    A go-between
+    :subscript:`1` One that mediates between parties at variance.
+    :subscript:`2` A go-between.
 
 .. toctree::
    :maxdepth: 2

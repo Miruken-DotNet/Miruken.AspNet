@@ -1,8 +1,8 @@
-namespace Example.Mediator.PureClasses
+namespace Example.Mediator.WithPureClasses
 {
     using Miruken.Mediator;
 
-    public class TeamMediator
+    public class TeamHandler
     {
         [Mediates]
         public TeamResult CreateTeam(CreateTeam request)
@@ -11,12 +11,6 @@ namespace Example.Mediator.PureClasses
             {
                 Team = request.Team
             };
-        }
-
-        [Mediates]
-        public void RemoveTeam(RemoveTeam request)
-        {
-            //remove team
         }
     }
 }

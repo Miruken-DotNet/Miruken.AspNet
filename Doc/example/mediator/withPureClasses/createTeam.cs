@@ -1,4 +1,4 @@
-namespace Example.Mediator.PureClasses
+namespace Example.Mediator.WithPureClasses
 {
     public class CreateTeam
     {

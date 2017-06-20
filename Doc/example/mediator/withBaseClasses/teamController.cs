@@ -12,12 +12,12 @@
         public TeamController()
         {
             _context  = new Context();
-            _context.AddHandlers(new TeamMediator());
+            _context.AddHandlers(new TeamHandler());
         }
 
         public async Task<Team> CreateTeam(Team team)
         {
-            var result = await _context.Send(new CreateTeam { Team = team });
+            var result  = await _context.Send(new CreateTeam { Team = team });
             return result.Team;
         }
 

@@ -1,4 +1,4 @@
-namespace Example.Mediator.WithBaseClasses
+namespace Example.Mediator
 {
     using Miruken.Mediator;
 

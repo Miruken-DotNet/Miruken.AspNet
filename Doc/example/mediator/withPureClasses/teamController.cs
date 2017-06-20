@@ -1,4 +1,4 @@
-﻿namespace Example.Mediator.PureClasses
+﻿namespace Example.Mediator.WithPureClasses
 {
     using System.Threading.Tasks;
     using Miruken.Context;
@@ -11,18 +11,13 @@
         public TeamController()
         {
             _context  = new Context();
-            _context.AddHandlers(new TeamMediator());
+            _context.AddHandlers(new TeamHandler());
         }
 
         public async Task<Team> CreateTeam(Team team)
         {
             var result = await _context.Send<TeamResult>(new CreateTeam { Team = team });
             return result.Team;
-        }
-
-        public async Task RemoveTeam(Team team)
-        {
-            await _context.Send(new RemoveTeam { Team = team });
         }
     }
 }
