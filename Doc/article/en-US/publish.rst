@@ -2,6 +2,9 @@
 Publish
 =======
 
+Publish notifications from any :code:`IHandler`
+===============================================
+
 :code:`Publish()` is a Miruken.Mediator extension method that you can call on any IHandler. 
 
 Publish is used for notification.  It expects that there will be zero or more handlers that receive the message. Published messages do not receive a response. 
