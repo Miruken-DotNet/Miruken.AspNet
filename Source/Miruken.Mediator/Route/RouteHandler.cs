@@ -5,7 +5,8 @@
     using Callback;
     using Concurrency;
 
-    public class RouteHandler : Mediator
+    [Pipeline]
+    public class RouteHandler : Handler
     {
         private readonly IRouter[] _routers;
 

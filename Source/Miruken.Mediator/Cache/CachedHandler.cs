@@ -5,7 +5,8 @@
     using Callback;
     using Concurrency;
 
-    public class CachedHandler : Mediator
+    [Pipeline]
+    public class CachedHandler : Handler
     {
         private readonly
             ConcurrentDictionary<object, CacheResponse> Cache

@@ -4,7 +4,7 @@
     using global::Castle.Windsor;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Miruken.Castle;
-    using Miruken.Mediator.Tests;
+    using Mediator.Tests;
     using Validate.Castle;
 
     [TestClass]
@@ -17,12 +17,9 @@
         public void TestInitialize()
         {
             _container = new WindsorContainer()
-                .Install(Plugins.FromAssemblies(
-                             typeof(LoggingMiddleware<,>).Assembly,
-                             typeof(ValidationMiddleware<,>).Assembly,
-                             typeof(Team).Assembly),
+                .Install(Plugins.FromAssemblies(typeof(Team).Assembly),
                          new ValidationInstaller(),
-                         new MediatorInstaller());
+                         new MediatorInstaller().WithMiddleware());
             _container.Kernel.AddHandlersFilter(new ContravariantFilter());
             _handler = new WindsorHandler(_container);
         }

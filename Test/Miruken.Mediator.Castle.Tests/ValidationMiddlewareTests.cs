@@ -116,7 +116,8 @@
             }
         }
 
-        public class TeamHandler : Mediator
+        [Pipeline]
+        public class TeamHandler : Handler
         {
             public int _teamId;
 
