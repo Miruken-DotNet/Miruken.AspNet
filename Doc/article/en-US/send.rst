@@ -2,9 +2,6 @@
 Send
 ====
 
-Send messages from any :code:`IHandler`
-=======================================
-
 :code:`Send()` is a Miruken.Mediator extension method that you can call on any IHandler. Send expects that there will be one handler who receives the message.
 
 Here is an example of an Asp.net Web Api Controller. Context implements IHandler.  We call Send on the context passing in the CreateTeam request. Mediator will look through the handlers in the context to find one that can handle the CreateTeam message and return a TeamResult.
