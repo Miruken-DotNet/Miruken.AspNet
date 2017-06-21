@@ -2,13 +2,8 @@
 Publish
 =======
 
-Publish notifications from any :code:`IHandler`
-===============================================
+:code:`Publish()` is an :code:`IHandler` extension method that is used for notification.  It will traverse the context and execute every handler that can handle the message. If no handler is found, it *will not throw* and exception.  Published messages do not return a response.
 
-:code:`Publish()` is a Miruken.Mediator extension method that you can call on any IHandler. 
-
-Publish is used for notification.  It expects that there will be zero or more handlers that receive the message. Published messages do not receive a response. 
-
-In this example we are executing :code:`Publish()` off of the IHandler composer that is passed in to the :code:`[Mediates]` method.  Mediator will find and execute all handlers that can handle TeamCreated.
+In this example we are executing :code:`Publish()` off of the :code:`IHandler composer` that is passed in to the :code:`[Mediates]` method.  Mediator will find and execute all handlers that can handle TeamCreated.
 
 .. literalinclude:: /example/handler/withComposer/teamHandler.cs

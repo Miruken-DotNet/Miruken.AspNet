@@ -10,7 +10,7 @@
         public IContext Context { get; set; }
 
         [HttpPost]
-        public async Task<Team> CreateTeam([FromBody]CreateTeam request)
+        public async Task<Team> CreateTeam(CreateTeam request)
         {
             var result  = await Context.Send(request);
             return result.Team;
