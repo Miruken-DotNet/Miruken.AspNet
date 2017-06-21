@@ -38,12 +38,9 @@
             LogManager.Configuration = config;
             _container = new WindsorContainer()
                 .AddFacility<LoggingFacility>(f => f.LogUsing(new NLogFactory(config)))
-                .Install(Plugins.FromAssemblies(
-                             typeof(LoggingMiddleware<,>).Assembly,
-                             typeof(ValidationMiddleware<,>).Assembly,
-                             typeof(Team).Assembly),
+                .Install(Plugins.FromAssemblies(typeof(Team).Assembly),
                          new ValidationInstaller(),
-                         new MediatorInstaller());
+                         new MediatorInstaller().WithMiddleware());
             _container.Kernel.AddHandlersFilter(new ContravariantFilter());
             _handler = new HandlerMediatorTests.TeamHandler()
                      + new WindsorHandler(_container)

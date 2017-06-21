@@ -104,7 +104,8 @@
             }
         }
 
-        public class TeamHandler : Mediator
+        [Pipeline]
+        public class TeamHandler : Handler
         {
             public int _teamId;
             private readonly List<object> _notifications = new List<object>();

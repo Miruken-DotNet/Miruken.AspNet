@@ -35,12 +35,12 @@
       <HintPath>..\..\packages\FluentValidation.7.0.3\lib\net45\FluentValidation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Miruken, Version=1.3.1.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.1.3.1.9-prerelease\lib\net461\Miruken.dll</HintPath>
+    <Reference Include="Miruken, Version=1.3.1.11, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.1.3.1.11-prerelease\lib\net461\Miruken.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Miruken.Validate, Version=1.0.1.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.Validate.1.0.1.6-prerelease\lib\net461\Miruken.Validate.dll</HintPath>
+    <Reference Include="Miruken.Validate, Version=1.0.1.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.Validate.1.0.1.7-prerelease\lib\net461\Miruken.Validate.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -63,7 +63,6 @@
     <Compile Include="IMiddleware.cs" />
     <Compile Include="IRequest.cs" />
     <Compile Include="MediatesAttribute.cs" />
-    <Compile Include="Mediator.cs" />
     <Compile Include="Oneway\Oneway.cs" />
     <Compile Include="Oneway\OnewayHandler.cs" />
     <Compile Include="PipelineAttribute.cs" />
