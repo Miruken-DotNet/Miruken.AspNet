@@ -1,17 +1,17 @@
-namespace Example.Mediator.WithComposer
+namespace Example.Handler.WithComposer
 {
-    using Mediator;
     using Miruken.Callback;
     using Miruken.Mediator;
+    using Team;
 
     public class TeamHandler
     {
         [Mediates]
         public TeamResult CreateTeam(CreateTeam request, IHandler composer)
         {
-            var team = new Team();
+            var team = request.Team;
 
-            composer.Publish(new TeamCreated { Team = team });
+            composer.Publish(new TeamCreated());
 
             return new TeamResult
             {

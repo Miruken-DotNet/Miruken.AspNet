@@ -1,4 +1,4 @@
-namespace Example.Mediator
+namespace Example.Team
 {
     public class TeamResult
     {

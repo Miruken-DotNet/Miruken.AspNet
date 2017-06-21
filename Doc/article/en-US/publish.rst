@@ -8,4 +8,4 @@ Publish is used for notification.  It expects that there will be zero or more ha
 
 In this example we are executing :code:`Publish()` off of the IHandler composer that is passed in to the :code:`[Mediates]` method.  Mediator will find and execute all handlers that can handle TeamCreated.
 
-.. literalinclude:: /example/mediator/withComposer/teamHandler.cs
+.. literalinclude:: /example/handler/withComposer/teamHandler.cs

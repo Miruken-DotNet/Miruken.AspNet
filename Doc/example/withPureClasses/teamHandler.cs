@@ -1,6 +1,7 @@
-namespace Example.Mediator.WithPureClasses
+namespace Example.WithPureClasses
 {
     using Miruken.Mediator;
+    using Team;
 
     public class TeamHandler
     {
