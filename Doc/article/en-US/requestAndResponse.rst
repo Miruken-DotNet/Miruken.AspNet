@@ -2,10 +2,7 @@
 Request And Response
 ====================
 
-Create request and response objects
-====================================
-
-By inheriting from :code:`IRequest<TResponse>` mediator will know the type of object being returned.
+Create request and response objects. By inheriting from :code:`IRequest<TResponse>` mediator will know the type of object being returned.
 
 .. literalinclude:: /example/team/createTeam.cs
 
