@@ -13,17 +13,23 @@
         private Action<ComponentRegistration> _configure;
         private Type[] _middleware;
 
-        public MediatorInstaller ConfigureMiddleware(Action<ComponentRegistration> configure)
-        {
-            _configure += configure;
-            return this;
+        public MediatorInstaller()
+            : base(typeof(IMiddleware<,>).Assembly)
+        {         
         }
 
         public MediatorInstaller WithMiddleware(params Type[] middleware)
         {
-            _middleware = middleware
-                .Where(type => type.GetOpenTypeConformance(typeof(IMiddleware<,>)) != null)
-                .ToArray();
+            if (middleware
+                .Any(type => type.GetOpenTypeConformance(typeof(IMiddleware<,>)) == null))
+                throw new ArgumentException("One or more types do not represent middleware");
+            _middleware = middleware;
+            return this;
+        }
+
+        public MediatorInstaller ConfigureMiddleware(Action<ComponentRegistration> configure)
+        {
+            _configure += configure;
             return this;
         }
 
