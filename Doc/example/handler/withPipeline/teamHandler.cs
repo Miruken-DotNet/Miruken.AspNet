@@ -1,8 +1,8 @@
 namespace Example.Handler.WithPipeline
 {
+    using League.Api.Team;
     using Miruken.Callback;
     using Miruken.Mediator;
-    using Team;
 
     [Pipeline]
     public class TeamHandler : Handler

@@ -1,6 +1,6 @@
 namespace Example.WithPureClasses
 {
-    using Team;
+    using League.Api.Team;
 
     public class CreateTeam
     {

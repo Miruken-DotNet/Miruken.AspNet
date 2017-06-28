@@ -18,6 +18,8 @@ Mediator
    article/en-US/handler.rst
    article/en-US/send.rst
    article/en-US/publish.rst
+   article/en-US/pipeline.rst
    article/en-US/outline.rst
+   article/en-US/configuringCastleWindsor.rst
    article/en-US/inspiration.rst
 

@@ -1,6 +1,7 @@
 namespace Example.Tests.HandlerTests
 {
     using System.Threading.Tasks;
+    using League.Api.Team;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Miruken.Context;
     using Team;

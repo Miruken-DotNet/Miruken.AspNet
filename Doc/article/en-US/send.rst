@@ -8,11 +8,11 @@ Here is an example of an Asp.net Web Api Controller. Context implements IHandler
 
 .. literalinclude:: /example/team/teamController.cs
 
-.. literalinclude:: /example/team/createTeam.cs
+.. literalinclude:: /example.league.api/team/createTeam.cs
 
-.. literalinclude:: /example/team/removeTeam.cs
+.. literalinclude:: /example.league.api/team/removeTeam.cs
 
-.. literalinclude:: /example/team/teamResult.cs
+.. literalinclude:: /example.league.api/team/teamResult.cs
 
 Send does not require a response.  Notice that the RemoveTeam request does not implement :code:`IRequest<TResponse>` and the handler does not return a response.
 

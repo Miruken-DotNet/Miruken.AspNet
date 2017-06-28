@@ -17,7 +17,7 @@
         public void TestInitialize()
         {
             _container = new WindsorContainer()
-                .Install(Plugins.FromAssemblies(typeof(Team).Assembly),
+                .Install(Features.FromAssemblies(typeof(Team).Assembly),
                          new ValidationInstaller(),
                          new MediatorInstaller().WithMiddleware());
             _container.Kernel.AddHandlersFilter(new ContravariantFilter());

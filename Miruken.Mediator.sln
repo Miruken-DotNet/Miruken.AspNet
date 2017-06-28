@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "example", "Doc\example\exam
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.Tests", "Test\Example.Tests\Example.Tests.csproj", "{94E7140C-3C9F-4F98-98D6-95105DBD37C0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "example.league.api", "Doc\example.league.api\example.league.api.csproj", "{4FDB8D23-A5F2-40C0-998B-644413C273B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{94E7140C-3C9F-4F98-98D6-95105DBD37C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94E7140C-3C9F-4F98-98D6-95105DBD37C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94E7140C-3C9F-4F98-98D6-95105DBD37C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FDB8D23-A5F2-40C0-998B-644413C273B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FDB8D23-A5F2-40C0-998B-644413C273B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FDB8D23-A5F2-40C0-998B-644413C273B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FDB8D23-A5F2-40C0-998B-644413C273B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,5 +70,6 @@ Global
 		{D0385FE6-C412-4921-8A66-38166D208461} = {567E2030-C79E-45FD-A7A4-CF5EB98C28C4}
 		{F73C6936-E41E-49C6-9E2B-C7A87DAF81D4} = {2F38DC4A-D056-425D-9319-1AC3AE6478B8}
 		{94E7140C-3C9F-4F98-98D6-95105DBD37C0} = {567E2030-C79E-45FD-A7A4-CF5EB98C28C4}
+		{4FDB8D23-A5F2-40C0-998B-644413C273B6} = {2F38DC4A-D056-425D-9319-1AC3AE6478B8}
 	EndGlobalSection
 EndGlobal

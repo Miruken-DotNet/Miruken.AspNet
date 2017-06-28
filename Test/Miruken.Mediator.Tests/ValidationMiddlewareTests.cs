@@ -141,13 +141,13 @@
             [Provides]
             public IValidator<TeamAction>[] TeamActionValidators()
             {
-                return new[] { new TeamActionIntegrity() };
+                return new [] { new TeamActionIntegrity() };
             }
 
             [Provides]
             public IValidator<RemoveTeam>[] RemoveTeamValidators()
             {
-                return new[] { new RemoveTeamIntegrity() };
+                return new IValidator<RemoveTeam>[] { new RemoveTeamIntegrity() };
             }
         }
     }

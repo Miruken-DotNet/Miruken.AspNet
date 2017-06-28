@@ -1,9 +1,9 @@
 ﻿namespace Example.Tests.WithPureClassesTests
 {
     using System.Threading.Tasks;
+    using League.Api.Team;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Miruken.Context;
-    using Team;
     using WithPureClasses;
     using CreateTeam = WithPureClasses.CreateTeam;
     using TeamController = WithPureClasses.TeamController;

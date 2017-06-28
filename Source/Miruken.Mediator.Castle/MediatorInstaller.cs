@@ -8,7 +8,7 @@
     using Infrastructure;
     using Miruken.Castle;
 
-    public class MediatorInstaller : PluginInstaller
+    public class MediatorInstaller : FeatureInstaller
     {
         private Action<ComponentRegistration> _configure;
         private Type[] _middleware;
@@ -40,9 +40,9 @@
             }
         }
 
-        protected override void InstallPlugin(Plugin plugin)
+        protected override void InstallFeature(FeatureAssembly feature)
         {
-            InstallAssembly(plugin.Assembly);
+            InstallAssembly(feature.Assembly);
         }
 
         private void InstallAssembly(Assembly assembly, Predicate<Type> filter = null)

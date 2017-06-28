@@ -6,7 +6,7 @@
     using Concurrency;
     using Validate;
 
-    public class ValidationMiddleware<TRequest, TResponse> 
+    public class ValidationMiddleware<TRequest, TResponse>
         : IMiddleware<TRequest, TResponse>
     {
         public int? Order { get; set; } = Stage.Validation;
@@ -22,7 +22,7 @@
 
         private static Promise<T> Validate<T>(T message, IValidating validator)
         {
-            return message == null ? Promise<T>.Empty 
+            return message == null ? Promise<T>.Empty
                  : validator.ValidateAsync(message).Then((outcome, s) =>
                    {
                        if (!outcome.IsValid)

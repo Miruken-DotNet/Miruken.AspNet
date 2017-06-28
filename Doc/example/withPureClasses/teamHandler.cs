@@ -1,7 +1,7 @@
 namespace Example.WithPureClasses
 {
+    using League.Api.Team;
     using Miruken.Mediator;
-    using Team;
 
     public class TeamHandler
     {
