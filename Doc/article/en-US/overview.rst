@@ -10,7 +10,7 @@ Source Code
 Installation
 ============
 
-Install into your project using Nuget.
+Install into your project using Nuget::
 
 	Install-Package Miruken.Mediator
 
