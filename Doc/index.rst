@@ -13,7 +13,7 @@ Mediator
    :maxdepth: 2
    :caption: Table of Contents
 
-   article/en-US/intro.rst
+   article/en-US/overview.rst
    article/en-US/requestAndResponse.rst
    article/en-US/handler.rst
    article/en-US/send.rst

@@ -2,6 +2,6 @@
 Miruken.Mediator
 ================
 
-  View the docs `here <http://miruken-dotnet-miruken-mediator.readthedocs.io/>`_
+  `Full Documentaion <http://miruken-dotnet-miruken-mediator.readthedocs.io/>`_
 
-A Miruken implementation of the mediator pattern
+Miruken implementation of the mediator pattern.
