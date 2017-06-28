@@ -1,6 +1,8 @@
 ﻿namespace Miruken.Mediator.Castle.Tests
 {
+    using System;
     using System.Linq;
+    using global::Castle.MicroKernel;
     using global::Castle.Windsor;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Miruken.Castle;
@@ -31,7 +33,7 @@
         }
 
         [TestMethod]
-        public void Should_Register_Interface_Middleware()
+        public void Should_Register_Middleware_By_Interface()
         {
             var middleWare = _container.ResolveAll<IMiddleware<GetStockQuote, StockQuote>>();
             Assert.AreEqual(2, middleWare.Length);
@@ -40,10 +42,35 @@
         }
 
         [TestMethod]
-        public void Should_Register_Class_Middleware()
+        public void Should_Register_Middleware_By_Class()
         {
             Assert.IsNotNull(_container.Resolve<LoggingMiddleware<GetStockQuote, StockQuote>>());
             Assert.IsNotNull(_container.Resolve<ValidationMiddleware<GetStockQuote, StockQuote>>());
+        }
+
+        [TestMethod,
+         ExpectedException(typeof(ComponentNotFoundException))]
+        public void Should_Not_Install_Middleware_By_Default()
+        {
+            var container = new WindsorContainer().Install(new MediatorInstaller());
+            container.Resolve<LoggingMiddleware<string, int>>();
+        }
+
+        [TestMethod]
+        public void Should_Install_Specific_Middleware()
+        {
+            var container = new WindsorContainer()
+                .Install(new MediatorInstaller().WithMiddleware(typeof(LoggingMiddleware<,>)));
+            var logging = container.Resolve<LoggingMiddleware<string, int>>();
+            Assert.IsNotNull(logging);
+        }
+
+        [TestMethod,
+         ExpectedException(typeof(ArgumentException))]
+        public void Should_Reject_Invalid_Middleware()
+        {
+             new WindsorContainer()
+                .Install(new MediatorInstaller().WithMiddleware(typeof(MediatorInstallerTests)));
         }
     }
 }

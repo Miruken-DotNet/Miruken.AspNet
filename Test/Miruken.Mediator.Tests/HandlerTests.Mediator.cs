@@ -7,7 +7,7 @@
     using Concurrency;
     using FluentValidation;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Miruken.Mediator;
+    using Mediator;
     using Validate;
     using Validate.DataAnnotations;
     using Validate.FluentValidation;

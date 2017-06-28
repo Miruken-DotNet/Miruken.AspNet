@@ -60,6 +60,7 @@
     <Compile Include="Cache\CachedHandler.cs" />
     <Compile Include="Cache\CacheExtensions.cs" />
     <Compile Include="Handler.Mediator.cs" />
+    <Compile Include="IMediating.cs" />
     <Compile Include="IMiddleware.cs" />
     <Compile Include="IRequest.cs" />
     <Compile Include="MediatesAttribute.cs" />
