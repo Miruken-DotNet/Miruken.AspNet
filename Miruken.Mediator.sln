@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		GlobalAssemblyInfo.cs = GlobalAssemblyInfo.cs
 		NuGet.Config = NuGet.Config
+		README.rst = README.rst
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miruken.Mediator.Castle", "Source\Miruken.Mediator.Castle\Miruken.Mediator.Castle.csproj", "{5FFD9BEE-9B56-4C8A-88E3-CCA10A5A0199}"

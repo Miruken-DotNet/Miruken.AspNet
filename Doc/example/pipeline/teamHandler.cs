@@ -3,6 +3,7 @@ namespace Example.Pipeline
     using League.Api.Team;
     using Miruken.Callback;
     using Miruken.Mediator;
+    using Miruken.Validate;
 
     [Pipeline]
     public class TeamHandler : Handler
@@ -14,6 +15,12 @@ namespace Example.Pipeline
             {
                 Team = request.Team
             };
+        }
+
+        [Validates]
+        public void CreateTeamIntegritey(CreateTeam message, ValidationOutcome outcome)
+        {
+            outcome.AddError("Team", "Something really bad");
         }
     }
 }

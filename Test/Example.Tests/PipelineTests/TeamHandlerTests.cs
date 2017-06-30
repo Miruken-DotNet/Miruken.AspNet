@@ -3,9 +3,11 @@
     using System.Threading.Tasks;
     using Castle.Windsor;
     using HandlerTests;
+    using League.Api.Team;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Miruken.Castle;
     using Miruken.Mediator.Castle;
+    using Miruken.Validate;
     using Miruken.Validate.Castle;
 
     [TestClass]
@@ -16,12 +18,17 @@
         {
             var container = new WindsorContainer();
             container.Install(
-                Features.FromAssemblies(),
-                new MediatorInstaller(),
+                Features.FromAssemblies(
+                    typeof(CreateTeam).Assembly,
+                    typeof(Pipeline.TeamHandler).Assembly),
+                new MediatorInstaller().WithMiddleware(),
                 new ValidationInstaller());
 
-            Controller.Context.AddHandlers(new WindsorHandler(container));
-            Controller.Context.AddHandlers(new Pipeline.TeamHandler());
+            Controller.Context.AddHandlers(
+                new WindsorHandler(container),
+                new ValidationHandler(),
+                new Pipeline.TeamHandler());
+
             await AssertCanCreateTeam();
         }
     }
