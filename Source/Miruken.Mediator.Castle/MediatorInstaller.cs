@@ -46,9 +46,9 @@
             }
         }
 
-        protected override void InstallFeature(FeatureAssembly feature)
+        protected override void InstallFeature(Assembly assembly)
         {
-            InstallAssembly(feature.Assembly);
+            InstallAssembly(assembly);
         }
 
         private void InstallAssembly(Assembly assembly, Predicate<Type> filter = null)

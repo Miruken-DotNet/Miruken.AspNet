@@ -18,9 +18,10 @@ namespace Example.Pipeline
         }
 
         [Validates]
-        public void CreateTeamIntegritey(CreateTeam message, ValidationOutcome outcome)
+        public void CreateTeamIntegritey(CreateTeam request, ValidationOutcome outcome)
         {
-            outcome.AddError("Team", "Something really bad");
+            if (request.Team == null)
+                outcome.AddError("Team", "Something really bad");
         }
     }
 }

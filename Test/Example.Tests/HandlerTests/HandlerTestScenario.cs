@@ -20,7 +20,10 @@ namespace Example.Tests.HandlerTests
 
         protected async Task AssertCanCreateTeam()
         {
-            var team = await Controller.CreateTeam(new CreateTeam { Team = new Team {Id = 1, Name = "my team"} });
+            var team = await Controller.CreateTeam(new CreateTeam
+            {
+                Team = new Team {Id = 1, Name = "my team"}
+            });
             Assert.IsNotNull(team);
             Assert.IsTrue(!string.IsNullOrEmpty(team.Name));
             Assert.IsTrue(team.Id > 0);
