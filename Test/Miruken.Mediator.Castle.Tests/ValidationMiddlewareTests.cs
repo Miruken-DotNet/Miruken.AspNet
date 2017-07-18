@@ -22,7 +22,7 @@
         public void TestInitialize()
         {
             _container = new WindsorContainer()
-                .Install(Features.FromAssemblies(
+                .Install(WithFeatures.FromAssemblies(
                             typeof(ValidationMiddleware<,>).Assembly,
                             typeof(Team).Assembly),
                          new MediatorInstaller(),

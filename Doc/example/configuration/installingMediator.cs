@@ -17,7 +17,7 @@
                 new CollectionResolver(Container.Kernel, true));
 
             Container.Install(
-                Features.FromAssemblies(typeof(CreateTeam).Assembly),
+                WithFeatures.FromAssemblies(typeof(CreateTeam).Assembly),
                 new MediatorInstaller());
         }
     }

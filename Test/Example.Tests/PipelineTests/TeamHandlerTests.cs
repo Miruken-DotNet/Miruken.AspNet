@@ -18,7 +18,7 @@
         {
             var container = new WindsorContainer();
             container.Install(
-                Features.FromAssemblies(
+                WithFeatures.FromAssemblies(
                     typeof(CreateTeam).Assembly,
                     typeof(Pipeline.TeamHandler).Assembly),
                 new MediatorInstaller().WithMiddleware(),
