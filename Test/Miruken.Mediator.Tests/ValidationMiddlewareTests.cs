@@ -118,6 +118,8 @@
             [Mediates]
             public void Remove(RemoveTeam remove, IHandler composer)
             {
+                remove.Team.Active = false;
+
             }
         }
 
