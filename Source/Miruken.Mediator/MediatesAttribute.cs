@@ -19,7 +19,7 @@
         public static readonly CallbackPolicy Policy =
             ContravariantPolicy.Create<Command>(r => r.Callback,
                 x => x.MatchMethod(Return.Is("resp"),
-                                   x.Target.OfType(typeof(IRequest<>), "resp"))
+                           x.Target.OfType(typeof(IRequest<>), "resp"))
                       .MatchMethod(x.Target)
                       .MatchMethod(x.Callback)
             );
