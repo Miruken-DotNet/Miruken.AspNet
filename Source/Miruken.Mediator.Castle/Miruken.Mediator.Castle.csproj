@@ -90,7 +90,7 @@
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="LoggingMiddleware.cs" />
-    <Compile Include="MediatorInstaller.cs" />
+    <Compile Include="MiddlewareInstaller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

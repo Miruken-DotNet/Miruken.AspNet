@@ -40,7 +40,7 @@
                 .AddFacility<LoggingFacility>(f => f.LogUsing(new NLogFactory(config)))
                 .Install(WithFeatures.FromAssemblies(typeof(Team).Assembly),
                          new ValidationInstaller(),
-                         new MediatorInstaller().WithMiddleware());
+                         new MiddlewareInstaller().StandardMiddleware());
             _container.Kernel.AddHandlersFilter(new ContravariantFilter());
             _handler = new HandlerMediatorTests.TeamHandler()
                      + new WindsorHandler(_container)

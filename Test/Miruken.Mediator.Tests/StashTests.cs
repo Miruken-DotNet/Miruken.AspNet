@@ -43,7 +43,7 @@
 
             private static bool Exist(int orderId)
             {
-                var order = new Order {Id = orderId};
+                var order = new Order { Id = orderId };
                 P<IStash>(Handler.Composer).Put(order);
                 return true;
             }
@@ -73,8 +73,8 @@
             }
 
             [Provides]
-            public IValidator<CancelOrder>[] ChangeOrderValidator() 
-                => new[] {new ChangeOrderIntegrity()};
+            public IValidator<CancelOrder>[] ChangeOrderValidator() => 
+                new[] { new ChangeOrderIntegrity() };
 
         }
 

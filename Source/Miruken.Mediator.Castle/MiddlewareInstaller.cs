@@ -8,17 +8,17 @@
     using Infrastructure;
     using Miruken.Castle;
 
-    public class MediatorInstaller : FeatureInstaller
+    public class MiddlewareInstaller : FeatureInstaller
     {
         private Action<ComponentRegistration> _configure;
         private Type[] _middleware;
 
-        public MediatorInstaller()
+        public MiddlewareInstaller()
             : base(typeof(IMiddleware<,>).Assembly)
         {         
         }
 
-        public MediatorInstaller WithMiddleware(params Type[] middleware)
+        public MiddlewareInstaller StandardMiddleware(params Type[] middleware)
         {
             if (middleware
                 .Any(type => type.GetOpenTypeConformance(typeof(IMiddleware<,>)) == null))
@@ -27,7 +27,7 @@
             return this;
         }
 
-        public MediatorInstaller ConfigureMiddleware(Action<ComponentRegistration> configure)
+        public MiddlewareInstaller ConfigureMiddleware(Action<ComponentRegistration> configure)
         {
             _configure += configure;
             return this;

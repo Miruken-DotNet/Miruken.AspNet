@@ -21,7 +21,7 @@
                 WithFeatures.FromAssemblies(
                     typeof(CreateTeam).Assembly,
                     typeof(Pipeline.TeamHandler).Assembly),
-                new MediatorInstaller().WithMiddleware(),
+                new MiddlewareInstaller().StandardMiddleware(),
                 new ValidationInstaller());
 
             Controller.Context.AddHandlers(

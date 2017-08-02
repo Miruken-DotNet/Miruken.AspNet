@@ -19,7 +19,7 @@
 
             Container.Install(
                 WithFeatures.FromAssembly(typeof(CreateTeam).Assembly),
-                new MediatorInstaller(),
+                new MiddlewareInstaller(),
                 new ValidationInstaller());
         }
     }
