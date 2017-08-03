@@ -15,7 +15,7 @@
     using Validate.FluentValidation;
 
     [TestClass]
-    public class MediatorInstallerTests
+    public class MiddlewareInstallerTests
     {
         protected IWindsorContainer _container;
         protected Callback.IHandler _handler;
@@ -79,7 +79,7 @@
         public void Should_Reject_Invalid_Middleware()
         {
              new WindsorContainer()
-                .Install(new MiddlewareInstaller().StandardMiddleware(typeof(MediatorInstallerTests)));
+                .Install(new MiddlewareInstaller().StandardMiddleware(typeof(MiddlewareInstallerTests)));
         }
 
         [TestMethod]

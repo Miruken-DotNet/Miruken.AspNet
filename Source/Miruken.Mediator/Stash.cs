@@ -42,18 +42,23 @@
 
     public static class StashExtensions
     {
-        public static T GetOrPut<T>(this IStash stash, T put)
-            where T : class
+        public static T TryGet<T>(this IStash stash)
+          where T : class
         {
-            T data = null;
             try
             {
-                data = stash.Get<T>();
+                return stash.Get<T>();
             }
             catch
             {
-                 // not found
+                return null;
             }
+        }
+
+        public static T GetOrPut<T>(this IStash stash, T put)
+            where T : class
+        {
+            var data = stash.TryGet<T>();
             if (data == null)
             {
                 data = put;
@@ -67,15 +72,7 @@
         {
             if (put == null)
                 throw new ArgumentNullException(nameof(put));
-            T data = null;
-            try
-            {
-                data = stash.Get<T>();
-            }
-            catch
-            {
-                // not found
-            }
+            var data = stash.TryGet<T>();
             if (data == null)
             {
                 data = put();
