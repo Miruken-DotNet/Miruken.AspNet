@@ -14,7 +14,7 @@
         public Task<TResponse> Next(TRequest request, MethodBinding method,
             IHandler composer, NextDelegate<Task<TResponse>> next)
         {
-            var validator = composer.P<IValidator>();
+            var validator = composer.id<IValidator>();
             return Validate(request, validator)
                 .Then((req, s) => next())
                 .Then((resp, s) => Validate(resp, validator));

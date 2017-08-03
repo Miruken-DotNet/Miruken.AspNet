@@ -7,18 +7,19 @@
     using global::Castle.MicroKernel.SubSystems.Configuration;
     using Infrastructure;
     using Miruken.Castle;
+    using Route;
 
-    public class MiddlewareInstaller : FeatureInstaller
+    public class MediatorInstaller : FeatureInstaller
     {
-        private Action<ComponentRegistration> _configure;
+        private Action<ComponentRegistration> _configureMiddleware;
         private Type[] _middleware;
 
-        public MiddlewareInstaller()
+        public MediatorInstaller()
             : base(typeof(IMiddleware<,>).Assembly)
         {         
         }
 
-        public MiddlewareInstaller StandardMiddleware(params Type[] middleware)
+        public MediatorInstaller StandardMiddleware(params Type[] middleware)
         {
             if (middleware
                 .Any(type => type.GetOpenTypeConformance(typeof(IMiddleware<,>)) == null))
@@ -27,9 +28,9 @@
             return this;
         }
 
-        public MiddlewareInstaller ConfigureMiddleware(Action<ComponentRegistration> configure)
+        public MediatorInstaller ConfigureMiddleware(Action<ComponentRegistration> configure)
         {
-            _configure += configure;
+            _configureMiddleware += configure;
             return this;
         }
 
@@ -40,7 +41,9 @@
             {
                 Predicate<Type> filter = null;
                 if (_middleware.Length != 0)
-                    filter = type => _middleware.Contains(type);
+                    filter = type => 
+                        type.GetOpenTypeConformance(typeof(IMiddleware<,>)) == null ||
+                        _middleware.Contains(type);
                 InstallAssembly(Assembly.GetExecutingAssembly(), filter);
                 InstallAssembly(typeof(IMiddleware<,>).Assembly, filter);
             }
@@ -53,14 +56,19 @@
 
         private void InstallAssembly(Assembly assembly, Predicate<Type> filter = null)
         {
-            var middleware = Classes.FromAssembly(assembly)
+            var compoments = Classes.FromAssembly(assembly)
                 .BasedOn(typeof(IMiddleware<,>))
+                .OrBasedOn(typeof(IRouter))
                 .WithServiceBase().WithServiceSelf();
             if (filter != null)
-                middleware = middleware.If(filter);
-            if (_configure != null)
-                middleware.Configure(_configure);
-            Container.Register(middleware);
+                compoments = compoments.If(filter);
+            if (_configureMiddleware != null)
+                compoments.Configure(component =>
+                {
+                    if (component.Implementation.GetOpenTypeConformance(typeof(IMiddleware<,>)) != null)
+                        compoments.Configure(_configureMiddleware);
+                });
+            Container.Register(compoments);
         }
     }
 }

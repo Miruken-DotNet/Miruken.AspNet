@@ -44,7 +44,7 @@
             private static bool Exist(int orderId)
             {
                 var order = new Order { Id = orderId };
-                P<IStash>(Handler.Composer).Put(order);
+                id<IStash>(Handler.Composer).Put(order);
                 return true;
             }
         }
@@ -55,7 +55,7 @@
             [Mediates]
             public Order Cancel(CancelOrder cancel, IHandler composer)
             {
-                var order = P<IStash>(composer).Get<Order>();
+                var order = id<IStash>(composer).Get<Order>();
                 order.Status = OrderStatus.Cancelled;
                 return order;
             }
@@ -83,8 +83,8 @@
         {
             var order   = new Order();
             var handler = new Stash();
-            P<IStash>(handler).Put(order);
-            Assert.AreSame(order, P<IStash>(handler).Get<Order>());
+            id<IStash>(handler).Put(order);
+            Assert.AreSame(order, id<IStash>(handler).Get<Order>());
         }
 
         [TestMethod]
@@ -92,9 +92,9 @@
         {
             var order   = new Order();
             var handler = new Stash();
-            var result  = P<IStash>(handler).GetOrPut(order);
+            var result  = id<IStash>(handler).GetOrPut(order);
             Assert.AreSame(order, result);
-            Assert.AreSame(order, P<IStash>(handler).Get<Order>());
+            Assert.AreSame(order, id<IStash>(handler).Get<Order>());
         }
 
         [TestMethod]
@@ -103,9 +103,9 @@
             var order   = new Order();
             var stash   = new Stash();
             var handler = stash + new Stash(true);
-            P<IStash>(handler).Put(order);
-            P<IStash>(handler).Drop<Order>();
-            Assert.IsNull(P<IStash>(handler).Get<Order>());
+            id<IStash>(handler).Put(order);
+            id<IStash>(handler).Droid<Order>();
+            Assert.IsNull(id<IStash>(handler).Get<Order>());
         }
 
         [TestMethod]
@@ -114,8 +114,8 @@
             var order    = new Order();
             var handler  = new Stash();
             var handler2 = new Stash() + handler;
-            P<IStash>(handler).Put(order);
-            Assert.AreSame(order, P<IStash>(handler2).Get<Order>());
+            id<IStash>(handler).Put(order);
+            Assert.AreSame(order, id<IStash>(handler2).Get<Order>());
         }
 
         [TestMethod]
@@ -124,9 +124,9 @@
             var order    = new Order();
             var handler  = new Stash();
             var handler2 = new Stash() + handler;
-            P<IStash>(handler).Put(order);
-            P<IStash>(handler2).Put<Order>(null);
-            Assert.IsNull(P<IStash>(handler2).Get<Order>());
+            id<IStash>(handler).Put(order);
+            id<IStash>(handler2).Put<Order>(null);
+            Assert.IsNull(id<IStash>(handler2).Get<Order>());
         }
 
         [TestMethod]

@@ -25,7 +25,7 @@
                 .Install(WithFeatures.FromAssemblies(
                             typeof(ValidationMiddleware<,>).Assembly,
                             typeof(Team).Assembly),
-                         new MiddlewareInstaller(),
+                         new MediatorInstaller(),
                          new ValidationInstaller());
             _container.Kernel.AddHandlersFilter(new ContravariantFilter());
             _handler = new TeamHandler()

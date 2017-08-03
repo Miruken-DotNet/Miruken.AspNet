@@ -8,7 +8,7 @@
     {
         T    Get<T>() where T : class;
         void Put<T>(T data) where T : class;
-        bool Drop<T>() where T : class;
+        bool Droid<T>() where T : class;
     }
 
     public class Stash : Handler, IStash
@@ -34,7 +34,7 @@
             _data[typeof(T)] = data;
         }
 
-        public bool Drop<T>() where T : class
+        public bool Droid<T>() where T : class
         {
             return _data.Remove(typeof(T));
         }

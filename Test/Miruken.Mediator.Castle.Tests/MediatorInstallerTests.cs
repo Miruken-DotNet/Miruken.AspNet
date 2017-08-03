@@ -15,7 +15,7 @@
     using Validate.FluentValidation;
 
     [TestClass]
-    public class MiddlewareInstallerTests
+    public class MediatorInstallerTests
     {
         protected IWindsorContainer _container;
         protected Callback.IHandler _handler;
@@ -26,7 +26,7 @@
             _container = new WindsorContainer()
                 .Install(WithFeatures.FromAssemblies(typeof(Team).Assembly),
                          new ValidationInstaller(),
-                         new MiddlewareInstaller().StandardMiddleware(),
+                         new MediatorInstaller().StandardMiddleware(),
                          new HandlerInstaller());
             _container.Kernel.AddHandlersFilter(new ContravariantFilter());
             _handler = new WindsorHandler(_container)
@@ -61,7 +61,7 @@
          ExpectedException(typeof(ComponentNotFoundException))]
         public void Should_Not_Install_Middleware_By_Default()
         {
-            var container = new WindsorContainer().Install(new MiddlewareInstaller());
+            var container = new WindsorContainer().Install(new MediatorInstaller());
             container.Resolve<LoggingMiddleware<string, int>>();
         }
 
@@ -69,7 +69,7 @@
         public void Should_Install_Specific_Middleware()
         {
             var container = new WindsorContainer()
-                .Install(new MiddlewareInstaller().StandardMiddleware(typeof(LoggingMiddleware<,>)));
+                .Install(new MediatorInstaller().StandardMiddleware(typeof(LoggingMiddleware<,>)));
             var logging = container.Resolve<LoggingMiddleware<string, int>>();
             Assert.IsNotNull(logging);
         }
@@ -79,7 +79,7 @@
         public void Should_Reject_Invalid_Middleware()
         {
              new WindsorContainer()
-                .Install(new MiddlewareInstaller().StandardMiddleware(typeof(MiddlewareInstallerTests)));
+                .Install(new MediatorInstaller().StandardMiddleware(typeof(MediatorInstallerTests)));
         }
 
         [TestMethod]
