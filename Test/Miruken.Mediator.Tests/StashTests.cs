@@ -6,7 +6,6 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Validate;
     using Validate.FluentValidation;
-    using static Protocol;
 
     [TestClass]
     public class StashTests
@@ -44,7 +43,7 @@
             private static bool Exist(int orderId)
             {
                 var order = new Order { Id = orderId };
-                id<IStash>(Handler.Composer).Put(order);
+                Handler.Composer.Proxy<IStash>().Put(order);
                 return true;
             }
         }
@@ -55,7 +54,7 @@
             [Mediates]
             public Order Cancel(CancelOrder cancel, IHandler composer)
             {
-                var order = id<IStash>(composer).Get<Order>();
+                var order = composer.Proxy<IStash>().Get<Order>();
                 order.Status = OrderStatus.Cancelled;
                 return order;
             }
@@ -83,8 +82,8 @@
         {
             var order   = new Order();
             var handler = new Stash();
-            id<IStash>(handler).Put(order);
-            Assert.AreSame(order, id<IStash>(handler).Get<Order>());
+            handler.Proxy<IStash>().Put(order);
+            Assert.AreSame(order, handler.Proxy<IStash>().Get<Order>());
         }
 
         [TestMethod]
@@ -92,9 +91,9 @@
         {
             var order   = new Order();
             var handler = new Stash();
-            var result  = id<IStash>(handler).GetOrPut(order);
+            var result  = handler.Proxy<IStash>().GetOrPut(order);
             Assert.AreSame(order, result);
-            Assert.AreSame(order, id<IStash>(handler).Get<Order>());
+            Assert.AreSame(order, handler.Proxy<IStash>().Get<Order>());
         }
 
         [TestMethod]
@@ -103,9 +102,9 @@
             var order   = new Order();
             var stash   = new Stash();
             var handler = stash + new Stash(true);
-            id<IStash>(handler).Put(order);
-            id<IStash>(handler).Droid<Order>();
-            Assert.IsNull(id<IStash>(handler).Get<Order>());
+            handler.Proxy<IStash>().Put(order);
+            handler.Proxy<IStash>().Droid<Order>();
+            Assert.IsNull(handler.Proxy<IStash>().Get<Order>());
         }
 
         [TestMethod]
@@ -114,8 +113,8 @@
             var order    = new Order();
             var handler  = new Stash();
             var handler2 = new Stash() + handler;
-            id<IStash>(handler).Put(order);
-            Assert.AreSame(order, id<IStash>(handler2).Get<Order>());
+            handler.Proxy<IStash>().Put(order);
+            Assert.AreSame(order, handler2.Proxy<IStash>().Get<Order>());
         }
 
         [TestMethod]
@@ -124,9 +123,9 @@
             var order    = new Order();
             var handler  = new Stash();
             var handler2 = new Stash() + handler;
-            id<IStash>(handler).Put(order);
-            id<IStash>(handler2).Put<Order>(null);
-            Assert.IsNull(id<IStash>(handler2).Get<Order>());
+            handler.Proxy<IStash>().Put(order);
+            handler2.Proxy<IStash>().Put<Order>(null);
+            Assert.IsNull(handler2.Proxy<IStash>().Get<Order>());
         }
 
         [TestMethod]
