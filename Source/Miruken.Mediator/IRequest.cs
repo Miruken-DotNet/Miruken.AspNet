@@ -1,7 +1,6 @@
 ﻿namespace Miruken.Mediator
 {
     using System;
-    using Infrastructure;
 
     public interface IRequest<out TResponse> { }
 

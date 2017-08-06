@@ -28,6 +28,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.Tests", "Test\Examp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "example.league.api", "Doc\example.league.api\example.league.api.csproj", "{4FDB8D23-A5F2-40C0-998B-644413C273B6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miruken.Http", "Source\Miruken.Http\Miruken.Http.csproj", "{34893034-98EF-4768-BCEA-C4F6A582732F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miruken.Http.Tests", "Test\Miruken.Http.Tests\Miruken.Http.Tests.csproj", "{13136395-F429-4BED-8D36-7FCCFA418509}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +66,14 @@ Global
 		{4FDB8D23-A5F2-40C0-998B-644413C273B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FDB8D23-A5F2-40C0-998B-644413C273B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FDB8D23-A5F2-40C0-998B-644413C273B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34893034-98EF-4768-BCEA-C4F6A582732F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34893034-98EF-4768-BCEA-C4F6A582732F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34893034-98EF-4768-BCEA-C4F6A582732F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34893034-98EF-4768-BCEA-C4F6A582732F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13136395-F429-4BED-8D36-7FCCFA418509}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13136395-F429-4BED-8D36-7FCCFA418509}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13136395-F429-4BED-8D36-7FCCFA418509}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13136395-F429-4BED-8D36-7FCCFA418509}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,5 +84,6 @@ Global
 		{F73C6936-E41E-49C6-9E2B-C7A87DAF81D4} = {2F38DC4A-D056-425D-9319-1AC3AE6478B8}
 		{94E7140C-3C9F-4F98-98D6-95105DBD37C0} = {567E2030-C79E-45FD-A7A4-CF5EB98C28C4}
 		{4FDB8D23-A5F2-40C0-998B-644413C273B6} = {2F38DC4A-D056-425D-9319-1AC3AE6478B8}
+		{13136395-F429-4BED-8D36-7FCCFA418509} = {567E2030-C79E-45FD-A7A4-CF5EB98C28C4}
 	EndGlobalSection
 EndGlobal
