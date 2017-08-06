@@ -15,6 +15,7 @@
     <tags>Miruken miruken Mediator mediator</tags>
     <dependencies>
       <dependency id="Miruken" version="(1.0,)"/>
+      <dependency id="Miruken.Validate" version="(1.0,)"/>
     </dependencies>
   </metadata>
 </package>

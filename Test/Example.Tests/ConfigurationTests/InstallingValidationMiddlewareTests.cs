@@ -14,7 +14,7 @@
             Assert.IsNotNull(container);
             var featureAssemblies = container.ResolveAll<FeatureAssembly>();
 
-            Assert.AreEqual(1, featureAssemblies.Length);
+            Assert.AreEqual(3, featureAssemblies.Length);
         }
     }
 }
