@@ -13,7 +13,7 @@ namespace Example.Tests.HandlerTests
         [TestInitialize]
         public void TestInitialize()
         {
-            Controller = new TeamController();
+            Controller  = new TeamController();
             var context = new Context();
             Controller.Context = context;
         }

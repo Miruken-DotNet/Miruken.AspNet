@@ -5,6 +5,7 @@
     using HandlerTests;
     using League.Api.Team;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Miruken.Callback.Policy;
     using Miruken.Castle;
     using Miruken.Mediator.Castle;
     using Miruken.Validate;
@@ -23,6 +24,8 @@
                     typeof(Pipeline.TeamHandler).Assembly),
                 new MediatorInstaller().StandardMiddleware(),
                 new ValidationInstaller());
+
+            HandlerDescriptor.GetDescriptor<Pipeline.TeamHandler>();
 
             Controller.Context.AddHandlers(
                 new WindsorHandler(container),

@@ -2,11 +2,12 @@
 {
     using System.Threading.Tasks;
     using Callback;
+    using Callback.Policy;
     using Concurrency;
     using global::Castle.Windsor;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Miruken.Castle;
-    using Miruken.Mediator.Tests;
+    using Mediator.Tests;
     using Validate;
     using Validate.Castle;
     using Validate.DataAnnotations;
@@ -21,6 +22,8 @@
         [TestInitialize]
         public void TestInitialize()
         {
+            HandlerDescriptor.GetDescriptor<TeamHandler>();
+
             _container = new WindsorContainer()
                 .Install(WithFeatures.FromAssemblies(
                             typeof(ValidationMiddleware<,>).Assembly,

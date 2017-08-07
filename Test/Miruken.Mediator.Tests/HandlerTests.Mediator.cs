@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Callback;
+    using Callback.Policy;
     using Concurrency;
     using FluentValidation;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -21,6 +22,7 @@
         [TestInitialize]
         public void TestInitialize()
         {
+            HandlerDescriptor.GetDescriptor<TeamHandler>();
             _handler = new TeamHandler()
                      + new MiddlewareProvider()
                      + new DataAnnotationsValidator()

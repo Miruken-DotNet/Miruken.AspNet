@@ -3,10 +3,11 @@
     using System;
     using System.Threading.Tasks;
     using Callback;
+    using Callback.Policy;
     using Concurrency;
     using FluentValidation;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Miruken.Mediator.Route;
+    using Mediator.Route;
     using Validate;
     using Validate.DataAnnotations;
     using Validate.FluentValidation;
@@ -19,6 +20,9 @@
         [TestInitialize]
         public void TestInitialize()
         {
+            HandlerDescriptor.GetDescriptor<StockQuoteHandler>();
+            HandlerDescriptor.GetDescriptor<RouteHandler>();
+
             _handler = new StockQuoteHandler()
                      + new RouteHandler(new TrashRouter(), new PassThroughRouter())
                      + new MiddlewareProvider()

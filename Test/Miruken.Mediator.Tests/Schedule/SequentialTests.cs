@@ -3,12 +3,20 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+    using Callback.Policy;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Miruken.Mediator.Schedule;
+    using Mediator.Schedule;
 
     [TestClass]
     public class SequentialTests
     {
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            HandlerDescriptor.GetDescriptor<StockQuoteHandler>();
+            HandlerDescriptor.GetDescriptor<ScheduleHandler>();
+        }
+
         [TestMethod]
         public async Task Should_Execute_Sequentially()
         {

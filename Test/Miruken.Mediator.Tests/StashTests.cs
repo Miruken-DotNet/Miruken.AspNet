@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
     using Callback;
+    using Callback.Policy;
     using FluentValidation;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Validate;
@@ -131,6 +132,8 @@
         [TestMethod]
         public async Task Should_Access_Stash()
         {
+            HandlerDescriptor.GetDescriptor<OrderHandler>();
+
             var handler = new OrderHandler()
                         + new ValidationHandler()
                         + new FluentValidationValidator()

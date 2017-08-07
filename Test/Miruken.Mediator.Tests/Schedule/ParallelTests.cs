@@ -3,13 +3,21 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+    using Callback.Policy;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Miruken.Mediator.Schedule;
-    using Parallel = Miruken.Mediator.Schedule.Parallel;
+    using Mediator.Schedule;
+    using Parallel = Mediator.Schedule.Parallel;
 
     [TestClass]
     public class ParallelTests
     {
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            HandlerDescriptor.GetDescriptor<StockQuoteHandler>();
+            HandlerDescriptor.GetDescriptor<ScheduleHandler>();
+        }
+
         [TestMethod]
         public async Task Should_Execute_In_Parallel()
         {

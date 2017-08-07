@@ -4,12 +4,13 @@
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using Callback;
+    using Callback.Policy;
     using global::Castle.Facilities.Logging;
     using global::Castle.Services.Logging.NLogIntegration;
     using global::Castle.Windsor;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Miruken.Castle;
-    using Miruken.Mediator.Tests;
+    using Mediator.Tests;
     using NLog;
     using NLog.Config;
     using NLog.Targets;
@@ -42,6 +43,9 @@
                          new ValidationInstaller(),
                          new MediatorInstaller().StandardMiddleware());
             _container.Kernel.AddHandlersFilter(new ContravariantFilter());
+
+            HandlerDescriptor.GetDescriptor<HandlerMediatorTests.TeamHandler>();
+
             _handler = new HandlerMediatorTests.TeamHandler()
                      + new WindsorHandler(_container)
                      + new DataAnnotationsValidator()
