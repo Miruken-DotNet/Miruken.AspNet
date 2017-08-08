@@ -23,5 +23,11 @@
             if (_configureMiddleware != null)
                 middleware.Configure(_configureMiddleware);
         }
+
+        public static FromDescriptor StandardFeatures =>
+            Classes.FromAssemblyContaining(typeof(IMiddleware<,>));
+
+        public static FromDescriptor CastleFeatures =>
+            Classes.FromAssemblyContaining(typeof(MediatorInstaller));
     }
 }

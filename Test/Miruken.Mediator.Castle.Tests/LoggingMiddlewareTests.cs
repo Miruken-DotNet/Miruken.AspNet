@@ -42,8 +42,8 @@
                 .AddFacility<LoggingFacility>(f => f.LogUsing(new NLogFactory(config)))
                 .Install(new ValidationInstaller(), new MediatorInstaller(),
                          WithFeatures.From(
-                             Classes.FromAssemblyContaining(typeof(LoggingMiddleware<,>)),
-                             Classes.FromAssemblyContaining(typeof(IMiddleware<,>)),
+                             MediatorInstaller.StandardFeatures,
+                             MediatorInstaller.CastleFeatures,
                              Classes.FromAssemblyContaining<Team>()));
             _container.Kernel.AddHandlersFilter(new ContravariantFilter());
 
