@@ -1,10 +1,10 @@
 ﻿namespace Miruken.Mediator.Castle.Tests
 {
-    using System;
     using System.Linq;
     using System.Threading.Tasks;
     using Callback;
     using global::Castle.MicroKernel;
+    using global::Castle.MicroKernel.Registration;
     using global::Castle.Windsor;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Miruken.Castle;
@@ -24,10 +24,11 @@
         public void TestInitialize()
         {
             _container = new WindsorContainer()
-                .Install(WithFeatures.FromAssemblies(typeof(Team).Assembly),
-                         new ValidationInstaller(),
-                         new MediatorInstaller().StandardMiddleware(),
-                         new HandlerInstaller());
+                .Install(new ValidationInstaller(), new MediatorInstaller(),
+                         new HandlerInstaller(), WithFeatures.From(
+                             Classes.FromAssemblyContaining(typeof(LoggingMiddleware<,>)),
+                             Classes.FromAssemblyContaining(typeof(IMiddleware<,>)),
+                             Classes.FromAssemblyContaining<Team>()));
             _container.Kernel.AddHandlersFilter(new ContravariantFilter());
             _handler = new WindsorHandler(_container)
                      + new DataAnnotationsValidator()
@@ -63,23 +64,6 @@
         {
             var container = new WindsorContainer().Install(new MediatorInstaller());
             container.Resolve<LoggingMiddleware<string, int>>();
-        }
-
-        [TestMethod]
-        public void Should_Install_Specific_Middleware()
-        {
-            var container = new WindsorContainer()
-                .Install(new MediatorInstaller().StandardMiddleware(typeof(LoggingMiddleware<,>)));
-            var logging = container.Resolve<LoggingMiddleware<string, int>>();
-            Assert.IsNotNull(logging);
-        }
-
-        [TestMethod,
-         ExpectedException(typeof(ArgumentException))]
-        public void Should_Reject_Invalid_Middleware()
-        {
-             new WindsorContainer()
-                .Install(new MediatorInstaller().StandardMiddleware(typeof(MediatorInstallerTests)));
         }
 
         [TestMethod]

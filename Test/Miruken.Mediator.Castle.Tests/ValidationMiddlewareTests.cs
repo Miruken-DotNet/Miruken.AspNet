@@ -4,6 +4,7 @@
     using Callback;
     using Callback.Policy;
     using Concurrency;
+    using global::Castle.MicroKernel.Registration;
     using global::Castle.Windsor;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Miruken.Castle;
@@ -25,11 +26,10 @@
             HandlerDescriptor.GetDescriptor<TeamHandler>();
 
             _container = new WindsorContainer()
-                .Install(WithFeatures.FromAssemblies(
-                            typeof(ValidationMiddleware<,>).Assembly,
-                            typeof(Team).Assembly),
-                         new MediatorInstaller(),
-                         new ValidationInstaller());
+                .Install(new MediatorInstaller(), new ValidationInstaller(),
+                    WithFeatures.From(
+                        Classes.FromAssemblyContaining(typeof(IMiddleware<,>)),
+                        Classes.FromAssemblyContaining<Team>()));
             _container.Kernel.AddHandlersFilter(new ContravariantFilter());
             _handler = new TeamHandler()
                      + new WindsorHandler(_container)

@@ -1,6 +1,7 @@
 ﻿namespace Example.Tests.PipelineTests
 {
     using System.Threading.Tasks;
+    using Castle.MicroKernel.Registration;
     using Castle.Windsor;
     using HandlerTests;
     using League.Api.Team;
@@ -19,11 +20,10 @@
         {
             var container = new WindsorContainer();
             container.Install(
-                WithFeatures.FromAssemblies(
-                    typeof(CreateTeam).Assembly,
-                    typeof(Pipeline.TeamHandler).Assembly),
-                new MediatorInstaller().StandardMiddleware(),
-                new ValidationInstaller());
+                new MediatorInstaller(), new ValidationInstaller(),
+                WithFeatures.From(
+                    Classes.FromAssemblyContaining<CreateTeam>(),
+                    Classes.FromAssemblyContaining<Pipeline.TeamHandler>()));
 
             HandlerDescriptor.GetDescriptor<Pipeline.TeamHandler>();
 

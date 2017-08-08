@@ -1,5 +1,6 @@
 ﻿namespace Example.Configuration
 {
+    using Castle.MicroKernel.Registration;
     using Castle.MicroKernel.Resolvers.SpecializedResolvers;
     using Castle.Windsor;
     using League.Api.Team;
@@ -18,9 +19,9 @@
                 new CollectionResolver(Container.Kernel, true));
 
             Container.Install(
-                WithFeatures.FromAssembly(typeof(CreateTeam).Assembly),
                 new MediatorInstaller(),
-                new ValidationInstaller());
+                new ValidationInstaller(),
+                    WithFeatures.From(Classes.FromAssemblyContaining<CreateTeam>()));
         }
     }
 }

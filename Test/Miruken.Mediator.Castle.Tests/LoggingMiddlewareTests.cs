@@ -6,6 +6,7 @@
     using Callback;
     using Callback.Policy;
     using global::Castle.Facilities.Logging;
+    using global::Castle.MicroKernel.Registration;
     using global::Castle.Services.Logging.NLogIntegration;
     using global::Castle.Windsor;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -39,9 +40,11 @@
             LogManager.Configuration = config;
             _container = new WindsorContainer()
                 .AddFacility<LoggingFacility>(f => f.LogUsing(new NLogFactory(config)))
-                .Install(WithFeatures.FromAssemblies(typeof(Team).Assembly),
-                         new ValidationInstaller(),
-                         new MediatorInstaller().StandardMiddleware());
+                .Install(new ValidationInstaller(), new MediatorInstaller(),
+                         WithFeatures.From(
+                             Classes.FromAssemblyContaining(typeof(LoggingMiddleware<,>)),
+                             Classes.FromAssemblyContaining(typeof(IMiddleware<,>)),
+                             Classes.FromAssemblyContaining<Team>()));
             _container.Kernel.AddHandlersFilter(new ContravariantFilter());
 
             HandlerDescriptor.GetDescriptor<HandlerMediatorTests.TeamHandler>();
