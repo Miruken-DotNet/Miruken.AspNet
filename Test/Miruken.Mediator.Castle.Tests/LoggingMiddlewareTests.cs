@@ -41,8 +41,8 @@
             _container = new WindsorContainer()
                 .AddFacility<LoggingFacility>(f => f.LogUsing(new NLogFactory(config)))
                 .Install(new FeaturesInstaller(
-                    new MediatorInstaller().WithStandardMiddleware(),
-                    new ValidationInstaller()).Use(
+                    new MediatorFeature().WithStandardMiddleware(),
+                    new ValidationFeature()).Use(
                         Classes.FromAssemblyContaining<Team>()));
             _container.Kernel.AddHandlersFilter(new ContravariantFilter());
 

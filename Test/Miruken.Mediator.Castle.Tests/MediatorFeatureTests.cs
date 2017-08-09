@@ -15,7 +15,7 @@
     using Validate.FluentValidation;
 
     [TestClass]
-    public class MediatorInstallerTests
+    public class MediatorFeatureTests
     {
         protected IWindsorContainer _container;
         protected Callback.IHandler _handler;
@@ -25,8 +25,8 @@
         {
             _container = new WindsorContainer()
                 .Install(new FeaturesInstaller(
-                    new MediatorInstaller().WithStandardMiddleware(),
-                    new HandlerInstaller(), new ValidationInstaller()).Use(
+                    new MediatorFeature().WithStandardMiddleware(),
+                    new HandlerFeature(), new ValidationFeature()).Use(
                         Classes.FromAssemblyContaining<Team>()));
             _container.Kernel.AddHandlersFilter(new ContravariantFilter());
             _handler = new WindsorHandler(_container)
@@ -61,7 +61,7 @@
          ExpectedException(typeof(ComponentNotFoundException))]
         public void Should_Not_Install_Middleware_By_Default()
         {
-            var container = new WindsorContainer().Install(new MediatorInstaller());
+            var container = new WindsorContainer().Install(new MediatorFeature());
             container.Resolve<LoggingMiddleware<string, int>>();
         }
 

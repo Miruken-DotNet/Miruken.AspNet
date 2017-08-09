@@ -27,8 +27,8 @@
 
             _container = new WindsorContainer()
                 .Install(new FeaturesInstaller(
-                    new MediatorInstaller().WithStandardMiddleware(),
-                    new ValidationInstaller()).Use(
+                    new MediatorFeature().WithStandardMiddleware(),
+                    new ValidationFeature()).Use(
                         Classes.FromAssemblyContaining<Team>()));
             _container.Kernel.AddHandlersFilter(new ContravariantFilter());
             _handler = new TeamHandler()

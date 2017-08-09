@@ -9,18 +9,18 @@
     using Route;
     using Schedule;
 
-    public class MediatorInstaller : FeatureInstaller
+    public class MediatorFeature : FeatureInstaller
     {
         private Action<ComponentRegistration> _configureMiddleware;
         private bool _standardMiddleware;
 
-        public MediatorInstaller ConfigureMiddleware(Action<ComponentRegistration> configure)
+        public MediatorFeature ConfigureMiddleware(Action<ComponentRegistration> configure)
         {
             _configureMiddleware += configure;
             return this;
         }
 
-        public MediatorInstaller WithStandardMiddleware()
+        public MediatorFeature WithStandardMiddleware()
         {
             _standardMiddleware = true;
             return this;
