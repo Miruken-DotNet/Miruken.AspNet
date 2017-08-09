@@ -30,7 +30,7 @@
         {
             yield return Types.From(
                 typeof(CachedHandler), typeof(OnewayHandler),
-                typeof(RouteHandler),  typeof(ScheduleHandler));
+                typeof(ScheduleHandler), typeof(PassThroughRouter));
 
             if (_standardMiddleware)
                 yield return Types.From(
@@ -40,7 +40,6 @@
 
         public override void InstallFeatures(FromDescriptor from)
         {
-            from.BasedOn<IRouter>().WithServiceBase();
             var middleware = from.BasedOn(typeof(IMiddleware<,>))
                 .WithServiceBase().WithServiceSelf();
             if (_configureMiddleware != null)

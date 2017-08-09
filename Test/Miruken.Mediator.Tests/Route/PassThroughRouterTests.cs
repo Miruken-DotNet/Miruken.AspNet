@@ -12,10 +12,9 @@
         public async Task Should_Pass_Through_Requests()
         {
             HandlerDescriptor.GetDescriptor<StockQuoteHandler>();
-            HandlerDescriptor.GetDescriptor<RouteHandler>();
+            HandlerDescriptor.GetDescriptor<PassThroughRouter>();
 
-            var handler = new StockQuoteHandler()
-                        + new RouteHandler(new PassThroughRouter());
+            var handler = new StockQuoteHandler() + new PassThroughRouter();
             var quote   = await handler.Send(new GetStockQuote("AAPL").RouteTo("pass-through"));
             Assert.AreEqual("AAPL", quote.Symbol);
         }

@@ -3,18 +3,26 @@
     using Callback;
     using Concurrency;
 
-    public class PassThroughRouter : IRouter
+    [Pipeline]
+    public class PassThroughRouter : Handler
     {
         public const string Scheme = "pass-through";
 
-        public bool CanRoute(Routed route)
+        [Mediates]
+        public Promise Route(Routed request, IHandler composer)
         {
-            return route.Route == Scheme;
+            return request.Route == Scheme
+                 ? composer.Send(request.Message)
+                 : null;
         }
 
-        public Promise Route(Routed routed, IHandler composer)
+        [Mediates]
+        public Promise<TResponse> Route<TResponse>(
+            RoutedRequest<TResponse> request, IHandler composer)
         {
-            return composer.Send(routed.Message);
+            return request.Route == Scheme
+                 ? composer.Send(request.Message).Cast<TResponse>()
+                 : null;
         }
     }
 }

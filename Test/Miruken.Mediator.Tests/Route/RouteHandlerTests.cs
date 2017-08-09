@@ -21,10 +21,11 @@
         public void TestInitialize()
         {
             HandlerDescriptor.GetDescriptor<StockQuoteHandler>();
-            HandlerDescriptor.GetDescriptor<RouteHandler>();
+            HandlerDescriptor.GetDescriptor<PassThroughRouter>();
 
             _handler = new StockQuoteHandler()
-                     + new RouteHandler(new TrashRouter(), new PassThroughRouter())
+                     + new PassThroughRouter()
+                     + new TrashHandler()
                      + new MiddlewareProvider()
                      + new DataAnnotationsValidator()
                      + new FluentValidationValidator()
@@ -45,19 +46,13 @@
             await _handler.Send(new Pickup().RouteTo("Trash"));
         }
 
-        [TestMethod]
+        [TestMethod,
+         ExpectedException(typeof(NotSupportedException))]
         public async Task Should_Fail_For_Unrecognized_Routes()
         {
             var handler = new StockQuoteHandler()
-                        + new RouteHandler(new TrashRouter());
-            try
-            {
-                await handler.Send(new Pickup().RouteTo("NoWhere"));
-            }
-            catch (NotSupportedException ex)
-            {
-                Assert.AreEqual(ex.Message, "Unrecognized route 'NoWhere'");
-            }
+                        + new PassThroughRouter();
+            await handler.Send(new Pickup().RouteTo("NoWhere"));
         }
 
         [TestMethod]
@@ -89,16 +84,21 @@
         {
         }
 
-        public class TrashRouter : IRouter
+        public class TrashHandler : Handler
         {
-            public bool CanRoute(Routed route)
+            public const string Scheme = "Trash";
+
+            [Mediates]
+            public Promise Route(Routed request, IHandler composer)
             {
-                return route.Route == "Trash";
+                return request.Route == Scheme ? Promise.Empty : null;
             }
 
-            public Promise Route(Routed route, IHandler composer)
+            [Mediates]
+            public Promise<TResponse> Route<TResponse>(
+                RoutedRequest<TResponse> request, IHandler composer)
             {
-                return Promise.Empty;
+                return request.Route == Scheme ? Promise<TResponse>.Empty : null;
             }
         }
 

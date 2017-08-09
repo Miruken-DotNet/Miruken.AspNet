@@ -67,11 +67,9 @@
     <Compile Include="Oneway\OnewayHandler.cs" />
     <Compile Include="PipelineAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Route\IRouter.cs" />
-    <Compile Include="Route\PassThroughRouter.cs" />
     <Compile Include="Route\Routed.cs" />
     <Compile Include="Route\RouteExtensions.cs" />
-    <Compile Include="Route\RouteHandler.cs" />
+    <Compile Include="Route\PassThroughRouter.cs" />
     <Compile Include="Schedule\Concurrent.cs" />
     <Compile Include="Schedule\Parallel.cs" />
     <Compile Include="Schedule\Scheduled.cs" />
