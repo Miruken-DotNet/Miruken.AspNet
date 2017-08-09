@@ -19,9 +19,9 @@
         public async Task CanHandleMessages()
         {
             var container = new WindsorContainer();
-            container.Install(
-                new MediatorInstaller(), new ValidationInstaller(),
-                WithFeatures.From(
+            container.Install(new FeaturesInstaller(
+                new MediatorInstaller(), new ValidationInstaller())
+                .Use(
                     Classes.FromAssemblyContaining<CreateTeam>(),
                     Classes.FromAssemblyContaining<Pipeline.TeamHandler>()));
 

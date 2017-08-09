@@ -15,10 +15,8 @@
             Container.Kernel.Resolver.AddSubResolver(
                 new CollectionResolver(Container.Kernel, true));
 
-            Container.Install(
-                new MediatorInstaller(), WithFeatures.From(
-                    MediatorInstaller.StandardFeatures)
-                );
+            Container.Install(new FeaturesInstaller(
+                new MediatorInstaller().WithStandardMiddleware()));
         }
     }
 }

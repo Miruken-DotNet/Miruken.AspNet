@@ -24,11 +24,10 @@
         public void TestInitialize()
         {
             _container = new WindsorContainer()
-                .Install(new ValidationInstaller(), new MediatorInstaller(),
-                         new HandlerInstaller(), WithFeatures.From(
-                             MediatorInstaller.StandardFeatures,
-                             MediatorInstaller.CastleFeatures,
-                             Classes.FromAssemblyContaining<Team>()));
+                .Install(new FeaturesInstaller(
+                    new MediatorInstaller().WithStandardMiddleware(),
+                    new HandlerInstaller(), new ValidationInstaller()).Use(
+                        Classes.FromAssemblyContaining<Team>()));
             _container.Kernel.AddHandlersFilter(new ContravariantFilter());
             _handler = new WindsorHandler(_container)
                      + new DataAnnotationsValidator()

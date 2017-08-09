@@ -18,9 +18,10 @@
             Container.Kernel.Resolver.AddSubResolver(
                 new CollectionResolver(Container.Kernel, true));
 
-            Container.Install(
-                new MediatorInstaller(), new ValidationInstaller(),
-                    WithFeatures.From(Classes.FromAssemblyContaining<CreateTeam>()));
+            Container.Install(new FeaturesInstaller(
+                new MediatorInstaller().WithStandardMiddleware(),
+                new ValidationInstaller()).Use(
+                    Classes.FromAssemblyContaining<CreateTeam>()));
         }
     }
 }
