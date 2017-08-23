@@ -2,7 +2,7 @@ namespace Example.Handler.WithHandlerBaseClass
 {
     using League.Api.Team;
     using Miruken.Callback;
-    using Miruken.Mediator;
+    using Miruken.Mediate;
 
     public class TeamHandler : Handler
     {

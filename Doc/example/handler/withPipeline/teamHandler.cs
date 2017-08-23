@@ -2,7 +2,7 @@ namespace Example.Handler.WithPipeline
 {
     using League.Api.Team;
     using Miruken.Callback;
-    using Miruken.Mediator;
+    using Miruken.Mediate;
 
     [Pipeline]
     public class TeamHandler : Handler

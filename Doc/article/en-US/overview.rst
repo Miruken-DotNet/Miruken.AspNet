@@ -5,14 +5,14 @@ Overview
 Source Code
 ===========
 
-`github.com/miruken-dotnet/miruken.mediator <https://www.github.com/miruken-dotnet/miruken.mediator>`_
+`github.com/miruken-dotnet/Miruken.Mediate <https://www.github.com/miruken-dotnet/Miruken.Mediate>`_
 
 Installation
 ============
 
 Install into your project using Nuget::
 
-	Install-Package Miruken.Mediator
+	Install-Package Miruken.Mediate
 
 Mediator Pattern
 ================

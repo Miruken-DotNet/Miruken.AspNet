@@ -3,7 +3,7 @@
     using Castle.MicroKernel.Resolvers.SpecializedResolvers;
     using Castle.Windsor;
     using Miruken.Castle;
-    using Miruken.Mediator.Castle;
+    using Miruken.Mediate.Castle;
 
     public class InstallingMediator
     {
@@ -16,7 +16,7 @@
                 new CollectionResolver(Container.Kernel, true));
 
             Container.Install(new FeaturesInstaller(
-                new MediatorFeature().WithStandardMiddleware()));
+                new MediateFeature().WithStandardMiddleware()));
         }
     }
 }

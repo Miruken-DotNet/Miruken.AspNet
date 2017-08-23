@@ -97,7 +97,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ConfigurationTests\InstallingValidationMiddlewareTests.cs" />
+    <Compile Include="ConfigurationTests\InstallingValidateMiddlewareTests.cs" />
     <Compile Include="ConfigurationTests\InstallingMediatorTestss.cs" />
     <Compile Include="HandlerTests\HandlerTestScenario.cs" />
     <Compile Include="HandlerTests\WithoutInheritance\TeamHandlerTests.cs" />
@@ -117,13 +117,13 @@
       <Project>{f73c6936-e41e-49c6-9e2b-c7a87daf81d4}</Project>
       <Name>example</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Source\Miruken.Mediator.Castle\Miruken.Mediator.Castle.csproj">
+    <ProjectReference Include="..\..\Source\Miruken.Mediate.Castle\Miruken.Mediate.Castle.csproj">
       <Project>{5ffd9bee-9b56-4c8a-88e3-cca10a5a0199}</Project>
-      <Name>Miruken.Mediator.Castle</Name>
+      <Name>Miruken.Mediate.Castle</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Source\Miruken.Mediator\Miruken.Mediator.csproj">
+    <ProjectReference Include="..\..\Source\Miruken.Mediate\Miruken.Mediate.csproj">
       <Project>{96b8ac46-cd2a-4c72-b8b8-ff6151552df7}</Project>
-      <Name>Miruken.Mediator</Name>
+      <Name>Miruken.Mediate</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

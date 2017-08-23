@@ -1,6 +1,6 @@
 namespace Example.League.Api.Team
 {
-    using Miruken.Mediator;
+    using Miruken.Mediate;
 
     public class CreateTeam : IRequest<TeamResult>
     {

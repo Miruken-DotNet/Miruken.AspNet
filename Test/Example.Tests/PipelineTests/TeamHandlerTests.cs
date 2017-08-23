@@ -8,7 +8,7 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Miruken.Callback.Policy;
     using Miruken.Castle;
-    using Miruken.Mediator.Castle;
+    using Miruken.Mediate.Castle;
     using Miruken.Validate;
     using Miruken.Validate.Castle;
 
@@ -20,7 +20,7 @@
         {
             var container = new WindsorContainer();
             container.Install(new FeaturesInstaller(
-                new MediatorFeature(), new ValidationFeature())
+                new MediateFeature(), new ValidationFeature())
                 .Use(
                     Classes.FromAssemblyContaining<CreateTeam>(),
                     Classes.FromAssemblyContaining<Pipeline.TeamHandler>()));

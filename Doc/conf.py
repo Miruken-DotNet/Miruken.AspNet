@@ -1,4 +1,4 @@
-project = u'Miruken.Mediator'
+project = u'Miruken.Mediate'
 copyright = u'2017, Miruken'
 author = u'Craig Neuwirt, Michael Dudley'
 

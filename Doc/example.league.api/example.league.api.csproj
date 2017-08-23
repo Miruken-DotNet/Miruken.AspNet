@@ -49,9 +49,9 @@
     <Compile Include="team\teamResult.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Source\Miruken.Mediator\Miruken.Mediator.csproj">
+    <ProjectReference Include="..\..\Source\Miruken.Mediate\Miruken.Mediate.csproj">
       <Project>{96b8ac46-cd2a-4c72-b8b8-ff6151552df7}</Project>
-      <Name>Miruken.Mediator</Name>
+      <Name>Miruken.Mediate</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

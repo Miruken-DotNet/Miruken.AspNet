@@ -85,7 +85,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="configuration\installingValidationMiddleware.cs" />
+    <Compile Include="configuration\InstallingValidateMiddleware.cs" />
     <Compile Include="configuration\installingMediator.cs" />
     <Compile Include="handler\withoutInheritance\teamHandler.cs" />
     <Compile Include="handler\withPipeline\teamHandler.cs" />
@@ -99,13 +99,13 @@
     <Compile Include="handler\withHandlerBaseClass\teamHandler.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Source\Miruken.Mediator.Castle\Miruken.Mediator.Castle.csproj">
+    <ProjectReference Include="..\..\Source\Miruken.Mediate.Castle\Miruken.Mediate.Castle.csproj">
       <Project>{5FFD9BEE-9B56-4C8A-88E3-CCA10A5A0199}</Project>
-      <Name>Miruken.Mediator.Castle</Name>
+      <Name>Miruken.Mediate.Castle</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Source\Miruken.Mediator\Miruken.Mediator.csproj">
+    <ProjectReference Include="..\..\Source\Miruken.Mediate\Miruken.Mediate.csproj">
       <Project>{96b8ac46-cd2a-4c72-b8b8-ff6151552df7}</Project>
-      <Name>Miruken.Mediator</Name>
+      <Name>Miruken.Mediate</Name>
     </ProjectReference>
     <ProjectReference Include="..\example.league.api\example.league.api.csproj">
       <Project>{4fdb8d23-a5f2-40c0-998b-644413c273b6}</Project>

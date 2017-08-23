@@ -2,7 +2,7 @@ namespace Example.Pipeline
 {
     using League.Api.Team;
     using Miruken.Callback;
-    using Miruken.Mediator;
+    using Miruken.Mediate;
     using Miruken.Validate;
 
     [Pipeline]

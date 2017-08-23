@@ -4,7 +4,7 @@
     using System.Web.Http;
     using League.Api.Team;
     using Miruken.Context;
-    using Miruken.Mediator;
+    using Miruken.Mediate;
 
     public class TeamController : ApiController
     {

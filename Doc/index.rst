@@ -1,4 +1,4 @@
-Miruken.Mediator
+Miruken.Mediate
 ================
 
 .. image:: img/miruken_circle_net.png

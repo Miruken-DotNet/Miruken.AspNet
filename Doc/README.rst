@@ -1,5 +1,5 @@
 =====================
-Miruken.Mediator Docs
+Miruken.Mediate Docs
 =====================
 
   View the docs `here <http://miruken-dotnet-miruken-mediator.readthedocs.io/>`_

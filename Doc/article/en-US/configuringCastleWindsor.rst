@@ -11,9 +11,9 @@ The first thing we need to do when configuring Castle Windsor is add a reference
 Installing Mediator
 ===================
 
-The MediatorInstaller lives in Miruken.Mediator.Castle so add a reference to its nuget package::
+The MediatorInstaller lives in Miruken.Mediate.Castle so add a reference to its nuget package::
 
-	Install-Package Miruken.Mediator.Castle
+	Install-Package Miruken.Mediate.Castle
 
 In the Container.Install() method, add your feature assemblies, and then pass in an instance of MediatorInstaller. 
 
