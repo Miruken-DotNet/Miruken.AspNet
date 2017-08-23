@@ -13,7 +13,7 @@
     using Validate.FluentValidation;
 
     [TestClass]
-    public class RouteHandlerTests
+    public class RouteTests
     {
         private IHandler _handler;
 

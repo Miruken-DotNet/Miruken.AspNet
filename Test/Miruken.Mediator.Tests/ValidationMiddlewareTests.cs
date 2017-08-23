@@ -18,6 +18,7 @@
         [TestInitialize]
         public void TestInitialize()
         {
+            HandlerDescriptor.ResetDescriptors();
             HandlerDescriptor.GetDescriptor<TeamHandler>();
 
             _handler = new TeamHandler()

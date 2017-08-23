@@ -40,12 +40,12 @@
       <HintPath>..\..\packages\FluentValidation.7.1.1\lib\net45\FluentValidation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Miruken, Version=1.4.1.27, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.1.4.1.27-prerelease\lib\net461\Miruken.dll</HintPath>
+    <Reference Include="Miruken, Version=1.4.1.35, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.1.4.1.35-prerelease\lib\net461\Miruken.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Miruken.Validate, Version=1.1.1.17, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.Validate.1.1.1.17-prerelease\lib\net461\Miruken.Validate.dll</HintPath>
+    <Reference Include="Miruken.Validate, Version=1.1.1.22, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.Validate.1.1.1.22-prerelease\lib\net461\Miruken.Validate.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -68,13 +68,14 @@
     <Compile Include="Cache\CacheHandlerTests.cs" />
     <Compile Include="GetStockQuote.cs" />
     <Compile Include="HandlerTests.Mediator.cs" />
+    <Compile Include="SendReturnMessageTests.cs" />
     <Compile Include="StashTests.cs" />
     <Compile Include="ValidationMiddlewareTests.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Oneway\OnewayHandlerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Route\PassThroughRouterTests.cs" />
-    <Compile Include="Route\RouteHandlerTests.cs" />
+    <Compile Include="Route\RouteTests.cs" />
     <Compile Include="Schedule\ConcurrentTests.cs" />
     <Compile Include="Schedule\ParallelTests.cs" />
     <Compile Include="Schedule\SequentialTests.cs" />

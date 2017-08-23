@@ -1,6 +1,5 @@
 ﻿namespace Miruken.Mediator.Tests
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -22,7 +21,9 @@
         [TestInitialize]
         public void TestInitialize()
         {
+            HandlerDescriptor.ResetDescriptors();
             HandlerDescriptor.GetDescriptor<TeamHandler>();
+
             _handler = new TeamHandler()
                      + new MiddlewareProvider()
                      + new DataAnnotationsValidator()
@@ -127,7 +128,7 @@
             }
 
             [Mediates]
-            public void Remove(RemoveTeam remove, IHandler composer)
+            public void Remove(RemoveTeam remove, Command command, IHandler composer)
             {
                 var team = remove.Team;
                 team.Active = false;

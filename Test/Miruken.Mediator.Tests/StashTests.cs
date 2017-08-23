@@ -32,9 +32,9 @@
             public int OrderId { get; }
         }
 
-        public class ChangeOrderIntegrity : AbstractValidator<CancelOrder>
+        public class CancelOrderIntegrity : AbstractValidator<CancelOrder>
         {
-            public ChangeOrderIntegrity()
+            public CancelOrderIntegrity()
             {
                 RuleFor(co => co.OrderId)
                     .GreaterThan(0)
@@ -74,8 +74,14 @@
 
             [Provides]
             public IValidator<CancelOrder>[] ChangeOrderValidator() => 
-                new[] { new ChangeOrderIntegrity() };
+                new[] { new CancelOrderIntegrity() };
 
+        }
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            HandlerDescriptor.ResetDescriptors();
         }
 
         [TestMethod]

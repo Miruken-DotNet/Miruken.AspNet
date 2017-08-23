@@ -3,6 +3,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Callback;
+    using Callback.Policy;
     using global::Castle.MicroKernel;
     using global::Castle.MicroKernel.Registration;
     using global::Castle.Windsor;
@@ -11,8 +12,6 @@
     using Mediator.Tests;
     using Validate;
     using Validate.Castle;
-    using Validate.DataAnnotations;
-    using Validate.FluentValidation;
 
     [TestClass]
     public class MediatorFeatureTests
@@ -23,16 +22,18 @@
         [TestInitialize]
         public void TestInitialize()
         {
+            HandlerDescriptor.ResetDescriptors();
+
             _container = new WindsorContainer()
                 .Install(new FeaturesInstaller(
-                    new MediatorFeature().WithStandardMiddleware(),
-                    new HandlerFeature(), new ValidationFeature()).Use(
-                        Classes.FromAssemblyContaining<Team>()));
+                    new HandlerFeature(), new ValidationFeature(),
+                    new MediatorFeature().WithStandardMiddleware()).Use(
+                        Types.From(typeof(TeamIntegrity),
+                                   typeof(TeamActionIntegrity),
+                                   typeof(RemoveTeamIntegrity),
+                                   typeof(HandlerMediatorTests.TeamHandler))));
             _container.Kernel.AddHandlersFilter(new ContravariantFilter());
-            _handler = new WindsorHandler(_container)
-                     + new DataAnnotationsValidator()
-                     + new FluentValidationValidator()
-                     + new ValidationHandler();
+            _handler = new WindsorHandler(_container);
         }
 
         [TestCleanup]

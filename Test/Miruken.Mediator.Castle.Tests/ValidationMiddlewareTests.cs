@@ -11,8 +11,6 @@
     using Mediator.Tests;
     using Validate;
     using Validate.Castle;
-    using Validate.DataAnnotations;
-    using Validate.FluentValidation;
 
     [TestClass]
     public class ValidationMiddlewareTests
@@ -23,19 +21,18 @@
         [TestInitialize]
         public void TestInitialize()
         {
-            HandlerDescriptor.GetDescriptor<TeamHandler>();
+            HandlerDescriptor.ResetDescriptors();
 
             _container = new WindsorContainer()
-                .Install(new FeaturesInstaller(
-                    new MediatorFeature().WithStandardMiddleware(),
-                    new ValidationFeature()).Use(
-                        Classes.FromAssemblyContaining<Team>()));
+                 .Install(new FeaturesInstaller(
+                    new HandlerFeature(), new ValidationFeature(),
+                    new MediatorFeature().WithStandardMiddleware()).Use(
+                        Types.From(typeof(TeamIntegrity),
+                                   typeof(TeamActionIntegrity),
+                                   typeof(RemoveTeamIntegrity),
+                                   typeof(TeamHandler))));
             _container.Kernel.AddHandlersFilter(new ContravariantFilter());
-            _handler = new TeamHandler()
-                     + new WindsorHandler(_container)
-                     + new DataAnnotationsValidator()
-                     + new FluentValidationValidator()
-                     + new ValidationHandler();
+            _handler = new WindsorHandler(_container);
         }
 
         [TestCleanup]
@@ -76,7 +73,7 @@
                 Assert.IsNotNull(outcome);
                 var team = outcome.GetOutcome("Team");
                 Assert.IsNotNull(team);
-                CollectionAssert.AreEqual(new[] { "Id" }, team.Culprits);
+                CollectionAssert.AreEqual(new[] { "Id", "Name" }, team.Culprits);
                 Assert.AreEqual("'Team. Id' must be greater than '0'.", team["Id"]);
             }
         }

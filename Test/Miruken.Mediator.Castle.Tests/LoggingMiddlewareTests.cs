@@ -17,8 +17,6 @@
     using NLog.Targets;
     using Validate;
     using Validate.Castle;
-    using Validate.DataAnnotations;
-    using Validate.FluentValidation;
 
     [TestClass]
     public class LoggingMiddlewareTests
@@ -30,6 +28,8 @@
         [TestInitialize]
         public void TestInitialize()
         {
+            HandlerDescriptor.ResetDescriptors();
+
             var config = new LoggingConfiguration();
             _memoryTarget = new MemoryTarget
             {
@@ -41,18 +41,15 @@
             _container = new WindsorContainer()
                 .AddFacility<LoggingFacility>(f => f.LogUsing(new NLogFactory(config)))
                 .Install(new FeaturesInstaller(
-                    new MediatorFeature().WithStandardMiddleware(),
-                    new ValidationFeature()).Use(
-                        Classes.FromAssemblyContaining<Team>()));
+                    new HandlerFeature(), new ValidationFeature(),
+                    new MediatorFeature().WithStandardMiddleware()).Use(
+                        Types.From(typeof(TeamIntegrity),
+                                   typeof(TeamActionIntegrity),
+                                   typeof(RemoveTeamIntegrity),
+                                   typeof(HandlerMediatorTests.TeamHandler))));
             _container.Kernel.AddHandlersFilter(new ContravariantFilter());
 
-            HandlerDescriptor.GetDescriptor<HandlerMediatorTests.TeamHandler>();
-
-            _handler = new HandlerMediatorTests.TeamHandler()
-                     + new WindsorHandler(_container)
-                     + new DataAnnotationsValidator()
-                     + new FluentValidationValidator()
-                     + new ValidationHandler();
+            _handler = new WindsorHandler(_container);
         }
 
         [TestCleanup]
