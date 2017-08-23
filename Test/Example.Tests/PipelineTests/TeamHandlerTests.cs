@@ -20,7 +20,7 @@
         {
             var container = new WindsorContainer();
             container.Install(new FeaturesInstaller(
-                new MediateFeature(), new ValidationFeature())
+                new MediateFeature(), new ValidateFeature())
                 .Use(
                     Classes.FromAssemblyContaining<CreateTeam>(),
                     Classes.FromAssemblyContaining<Pipeline.TeamHandler>()));

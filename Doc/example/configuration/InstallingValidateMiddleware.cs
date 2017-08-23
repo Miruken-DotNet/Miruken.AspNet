@@ -20,7 +20,7 @@
 
             Container.Install(new FeaturesInstaller(
                 new MediateFeature().WithStandardMiddleware(),
-                new ValidationFeature()).Use(
+                new ValidateFeature()).Use(
                     Classes.FromAssemblyContaining<CreateTeam>()));
         }
     }

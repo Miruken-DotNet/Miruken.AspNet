@@ -26,7 +26,7 @@
 
             _container = new WindsorContainer()
                 .Install(new FeaturesInstaller(
-                    new HandlerFeature(), new ValidationFeature(),
+                    new HandleFeature(), new ValidateFeature(),
                     new MediateFeature().WithStandardMiddleware()).Use(
                         Types.From(typeof(TeamIntegrity),
                                    typeof(TeamActionIntegrity),
