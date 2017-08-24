@@ -1,8 +1,9 @@
-﻿namespace Miruken.Mediate.Tests
+﻿namespace Miruken.Mediate.Tests.Workflow
 {
     using System.Threading.Tasks;
     using Callback;
     using Callback.Policy;
+    using Mediate.Workflow;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]

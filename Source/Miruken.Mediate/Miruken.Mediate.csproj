@@ -75,7 +75,7 @@
     <Compile Include="Schedule\Scheduled.cs" />
     <Compile Include="Schedule\ScheduleHandler.cs" />
     <Compile Include="Schedule\Sequential.cs" />
-    <Compile Include="SendReturnMessage.cs" />
+    <Compile Include="Workflow\SendReturnMessage.cs" />
     <Compile Include="Stash.cs" />
     <Compile Include="ValidateMiddleware.cs" />
     <Compile Include="Stage.cs" />

@@ -1,4 +1,4 @@
-﻿namespace Miruken.Mediate
+﻿namespace Miruken.Mediate.Workflow
 {
     using System;
     using System.Collections.Generic;
