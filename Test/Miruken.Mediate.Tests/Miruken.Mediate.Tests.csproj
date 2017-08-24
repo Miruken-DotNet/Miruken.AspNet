@@ -68,7 +68,7 @@
     <Compile Include="Cache\CacheHandlerTests.cs" />
     <Compile Include="GetStockQuote.cs" />
     <Compile Include="HandlerTests.Mediate.cs" />
-    <Compile Include="SendReturnMessageTests.cs" />
+    <Compile Include="Workflow\SendReturnMessageTests.cs" />
     <Compile Include="StashTests.cs" />
     <Compile Include="ValidateMiddlewareTests.cs" />
     <Compile Include="Model.cs" />
