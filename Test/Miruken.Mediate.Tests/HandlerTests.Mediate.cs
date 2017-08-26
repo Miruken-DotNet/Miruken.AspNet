@@ -108,8 +108,7 @@
             }
         }
 
-        [Pipeline]
-        public class TeamHandler : Handler
+        public class TeamHandler : PipelineHandler
         {
             public int _teamId;
             private readonly List<object> _notifications = new List<object>();

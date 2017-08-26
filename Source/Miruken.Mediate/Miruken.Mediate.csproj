@@ -66,6 +66,7 @@
     <Compile Include="Oneway\Oneway.cs" />
     <Compile Include="Oneway\OnewayHandler.cs" />
     <Compile Include="PipelineAttribute.cs" />
+    <Compile Include="PipelineHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Route\Routed.cs" />
     <Compile Include="Route\RouteExtensions.cs" />

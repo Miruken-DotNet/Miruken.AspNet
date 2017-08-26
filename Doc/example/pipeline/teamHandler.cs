@@ -1,12 +1,10 @@
 namespace Example.Pipeline
 {
     using League.Api.Team;
-    using Miruken.Callback;
     using Miruken.Mediate;
     using Miruken.Validate;
 
-    [Pipeline]
-    public class TeamHandler : Handler
+    public class TeamHandler : PipelineHandler
     {
         [Mediates]
         public TeamResult CreateTeam(CreateTeam request)

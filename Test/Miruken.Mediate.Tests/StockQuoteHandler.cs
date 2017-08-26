@@ -1,12 +1,10 @@
 namespace Miruken.Mediate.Tests
 {
     using System;
-    using Callback;
     using Concurrency;
     using Mediate;
 
-    [Pipeline]
-    public class StockQuoteHandler : Handler
+    public class StockQuoteHandler : PipelineHandler
     {
         public static int Called;
 
