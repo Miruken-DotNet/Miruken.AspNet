@@ -3,8 +3,7 @@
     using Callback;
     using Concurrency;
 
-    [Pipeline]
-    public class PassThroughRouter : Handler
+    public class PassThroughRouter : PipelineHandler
     {
         public const string Scheme = "pass-through";
 

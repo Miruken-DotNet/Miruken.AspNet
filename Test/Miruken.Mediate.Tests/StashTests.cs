@@ -49,8 +49,7 @@
             }
         }
 
-        [Pipeline]
-        public class OrderHandler : Handler
+        public class OrderHandler : PipelineHandler
         {
             [Mediates]
             public Order Cancel(CancelOrder cancel, IHandler composer)

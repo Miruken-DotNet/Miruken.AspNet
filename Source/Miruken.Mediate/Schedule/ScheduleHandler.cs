@@ -6,8 +6,7 @@
     using System.Threading.Tasks;
     using Callback;
 
-    [Pipeline]
-    public class ScheduleHandler : Handler
+    public class ScheduleHandler : PipelineHandler
     {
         [Mediates]
         public async Task<ScheduleResult> Concurrent(Concurrent concurrent, IHandler composer)

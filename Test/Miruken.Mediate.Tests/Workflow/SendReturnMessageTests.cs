@@ -28,8 +28,7 @@
         private class StepTwo {}
         private class StepThree {}
 
-        [Pipeline]
-        private class Saga : Handler
+        private class Saga : PipelineHandler
         {
             [Mediates,
              SendReturnMessage]

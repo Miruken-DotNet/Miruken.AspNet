@@ -116,8 +116,7 @@
             }
         }
 
-        [Pipeline]
-        public class TeamHandler : Handler
+        public class TeamHandler : PipelineHandler
         {
             public int _teamId;
 
