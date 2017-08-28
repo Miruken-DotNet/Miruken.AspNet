@@ -11,14 +11,7 @@
 
     public class MediateFeature : FeatureInstaller
     {
-        private Action<ComponentRegistration> _configureMiddleware;
         private bool _standardMiddleware;
-
-        public MediateFeature ConfigureMiddleware(Action<ComponentRegistration> configure)
-        {
-            _configureMiddleware += configure;
-            return this;
-        }
 
         public MediateFeature WithStandardMiddleware()
         {
@@ -40,10 +33,6 @@
 
         public override void InstallFeatures(FromDescriptor from)
         {
-            var middleware = from.BasedOn(typeof(IMiddleware<,>))
-                .WithServiceBase().WithServiceSelf();
-            if (_configureMiddleware != null)
-                middleware.Configure(_configureMiddleware);
         }
     }
 }
