@@ -109,11 +109,11 @@
         private static readonly JsonSerializerSettings JsonSettings =
             new JsonSerializerSettings
             {
-                Formatting = Formatting.Indented,
-                DateFormatString = "MM-dd-yyyy hh:mm:ss",
-                NullValueHandling = NullValueHandling.Ignore,
+                Formatting            = Formatting.Indented,
+                DateFormatString      = "MM-dd-yyyy hh:mm:ss",
+                NullValueHandling     = NullValueHandling.Ignore,
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                Converters =  {
+                Converters = {
                     new StringEnumConverter(),
                     new ByteArrayFormatter()
                 }
