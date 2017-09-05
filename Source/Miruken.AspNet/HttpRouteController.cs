@@ -4,6 +4,7 @@
     using System.Web.Http;
     using Http;
 
+    [HttpRoute]
     public class HttpRouteController : ApiController
     {
         [HttpPost]
