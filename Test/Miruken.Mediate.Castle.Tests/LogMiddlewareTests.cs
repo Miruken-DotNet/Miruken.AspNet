@@ -88,8 +88,8 @@
         {
             var team = new Team
             {
-                Id = 1,
-                Name = "Liverpool Owen",
+                Id     = 1,
+                Name   = "Liverpool Owen",
                 Active = true
             };
 
@@ -106,6 +106,23 @@
                 @"DEBUG.*Miruken\.Mediate\.Tests\.HandlerMediateTests\+TeamHandler.*Completed TeamRemoved").Success));
             Assert.IsTrue(events.Any(x => Regex.Match(x,
                 @"DEBUG.*Miruken\.Mediate\.Tests\.HandlerMediateTests\+TeamHandler.*Completed RemoveTeam").Success));
+        }
+
+        [TestMethod]
+        public async Task Should_Ignore_Null_Proprties()
+        {
+            var team = await _handler.Send(new CreateTeam
+            {
+                Team = new Team
+                {
+                    Name = "Liverpool Owen"
+                }
+            });
+            Assert.AreEqual(1, team.Id);
+            Assert.IsTrue(team.Active);
+
+            var events = _memoryTarget.Logs;
+            Assert.IsFalse(events.Any(x => Regex.Match(x, "Division").Success));
         }
 
         [TestMethod]
