@@ -1,6 +1,5 @@
 ﻿namespace Miruken.Mediate.Castle
 {
-    using System;
     using System.Collections.Generic;
     using Cache;
     using global::Castle.MicroKernel.Registration;
