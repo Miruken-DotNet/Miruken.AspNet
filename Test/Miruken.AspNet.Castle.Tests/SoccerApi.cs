@@ -8,7 +8,12 @@
         public string Name { get; set; }
     }
 
-    public class RegisterPlayer : IRequest<PlayerResponse>
+    public class CreatePlayer : IRequest<PlayerResponse>
+    {
+        public Player Player { get; set; }
+    }
+
+    public class UpdatePlayer : IRequest<PlayerResponse>
     {
         public Player Player { get; set; }
     }

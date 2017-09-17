@@ -33,21 +33,19 @@
 
         private HttpResponseMessage CreateErrorResponse(Exception exception)
         {
-            var    code      = 0;
-            object surrogate = null;
+            var    code  = 0;
+            object error = null;
             Context.All(bundle => bundle.Add(h => 
-                surrogate = h.BestEffort().Proxy<IMapping>()
+                error = h.BestEffort().Proxy<IMapping>()
                     .Map(exception, HttpRouter.ExceptionSurrogate)
                 ).Add(h => code = h.BestEffort().Proxy<IMapping>()
                     .Map<int>(exception, HttpRouter.ExceptionStatusCode)));
-            if (surrogate == null)
-                surrogate = new HttpError(exception, true);
+            if (error == null)
+                error = new HttpError(exception, true);
             var statusCode = code > 0
                 ? (HttpStatusCode)code
                 : HttpStatusCode.InternalServerError;
-            var response = Request.CreateResponse(statusCode,
-                new Message(surrogate));
-            return response;
+            return Request.CreateResponse(statusCode, new Message(error));
         }
     }
 }

@@ -60,7 +60,7 @@
         }
 
         [TestMethod]
-        public async Task Should_Route_Http_Requests()
+        public async Task Should_Route_Requests()
         {
             using (WebApp.Start("http://localhost:9000/", Configuration))
             {
@@ -69,10 +69,26 @@
                     Name = "Philippe Coutinho"
                 };
                 var response = await _handler
-                    .Send(new RegisterPlayer { Player = player }
-                        .RouteTo("http://localhost:9000/process"));
+                    .Send(new CreatePlayer { Player = player }
+                    .RouteTo("http://localhost:9000/process"));
                 Assert.AreEqual("Philippe Coutinho", response.Player.Name);
                 Assert.IsTrue(response.Player.Id > 0);
+            }
+        }
+
+        [TestMethod]
+        public async Task Should_Fail_Unhandled_Requests()
+        {
+            using (WebApp.Start("http://localhost:9000/", Configuration))
+            {
+                var player = new Player
+                {
+                    Id   = 1,
+                    Name = "Philippe Coutinho"
+                };
+                await _handler
+                    .Send(new UpdatePlayer { Player = player }
+                    .RouteTo("http://localhost:9000/process"));
             }
         }
     }

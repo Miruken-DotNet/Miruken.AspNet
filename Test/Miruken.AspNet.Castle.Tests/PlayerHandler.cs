@@ -9,9 +9,9 @@
         private static int _id;
 
         [Mediates]
-        public PlayerResponse Register(RegisterPlayer register)
+        public PlayerResponse Create(CreatePlayer create)
         {
-            var player = register.Player;
+            var player = create.Player;
             player.Id  = Interlocked.Increment(ref _id);
             return new PlayerResponse { Player = player };
         }
