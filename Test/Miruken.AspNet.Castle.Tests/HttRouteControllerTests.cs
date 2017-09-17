@@ -1,5 +1,6 @@
 ﻿namespace Miruken.AspNet.Castle.Tests
 {
+    using System;
     using System.Threading.Tasks;
     using System.Web.Http;
     using Context;
@@ -76,7 +77,8 @@
             }
         }
 
-        [TestMethod]
+        [TestMethod,
+         ExpectedException(typeof(NotSupportedException))]
         public async Task Should_Fail_Unhandled_Requests()
         {
             using (WebApp.Start("http://localhost:9000/", Configuration))
