@@ -3,7 +3,6 @@
     using System;
     using System.Net;
     using System.Net.Http;
-    using System.Runtime.ExceptionServices;
     using System.Threading.Tasks;
     using System.Web.Http;
     using Callback;
@@ -41,18 +40,14 @@
                     .Map(exception, HttpRouter.ExceptionSurrogate)
                 ).Add(h => code = h.BestEffort().Proxy<IMapping>()
                     .Map<int>(exception, HttpRouter.ExceptionStatusCode)));
-            if (surrogate != null)
-            {
-                var statusCode = code > 0
-                    ? (HttpStatusCode)code
-                    : HttpStatusCode.InternalServerError;
-                var response = Request.CreateResponse(statusCode,
-                    new Message(surrogate));
-                response.Headers.Add(HttpRouter.MappedErrorHeader, "1");
-                return response;
-            }
-            ExceptionDispatchInfo.Capture(exception).Throw();
-            return null;
+            if (surrogate == null)
+                surrogate = new HttpError(exception, true);
+            var statusCode = code > 0
+                ? (HttpStatusCode)code
+                : HttpStatusCode.InternalServerError;
+            var response = Request.CreateResponse(statusCode,
+                new Message(surrogate));
+            return response;
         }
     }
 }

@@ -71,8 +71,10 @@
                     Name = "Philippe Coutinho"
                 };
                 var response = await _handler
-                    .Send(new RegisterPlayer()
+                    .Send(new RegisterPlayer { Player =  player }
                         .RouteTo("http://localhost:9000/process"));
+                Assert.AreEqual("Philippe Coutinho", response.Player.Name);
+                Assert.IsTrue(response.Player.Id > 0);
             }
         }
     }
