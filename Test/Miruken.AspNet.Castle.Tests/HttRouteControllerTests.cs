@@ -1,14 +1,16 @@
 ﻿namespace Miruken.AspNet.Castle.Tests
 {
+    using System.Threading.Tasks;
     using System.Web.Http;
     using Callback;
     using Context;
     using global::Castle.MicroKernel.Registration;
     using global::Castle.Windsor;
     using Http;
-    using Http.Get;
     using Map;
+    using Mediate;
     using Mediate.Castle;
+    using Mediate.Route;
     using Microsoft.Owin.Hosting;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Miruken.Castle;
@@ -27,7 +29,7 @@
             {
                 container.Install(new FeaturesInstaller(
                     new MediateFeature().WithStandardMiddleware(),
-                    new HandleFeature()).Use(
+                    new HandleFeature(), new ValidateFeature()).Use(
                         Classes.FromAssemblyContaining<HttpRouter>(),
                         Classes.FromAssemblyContaining<MappingHandler>(),
                         Classes.FromThisAssembly()));
@@ -43,7 +45,6 @@
         public void Configuration(IAppBuilder app)
         {
             var config = new HttpConfiguration();
-            config.Formatters.Clear();
             config.MapHttpAttributeRoutes();
             app.UseWebApi(config);
 
@@ -61,11 +62,17 @@
         }
 
         [TestMethod]
-        public void Should_Route_Http_Requests()
+        public async Task Should_Route_Http_Requests()
         {
             using (WebApp.Start("http://localhost:9000/", Configuration))
             {
-
+                var player = new Player
+                {
+                    Name = "Philippe Coutinho"
+                };
+                var response = await _handler
+                    .Send(new RegisterPlayer()
+                        .RouteTo("http://localhost:9000/process"));
             }
         }
     }

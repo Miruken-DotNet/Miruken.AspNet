@@ -22,6 +22,7 @@
         {
             HandlerDescriptor.GetDescriptor<StockQuoteHandler>();
             HandlerDescriptor.GetDescriptor<PassThroughRouter>();
+            HandlerDescriptor.GetDescriptor<TrashHandler>();
 
             _handler = new StockQuoteHandler()
                      + new PassThroughRouter()
@@ -92,13 +93,6 @@
             public Promise Route(Routed request, IHandler composer)
             {
                 return request.Route == Scheme ? Promise.Empty : null;
-            }
-
-            [Mediates]
-            public Promise<TResponse> Route<TResponse>(
-                RoutedRequest<TResponse> request, IHandler composer)
-            {
-                return request.Route == Scheme ? Promise<TResponse>.Empty : null;
             }
         }
 
