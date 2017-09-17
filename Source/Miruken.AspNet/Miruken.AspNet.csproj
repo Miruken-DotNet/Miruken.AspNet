@@ -74,6 +74,7 @@
     </Compile>
     <Compile Include="ContextualResolver.cs" />
     <Compile Include="ContextualApiController.cs" />
+    <Compile Include="HttpConfigurationExtensions.cs" />
     <Compile Include="HttpRouteAttribute.cs" />
     <Compile Include="HttpRouteController.cs" />
     <Compile Include="JsonContentNegotiator.cs" />

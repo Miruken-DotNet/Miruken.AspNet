@@ -16,11 +16,14 @@
     {
         protected void Application_Start()
         {
+            var appContext = new Context();
+
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            GlobalConfiguration.Configuration.UseMiruken(appContext);
 
             var container  = new WindsorContainer()
                 .Install(new FeaturesInstaller(
@@ -29,12 +32,7 @@
                     new AspNetFeature())
                 .Use(Classes.FromThisAssembly()));
             container.Kernel.AddHandlersFilter(new ContravariantFilter());
-
-            var appContext = new Context();
             appContext.AddHandlers(new WindsorHandler(container));
-
-            GlobalConfiguration.Configuration.DependencyResolver =
-                new ContextualResolver(appContext);
         }
     }
 }

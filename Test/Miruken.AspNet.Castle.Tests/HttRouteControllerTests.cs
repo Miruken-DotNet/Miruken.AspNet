@@ -2,7 +2,6 @@
 {
     using System.Threading.Tasks;
     using System.Web.Http;
-    using Callback;
     using Context;
     using global::Castle.MicroKernel.Registration;
     using global::Castle.Windsor;
@@ -44,7 +43,9 @@
 
         public void Configuration(IAppBuilder app)
         {
-            var config = new HttpConfiguration();
+            var appContext = new Context();
+            var config     = new HttpConfiguration()
+                .UseMiruken(appContext);
             config.MapHttpAttributeRoutes();
             app.UseWebApi(config);
 
@@ -55,10 +56,7 @@
                       new AspNetFeature())
                   .Use(Classes.FromThisAssembly()));
             container.Kernel.AddHandlersFilter(new ContravariantFilter());
-
-            var appContext = new Context();
             appContext.AddHandlers(new WindsorHandler(container));
-            config.DependencyResolver = new ContextualResolver(appContext);
         }
 
         [TestMethod]
@@ -71,7 +69,7 @@
                     Name = "Philippe Coutinho"
                 };
                 var response = await _handler
-                    .Send(new RegisterPlayer { Player =  player }
+                    .Send(new RegisterPlayer { Player = player }
                         .RouteTo("http://localhost:9000/process"));
                 Assert.AreEqual("Philippe Coutinho", response.Player.Name);
                 Assert.IsTrue(response.Player.Id > 0);
