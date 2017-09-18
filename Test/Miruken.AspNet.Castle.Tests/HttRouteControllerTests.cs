@@ -1,10 +1,14 @@
 ﻿namespace Miruken.AspNet.Castle.Tests
 {
     using System;
+    using System.Linq;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using System.Web.Http;
     using Context;
+    using global::Castle.Facilities.Logging;
     using global::Castle.MicroKernel.Registration;
+    using global::Castle.Services.Logging.NLogIntegration;
     using global::Castle.Windsor;
     using Http;
     using Map;
@@ -14,6 +18,9 @@
     using Microsoft.Owin.Hosting;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Miruken.Castle;
+    using NLog;
+    using NLog.Config;
+    using NLog.Targets;
     using Owin;
     using Validate;
     using Validate.Castle;
@@ -21,20 +28,31 @@
     [TestClass]
     public class HttRouteControllerTests
     {
-        protected WindsorHandler _handler;
+        private MemoryTarget _memoryTarget;
+        private LoggingConfiguration _config;
+        private WindsorHandler _handler;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            _handler = new WindsorHandler(container =>
+            _config = new LoggingConfiguration();
+            _memoryTarget   = new MemoryTarget
             {
-                container.Install(new FeaturesInstaller(
+                Layout = "${date} [${threadid}] ${level:uppercase=true} ${logger} ${message} ${exception:format=tostring}"
+            };
+            _config.AddTarget("InMemoryTarget", _memoryTarget);
+            _config.LoggingRules.Add(new LoggingRule("*", LogLevel.Debug, _memoryTarget));
+            LogManager.Configuration = _config;
+
+            _handler = new WindsorHandler(container => container
+                .AddFacility<LoggingFacility>(f => f.LogUsing(new NLogFactory(_config)))
+                .Install(new FeaturesInstaller(
                     new MediateFeature().WithStandardMiddleware(),
                     new HandleFeature(), new ValidateFeature()).Use(
                         Classes.FromAssemblyContaining<HttpRouter>(),
                         Classes.FromAssemblyContaining<MappingHandler>(),
-                        Classes.FromThisAssembly()));
-            });
+                        Classes.FromThisAssembly()))
+            );
         }
 
         [TestCleanup]
@@ -52,6 +70,7 @@
             app.UseWebApi(config);
 
             var container = new WindsorContainer()
+                  .AddFacility<LoggingFacility>(f => f.LogUsing(new NLogFactory(_config)))
                   .Install(new FeaturesInstaller(
                       new HandleFeature(), new ValidateFeature(),
                       new MediateFeature().WithStandardMiddleware(),
@@ -114,6 +133,34 @@
                     Assert.AreEqual("'Player' must not be empty.", outcome["Player"]);
                 }
             }
+        }
+
+        [TestMethod]
+        public async Task Should_Log_Client_And_Server_Requests()
+        {
+            using (WebApp.Start("http://localhost:9000/", Configuration))
+            {
+                var player = new Player
+                {
+                    Name = "Philippe Coutinho"
+                };
+                await _handler.Send(new CreatePlayer { Player = player }
+                    .RouteTo("http://localhost:9000/process"));
+            }
+
+            var events = _memoryTarget.Logs;
+            Assert.IsTrue(events.Any(x => Regex.Match(x,
+                @"DEBUG.*Miruken\.Http\.HttpRouter.*Handling RoutedRequest<PlayerResponse>").Success));
+            Assert.IsTrue(events.Any(x => Regex.Match(x,
+                @"DEBUG.*Miruken\.Http\.Post\.PostHandler.*Handling PostRequest<Message, Try<Message, Message>>").Success));
+            Assert.IsTrue(events.Any(x => Regex.Match(x,
+                @"DEBUG.*Miruken\.AspNet\.Castle\.Tests\.PlayerHandler.*Handling CreatePlayer ").Success));
+            Assert.IsTrue(events.Any(x => Regex.Match(x,
+                @"DEBUG.*Miruken\.AspNet\.Castle\.Tests\.PlayerHandler.*Completed CreatePlayer ").Success));
+            Assert.IsTrue(events.Any(x => Regex.Match(x,
+                @"DEBUG.*Miruken\.Http\.Post\.PostHandler.*Completed PostRequest<Message, Try<Message, Message>>").Success));
+            Assert.IsTrue(events.Any(x => Regex.Match(x,
+                @"DEBUG.*Miruken\.Http\.HttpRouter.*Completed RoutedRequest<PlayerResponse>").Success));
         }
     }
 }
