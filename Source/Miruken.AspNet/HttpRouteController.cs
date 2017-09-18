@@ -35,9 +35,10 @@
         {
             object error = null;
             var code = HttpStatusCode.InternalServerError;
-            Context.Resolve().BestEffort().All(bundle => bundle.Add(h => 
-                error = h.Proxy<IMapping>().Map(exception, typeof(Exception))
-                ).Add(h => code = h.Resolve().Proxy<IMapping>()
+            Context.Resolve().BestEffort().All(bundle => bundle
+                .Add(h => error = h.Proxy<IMapping>()
+                    .Map<object>(exception, typeof(Exception)))
+                .Add(h => code = h.Proxy<IMapping>()
                     .Map<HttpStatusCode>(exception)));
             if (error == null)
                 error = new HttpError(exception, true);

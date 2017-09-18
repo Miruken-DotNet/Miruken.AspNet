@@ -1,10 +1,9 @@
 ﻿namespace Miruken.AspNet.Castle.Tests
 {
     using System.Threading;
-    using Callback;
     using Mediate;
 
-    public class PlayerHandler : Handler
+    public class PlayerHandler : PipelineHandler
     {
         private static int _id;
 

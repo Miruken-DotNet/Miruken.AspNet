@@ -15,6 +15,7 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Miruken.Castle;
     using Owin;
+    using Validate;
     using Validate.Castle;
 
     [TestClass]
@@ -91,6 +92,27 @@
                 await _handler
                     .Send(new UpdatePlayer { Player = player }
                     .RouteTo("http://localhost:9000/process"));
+            }
+        }
+
+        [TestMethod]
+        public async Task Should_Fail_Validation_Rules()
+        {
+            using (WebApp.Start("http://localhost:9000/", Configuration))
+            {
+                try
+                {
+                    await _handler.Send(new CreatePlayer()
+                        .RouteTo("http://localhost:9000/process"));
+                    Assert.Fail("Should have failed");
+                }
+                catch (ValidationException vex)
+                {
+                    var outcome = vex.Outcome;
+                    Assert.IsNotNull(outcome);
+                    CollectionAssert.AreEqual(new[] { "Player" }, outcome.Culprits);
+                    Assert.AreEqual("'Player' must not be empty.", outcome["Player"]);
+                }
             }
         }
     }

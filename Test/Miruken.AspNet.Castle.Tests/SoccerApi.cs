@@ -1,5 +1,6 @@
 ﻿namespace Miruken.AspNet.Castle.Tests
 {
+    using FluentValidation;
     using Mediate;
 
     public class Player
@@ -21,5 +22,17 @@
     public class PlayerResponse
     {
         public Player Player { get; set; }
+    }
+
+    public class TeamIntegrity : AbstractValidator<CreatePlayer>
+    {
+        public TeamIntegrity()
+        {
+            RuleFor(p => p.Player).NotNull();
+            When(p => p.Player != null, () =>
+            {
+                RuleFor(p => p.Player.Name).NotEmpty();
+            });
+        }
     }
 }
