@@ -39,12 +39,12 @@
       <HintPath>..\..\packages\Castle.Windsor.4.0.0\lib\net45\Castle.Windsor.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="FluentValidation, Version=6.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\FluentValidation.6.4.0\lib\Net45\FluentValidation.dll</HintPath>
+    <Reference Include="FluentValidation, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentValidation.7.1.1\lib\net45\FluentValidation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Miruken, Version=1.8.1.17, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.1.8.1.17-prerelease\lib\net461\Miruken.dll</HintPath>
+    <Reference Include="Miruken, Version=1.8.1.18, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.1.8.1.18-prerelease\lib\net461\Miruken.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Miruken.Castle, Version=1.8.1.8, Culture=neutral, processorArchitecture=MSIL">
