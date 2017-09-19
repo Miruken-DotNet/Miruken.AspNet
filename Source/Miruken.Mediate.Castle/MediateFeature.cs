@@ -5,7 +5,6 @@
     using global::Castle.MicroKernel.Registration;
     using Miruken.Castle;
     using Oneway;
-    using Route;
     using Schedule;
 
     public class MediateFeature : FeatureInstaller
@@ -22,7 +21,7 @@
         {
             yield return Types.From(
                 typeof(CachedHandler), typeof(OnewayHandler),
-                typeof(ScheduleHandler), typeof(PassThroughRouter));
+                typeof(ScheduleHandler));
 
             if (_standardMiddleware)
                 yield return Types.From(

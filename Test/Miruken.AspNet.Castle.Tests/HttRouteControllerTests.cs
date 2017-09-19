@@ -162,5 +162,13 @@
             Assert.IsTrue(events.Any(x => Regex.Match(x,
                 @"DEBUG.*Miruken\.Http\.HttpRouter.*Completed RoutedRequest<PlayerResponse>").Success));
         }
+
+        [TestMethod,
+         ExpectedException(typeof(NotSupportedException))]
+        public async Task Should_Reject_Invalid_Route()
+        {
+            await _handler.Send(new CreatePlayer()
+                .RouteTo("abc://localhost:9000/process"));
+        }
     }
 }
