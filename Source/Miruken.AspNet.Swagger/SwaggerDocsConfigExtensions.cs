@@ -3,19 +3,22 @@
     using System;
     using System.IO;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using Swashbuckle.Application;
 
     public static class SwaggerDocsConfigExtensions
     {
-        public static SwaggerDocsConfig UseMiruken(this SwaggerDocsConfig config)
+        public static SwaggerDocsConfig UseMiruken(
+            this SwaggerDocsConfig config)
         {
             config.SchemaId(SwaggerMediatesFilter.ModelToSchemaId);
             config.DocumentFilter<SwaggerMediatesFilter>();
-            IncludeApiComments(config);
+            config.IncludeApiComments("Miruken.Mediate");
             return config;
         }
 
-        private static void IncludeApiComments(SwaggerDocsConfig config)
+        public static void IncludeApiComments(
+            this SwaggerDocsConfig config, params string[] patterns)
         {
             var files =
                 (AppDomain.CurrentDomain.SetupInformation.PrivateBinPath ??
@@ -25,8 +28,7 @@
             foreach (var file in files)
             {
                 var filename = new FileInfo(file).Name;
-                if (filename.IndexOf("Api", StringComparison.OrdinalIgnoreCase) >= 0 ||
-                    filename.IndexOf("Miruken.Mediate", StringComparison.OrdinalIgnoreCase) >= 0)
+                if (patterns.Any(pattern => Regex.IsMatch(filename, pattern)))
                     config.IncludeXmlComments(file);
             }
         }

@@ -5,6 +5,7 @@
     using System.Web.Optimization;
     using System.Web.Routing;
     using Castle;
+    using Castle.Tests;
     using Context;
     using global::Castle.MicroKernel.Registration;
     using global::Castle.Windsor;
@@ -30,7 +31,8 @@
                     new HandleFeature(), new ValidateFeature(),
                     new MediateFeature().WithStandardMiddleware(),
                     new AspNetFeature())
-                .Use(Classes.FromThisAssembly()));
+                .Use(Classes.FromAssemblyContaining<PlayerHandler>(),
+                     Classes.FromThisAssembly()));
             container.Kernel.AddHandlersFilter(new ContravariantFilter());
             appContext.AddHandlers(new WindsorHandler(container));
         }

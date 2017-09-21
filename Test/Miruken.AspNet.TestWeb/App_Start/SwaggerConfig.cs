@@ -178,7 +178,8 @@ namespace Miruken.AspNet.TestWeb
                         // alternative implementation for ISwaggerProvider with the CustomProvider option.
                         //
                         //c.CustomProvider((defaultProvider) => new CachingSwaggerProvider(defaultProvider));
-                        c.UseMiruken();
+                        c.UseMiruken()
+                         .IncludeApiComments("Miruken.AspNet.Castle.Tests");
                     })
                 .EnableSwaggerUi(c =>
                     {

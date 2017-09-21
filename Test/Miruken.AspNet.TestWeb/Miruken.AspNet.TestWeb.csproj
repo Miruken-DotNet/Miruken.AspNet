@@ -356,6 +356,10 @@
       <Project>{96b8ac46-cd2a-4c72-b8b8-ff6151552df7}</Project>
       <Name>Miruken.Mediate</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Miruken.AspNet.Castle.Tests\Miruken.AspNet.Castle.Tests.csproj">
+      <Project>{015b66fd-dbc0-40fb-9312-ccacc0488da8}</Project>
+      <Name>Miruken.AspNet.Castle.Tests</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
