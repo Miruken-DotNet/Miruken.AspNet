@@ -1,6 +1,6 @@
 ﻿namespace Miruken.Mediate.Schedule
 {
-    public class Scheduled : IRequest<ScheduleResult>
+    public abstract class Scheduled : IRequest<ScheduleResult>
     {
         public object[] Requests { get; set; }
     }

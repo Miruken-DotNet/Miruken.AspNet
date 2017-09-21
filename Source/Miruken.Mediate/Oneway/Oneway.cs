@@ -1,7 +1,6 @@
 ﻿namespace Miruken.Mediate.Oneway
 {
     using System;
-    using Infrastructure;
 
     public abstract class Oneway : IDecorator
     {

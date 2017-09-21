@@ -13,8 +13,8 @@
     [HttpRoute]
     public class HttpRouteController : ContextualApiController
     {
-        [HttpPost, Route("Process")]
-        public Task<HttpResponseMessage> Process(Message message)
+        [HttpPost, Route("Process/{*rest}")]
+        public Task<HttpResponseMessage> Process(Message message, string rest)
         {
             var request = message.Payload;
             return Context.Send(request).Then((response, s) => 
@@ -22,8 +22,8 @@
                 .Catch((ex, s) => CreateErrorResponse(ex));
         }
 
-        [HttpPost, Route("Publish")]
-        public Task<HttpResponseMessage> Publish(Message message)
+        [HttpPost, Route("Publish/{*rest}")]
+        public Task<HttpResponseMessage> Publish(Message message, string rest)
         {
             var notification = message.Payload;
             return Context.Publish(notification).Then((_, s) =>

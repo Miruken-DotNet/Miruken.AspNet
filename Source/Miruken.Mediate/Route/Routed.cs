@@ -10,8 +10,8 @@
         {
         }
 
-        public string Route   { get; set; }
-        public string Tag     { get; set; }
+        public string Route { get; set; }
+        public string Tag   { get; set; }
     }
 
     public class RoutedRequest<TResponse> : Routed, IRequest<TResponse>

@@ -12,7 +12,7 @@
         public async Task<ScheduleResult> Concurrent(Concurrent concurrent, IHandler composer)
         {
             var requests  = concurrent.Requests;
-            var responses = requests?.Length > 0
+            var responses = requests != null && requests.Length > 0
                 ? await Task.WhenAll(requests.Select(req => Process(req, composer)))
                 : Array.Empty<object>();
             return new ScheduleResult
@@ -25,7 +25,8 @@
         public async Task<ScheduleResult> Sequential(Sequential sequential, IHandler composer)
         {
             var responses = new List<object>();
-            if (sequential.Requests?.Length > 0)
+            var requests  = sequential.Requests;
+            if (requests != null && requests.Length > 0)
             {
                 foreach (var req in sequential.Requests)
                     responses.Add(await Process(req, composer));
@@ -40,7 +41,7 @@
         public ScheduleResult Parallel(Parallel parallel, IHandler composer)
         {
             var requests  = parallel.Requests;
-            var responses = requests?.Length > 0
+            var responses = requests != null && requests.Length > 0
                 ? requests.AsParallel().Select(
                     req => Process(req, composer).Result).ToArray()
                 : Array.Empty<object>();

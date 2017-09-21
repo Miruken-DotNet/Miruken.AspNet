@@ -4,10 +4,10 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Miruken.AspNet")]
+[assembly: AssemblyTitle("Miruken.AspNet.Swagger")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("Miruken.AspNet")]
+[assembly: AssemblyProduct("Miruken.AspNet.Swagger")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("2702b571-68bf-4f79-b075-fd9437fac64b")]
+[assembly: Guid("6e0934f2-3ec5-4bdf-b290-d03949498ddb")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -30,4 +30,3 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("0.0.0.0")] //updated in TeamCity
 [assembly: AssemblyFileVersion("0.0.0.0")] //updated in TeamCity
 [assembly: AssemblyInformationalVersion("0.0.0.0")] //updated in TeamCity
-
