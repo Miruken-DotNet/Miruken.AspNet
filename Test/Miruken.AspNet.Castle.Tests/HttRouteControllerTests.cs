@@ -5,6 +5,7 @@
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using System.Web.Http;
+    using Callback;
     using Context;
     using global::Castle.Facilities.Logging;
     using global::Castle.MicroKernel.Registration;
@@ -161,6 +162,26 @@
                 @"DEBUG.*Miruken\.Http\.Post\.PostHandler.*Completed PostRequest<Message, Try<Message, Message>>").Success));
             Assert.IsTrue(events.Any(x => Regex.Match(x,
                 @"DEBUG.*Miruken\.Http\.HttpRouter.*Completed RoutedRequest<PlayerResponse>").Success));
+        }
+
+        [TestMethod]
+        public async Task Should_Batch_Requests()
+        {
+            using (WebApp.Start("http://localhost:9000/", Configuration))
+            {
+                var player = new Player
+                {
+                    Name = "Paul Pogba"
+                };
+                await _handler.Batch(async batch =>
+                {
+                    var response = await batch.Send(
+                        new CreatePlayer {Player = player}
+                        .RouteTo("http://localhost:9000/process"));
+                    Assert.AreEqual("Paul Pogba", response.Player.Name);
+                    Assert.IsTrue(response.Player.Id > 0);
+                });
+            }
         }
 
         [TestMethod,

@@ -11,14 +11,24 @@
         [Mediates]
         public async Task<ScheduleResult> Concurrent(Concurrent concurrent, IHandler composer)
         {
-            var requests  = concurrent.Requests;
-            var responses = requests != null && requests.Length > 0
-                ? await Task.WhenAll(requests.Select(req => Process(req, composer)))
-                : Array.Empty<object>();
-            return new ScheduleResult
+            var requests = concurrent.Requests;
+            if (requests == null || requests.Length == 0)
+                return new ScheduleResult
+                {
+                    Responses = Array.Empty<object>()
+                };
+            var all = Task.WhenAll(requests.Select(req => Process(req, composer)));
+            try
             {
-                Responses = responses
-            };
+                return new ScheduleResult
+                {
+                    Responses = await all
+                };
+            }
+            catch when (all.Exception != null)
+            {
+                throw all.Exception;
+            }
         }
 
         [Mediates]
@@ -40,15 +50,24 @@
         [Mediates]
         public ScheduleResult Parallel(Parallel parallel, IHandler composer)
         {
-            var requests  = parallel.Requests;
-            var responses = requests != null && requests.Length > 0
-                ? requests.AsParallel().Select(
-                    req => Process(req, composer).Result).ToArray()
-                : Array.Empty<object>();
-            return new ScheduleResult
+            var requests = parallel.Requests;
+            if (requests == null || requests.Length == 0)
+                return new ScheduleResult
+                {
+                    Responses = Array.Empty<object>()
+                };
+            try
             {
-                Responses = responses
-            };
+                return new ScheduleResult
+                {
+                    Responses = requests.AsParallel().Select(
+                        req => Process(req, composer).Result).ToArray()
+                };
+            }
+            catch (AggregateException e) when (e.InnerExceptions.Count == 1)
+            {
+                throw e.InnerExceptions[0];
+            }
         }
 
         private static Task<object> Process(object request, IHandler composer)

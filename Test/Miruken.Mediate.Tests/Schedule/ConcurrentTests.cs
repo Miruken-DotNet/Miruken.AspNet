@@ -39,7 +39,7 @@
         }
 
         [TestMethod]
-        public async Task Should_Propogate_Exception()
+        public async Task Should_Propogate_Single_Exception()
         {
             var handler = new StockQuoteHandler()
                         + new ScheduleHandler();
@@ -49,9 +49,8 @@
                 {
                     Requests = new[]
                     {
-                        new GetStockQuote("AAPL"),
-                        new GetStockQuote("EX"),
-                        new GetStockQuote("GOOGL")
+                        new GetStockQuote("APPL"),
+                        new GetStockQuote("EX")
                     }
                 });
                 Assert.Fail("Expected an exception");
@@ -59,6 +58,32 @@
             catch (Exception ex)
             {
                 Assert.AreEqual("Stock Exchange is down", ex.Message);
+            }
+        }
+
+        [TestMethod]
+        public async Task Should_Propogate_Multiple_Exceptions()
+        {
+            var handler = new StockQuoteHandler()
+                        + new ScheduleHandler();
+            try
+            {
+                await handler.Send(new Concurrent
+                {
+                    Requests = new[]
+                    {
+                        new GetStockQuote("EX"),
+                        new GetStockQuote("APPL"),
+                        new GetStockQuote("EX")
+                    }
+                });
+                Assert.Fail("Expected an exception");
+            }
+            catch (AggregateException ex)
+            {
+                Assert.AreEqual(2, ex.InnerExceptions.Count);
+                Assert.AreEqual("Stock Exchange is down", ex.InnerExceptions[0].Message);
+                Assert.AreEqual("Stock Exchange is down", ex.InnerExceptions[1].Message);
             }
         }
     }
