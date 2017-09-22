@@ -109,7 +109,7 @@
             var stash   = new Stash();
             var handler = stash + new Stash(true);
             handler.Proxy<IStash>().Put(order);
-            handler.Proxy<IStash>().Droid<Order>();
+            handler.Proxy<IStash>().Drop<Order>();
             Assert.IsNull(handler.Proxy<IStash>().Get<Order>());
         }
 

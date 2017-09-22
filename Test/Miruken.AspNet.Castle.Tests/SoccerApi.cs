@@ -31,6 +31,7 @@
             RuleFor(p => p.Player).NotNull();
             When(p => p.Player != null, () =>
             {
+                RuleFor(p => p.Player.Id).Equal(0);
                 RuleFor(p => p.Player.Name).NotEmpty();
             });
         }
