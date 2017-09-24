@@ -12,7 +12,6 @@
     using global::Castle.Services.Logging.NLogIntegration;
     using global::Castle.Windsor;
     using Http;
-    using Map;
     using Mediate;
     using Mediate.Castle;
     using Mediate.Route;
@@ -51,7 +50,6 @@
                     new HandleFeature(), new ValidateFeature(),
                     new MediateFeature().WithStandardMiddleware()).Use(
                         Classes.FromAssemblyContaining<HttpRouter>(),
-                        Classes.FromAssemblyContaining<MappingHandler>(),
                         Classes.FromThisAssembly()))
             );
         }
@@ -246,7 +244,7 @@
                         batch.Send(new CreatePlayer { Player = new Player
                                    {
                                        Id   = 3,
-                                       Name ="Sergio Ramos"
+                                       Name = "Sergio Ramos"
                                    }}
                             .RouteTo("http://localhost:9000"));
                     });

@@ -5,7 +5,6 @@
     using System.Web.Http.Controllers;
     using global::Castle.MicroKernel.Registration;
     using Http;
-    using Map;
     using Miruken.Castle;
 
     public class AspNetFeature : FeatureInstaller
@@ -22,7 +21,6 @@
         {
             yield return Classes.FromAssemblyContaining<HttpRouter>();
             yield return Classes.FromAssemblyContaining<HttpRouteController>();
-            yield return Classes.FromAssemblyContaining<MappingHandler>();
         }
 
         public override void InstallFeatures(FromDescriptor from)
