@@ -48,8 +48,8 @@
             _handler = new WindsorHandler(container => container
                 .AddFacility<LoggingFacility>(f => f.LogUsing(new NLogFactory(_config)))
                 .Install(new FeaturesInstaller(
-                    new MediateFeature().WithStandardMiddleware(),
-                    new HandleFeature(), new ValidateFeature()).Use(
+                    new HandleFeature(), new ValidateFeature(),
+                    new MediateFeature().WithStandardMiddleware()).Use(
                         Classes.FromAssemblyContaining<HttpRouter>(),
                         Classes.FromAssemblyContaining<MappingHandler>(),
                         Classes.FromThisAssembly()))
@@ -92,7 +92,7 @@
                 };
                 var response = await _handler
                     .Send(new CreatePlayer { Player = player }
-                    .RouteTo("http://localhost:9000/process"));
+                    .RouteTo("http://localhost:9000"));
                 Assert.AreEqual("Philippe Coutinho", response.Player.Name);
                 Assert.IsTrue(response.Player.Id > 0);
             }
@@ -111,7 +111,7 @@
                 };
                 await _handler
                     .Send(new UpdatePlayer { Player = player }
-                    .RouteTo("http://localhost:9000/process"));
+                    .RouteTo("http://localhost:9000"));
             }
         }
 
@@ -123,7 +123,7 @@
                 try
                 {
                     await _handler.Send(new CreatePlayer()
-                        .RouteTo("http://localhost:9000/process"));
+                        .RouteTo("http://localhost:9000/"));
                     Assert.Fail("Should have failed");
                 }
                 catch (ValidationException vex)
@@ -146,7 +146,7 @@
                     Name = "Philippe Coutinho"
                 };
                 await _handler.Send(new CreatePlayer { Player = player }
-                    .RouteTo("http://localhost:9000/process"));
+                    .RouteTo("http://localhost:9000"));
             }
 
             var events = _memoryTarget.Logs;
@@ -164,32 +164,98 @@
                 @"DEBUG.*Miruken\.Http\.HttpRouter.*Completed RoutedRequest<PlayerResponse>").Success));
         }
 
-        [TestMethod]
-        public async Task Should_Batch_Requests()
-        {
-            using (WebApp.Start("http://localhost:9000/", Configuration))
-            {
-                var player = new Player
-                {
-                    Name = "Paul Pogba"
-                };
-                await _handler.Batch(async batch =>
-                {
-                    var response = await batch.Send(
-                        new CreatePlayer {Player = player}
-                        .RouteTo("http://localhost:9000/process"));
-                    Assert.AreEqual("Paul Pogba", response.Player.Name);
-                    Assert.IsTrue(response.Player.Id > 0);
-                });
-            }
-        }
-
         [TestMethod,
          ExpectedException(typeof(NotSupportedException))]
         public async Task Should_Reject_Invalid_Route()
         {
             await _handler.Send(new CreatePlayer()
-                .RouteTo("abc://localhost:9000/process"));
+                .RouteTo("abc://localhost:9000"));
+        }
+
+        [TestMethod]
+        public async Task Should_Batch_Requests()
+        {
+            using (WebApp.Start("http://localhost:9000/", Configuration))
+            {
+                var player1 = new Player
+                {
+                    Name = "Paul Pogba"
+                };
+                var player2 = new Player
+                {
+                    Name = "Eden Hazard"
+                };
+                var results = await _handler.Batch(batch =>
+                {
+                    batch.Send(new CreatePlayer { Player = player1 }
+                        .RouteTo("http://localhost:9000"))
+                        .Then((response, s) =>
+                        {
+                            Assert.AreEqual("Paul Pogba", response.Player.Name);
+                            Assert.IsTrue(response.Player.Id > 0);
+                        });
+                    batch.Send(new CreatePlayer { Player = player2 }
+                            .RouteTo("http://localhost:9000"))
+                        .Then((response, s) =>
+                        {
+                            Assert.AreEqual("Eden Hazard", response.Player.Name);
+                            Assert.IsTrue(response.Player.Id > 0);
+                        });
+                });
+                Assert.AreEqual(1, results.Length);
+                var groups = (object[])results[0];
+                Assert.AreEqual(1, groups.Length);
+                var group = (Tuple<string, object[]>)groups[0];
+                Assert.AreEqual("http://localhost:9000", group.Item1);
+                Assert.AreEqual(2, group.Item2.Length);
+            }
+        }
+
+        [TestMethod]
+        public async Task Should_Propogate_Failure()
+        {
+            using (WebApp.Start("http://localhost:9000/", Configuration))
+            {
+                try
+                {
+                    await _handler.Batch(batch =>
+                        batch.Send(new CreatePlayer { Player = new Player() }
+                            .RouteTo("http://localhost:9000")));
+                }
+                catch (ValidationException vex)
+                {
+                    var outcome = vex.Outcome;
+                    Assert.IsNotNull(outcome);
+                    CollectionAssert.AreEqual(new[] { "Player" }, outcome.Culprits);
+                    Assert.AreEqual("'Player. Name' should not be empty.", outcome["Player.Name"]);
+                }
+            }
+        }
+
+        [TestMethod]
+        public async Task Should_Propogate_Multiple_Failures()
+        {
+            using (WebApp.Start("http://localhost:9000/", Configuration))
+            {
+                try
+                {
+                    await _handler.Batch(batch =>
+                    {
+                        batch.Send(new CreatePlayer { Player = new Player() }
+                            .RouteTo("http://localhost:9000"));
+                        batch.Send(new CreatePlayer { Player = new Player
+                                   {
+                                       Id   = 3,
+                                       Name ="Sergio Ramos"
+                                   }}
+                            .RouteTo("http://localhost:9000"));
+                    });
+                }
+                catch (AggregateException ex)
+                {
+                    Assert.AreEqual(2, ex.InnerExceptions.Count);
+                }
+            }
         }
     }
 }
