@@ -70,20 +70,20 @@
       <HintPath>..\..\packages\Microsoft.Owin.Security.3.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Miruken, Version=1.8.1.25, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.1.8.1.25-prerelease\lib\net461\Miruken.dll</HintPath>
+    <Reference Include="Miruken, Version=1.8.1.27, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.1.8.1.27-prerelease\lib\net461\Miruken.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Miruken.Castle, Version=1.8.1.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.Castle.1.8.1.9-prerelease\lib\net461\Miruken.Castle.dll</HintPath>
+    <Reference Include="Miruken.Castle, Version=1.8.1.10, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.Castle.1.8.1.10-prerelease\lib\net461\Miruken.Castle.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Miruken.Validate, Version=1.5.1.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.Validate.1.5.1.9-prerelease\lib\net461\Miruken.Validate.dll</HintPath>
+    <Reference Include="Miruken.Validate, Version=1.5.1.10, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.Validate.1.5.1.10-prerelease\lib\net461\Miruken.Validate.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Miruken.Validate.Castle, Version=1.5.1.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.Validate.Castle.1.5.1.8-prerelease\lib\net461\Miruken.Validate.Castle.dll</HintPath>
+    <Reference Include="Miruken.Validate.Castle, Version=1.5.1.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.Validate.Castle.1.5.1.9-prerelease\lib\net461\Miruken.Validate.Castle.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">

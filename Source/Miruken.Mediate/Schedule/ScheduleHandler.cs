@@ -9,7 +9,8 @@
     public class ScheduleHandler : PipelineHandler
     {
         [Mediates]
-        public async Task<ScheduleResult> Concurrent(Concurrent concurrent, IHandler composer)
+        public async Task<ScheduleResult> Concurrent(
+            Concurrent concurrent, IHandler composer)
         {
             var requests = concurrent.Requests;
             if (requests == null || requests.Length == 0)
@@ -32,7 +33,8 @@
         }
 
         [Mediates]
-        public async Task<ScheduleResult> Sequential(Sequential sequential, IHandler composer)
+        public async Task<ScheduleResult> Sequential(
+            Sequential sequential, IHandler composer)
         {
             var responses = new List<object>();
             var requests  = sequential.Requests;
