@@ -1,10 +1,14 @@
 ﻿namespace Miruken.Mediate
 {
+    using System;
+    using System.Diagnostics;
     using System.Threading.Tasks;
     using Callback;
     using Callback.Policy;
     using Concurrency;
+    using FluentValidation;
     using Validate;
+    using ValidationException = Validate.ValidationException;
 
     public class ValidateMiddleware<TRequest, TResponse>
         : IMiddleware<TRequest, TResponse>

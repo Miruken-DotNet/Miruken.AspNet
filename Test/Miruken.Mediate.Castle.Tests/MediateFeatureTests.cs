@@ -10,8 +10,8 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Miruken.Castle;
     using Mediate.Tests;
-    using Validate;
     using Validate.Castle;
+    using ValidationException = Validate.ValidationException;
 
     [TestClass]
     public class MediateFeatureTests
@@ -123,7 +123,7 @@
             {
                 var outcome = vex.Outcome;
                 Assert.IsNotNull(outcome);
-                CollectionAssert.AreEqual(new[] { "Team" }, outcome.Culprits);
+                CollectionAssert.AreEqual(new[] {"Team"}, outcome.Culprits);
                 Assert.AreEqual("'Team' should not be empty.", outcome["Team"]);
             }
         }
