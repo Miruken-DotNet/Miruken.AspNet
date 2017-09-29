@@ -73,7 +73,7 @@
                   .Install(new FeaturesInstaller(
                       new HandleFeature(), new ValidateFeature(),
                       new MediateFeature().WithStandardMiddleware(),
-                      new AspNetFeature())
+                      new AspNetFeature(appContext).WithWebApi(config))
                   .Use(Classes.FromThisAssembly()));
             container.Kernel.AddHandlersFilter(new ContravariantFilter());
             appContext.AddHandlers(new WindsorHandler(container));

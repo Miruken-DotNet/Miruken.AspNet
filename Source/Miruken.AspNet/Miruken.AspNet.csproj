@@ -98,15 +98,15 @@
     <Compile Include="..\..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ContextualController.cs" />
     <Compile Include="ContextualControllerFactory.cs" />
-    <Compile Include="ContextualModule.cs" />
     <Compile Include="ContextualResolver.cs" />
     <Compile Include="ContextualApiController.cs" />
     <Compile Include="HttpApplicationExtensions.cs" />
     <Compile Include="HttpConfigurationExtensions.cs" />
     <Compile Include="HttpRouteAttribute.cs" />
     <Compile Include="HttpRouteController.cs" />
-    <Compile Include="IClientContextSelector.cs" />
+    <Compile Include="IHttpContextSelector.cs" />
     <Compile Include="JsonContentNegotiator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

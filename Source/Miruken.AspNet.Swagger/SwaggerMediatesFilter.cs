@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using System.Runtime.Serialization.Formatters;
     using System.Web.Http.Description;
     using Callback.Policy;
     using Http;
@@ -26,9 +25,9 @@
         private static readonly JsonSerializerSettings SerializerSettings
             = new JsonSerializerSettings
             {
-                ContractResolver       = new CamelCasePropertyNamesContractResolver(),
-                TypeNameHandling       = TypeNameHandling.Auto,
-                TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple
+                ContractResolver               = new CamelCasePropertyNamesContractResolver(),
+                TypeNameHandling               = TypeNameHandling.Auto,
+                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
             };
 
         private static readonly string[] JsonFormats = { "application/json" };

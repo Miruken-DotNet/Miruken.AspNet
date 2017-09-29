@@ -18,7 +18,6 @@
         protected void Application_Start()
         {
             var appContext = new Context();
-            this.SetRootContext(appContext);
 
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
@@ -26,16 +25,17 @@
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            var container  = new WindsorContainer()
+            var container = new WindsorContainer()
                 .Install(new FeaturesInstaller(
                     new HandleFeature(), new ValidateFeature(),
                     new MediateFeature().WithStandardMiddleware(),
-                    new AspNetFeature())
+                    new AspNetFeature(appContext)
+                        .WithMvc(this)
+                        .WithWebApi(GlobalConfiguration.Configuration))
                 .Use(Classes.FromAssemblyContaining<PlayerHandler>(),
                      Classes.FromThisAssembly()));
             container.Kernel.AddHandlersFilter(new ContravariantFilter());
             appContext.AddHandlers(new WindsorHandler(container));
-            GlobalConfiguration.Configuration.UseMiruken(appContext);
         }
     }
 }

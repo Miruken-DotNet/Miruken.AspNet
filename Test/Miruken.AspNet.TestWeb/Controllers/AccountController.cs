@@ -20,7 +20,7 @@ namespace Miruken.AspNet.TestWeb.Controllers
 {
     [Authorize]
     [RoutePrefix("api/Account")]
-    public class AccountController : ContextualApiController
+    public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;

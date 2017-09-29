@@ -4,7 +4,7 @@ using System.Web.Http;
 namespace Miruken.AspNet.TestWeb.Controllers
 {
     [Authorize]
-    public class ValuesController : ContextualApiController
+    public class ValuesController : ApiController
     {
         // GET api/values
         public IEnumerable<string> Get()
