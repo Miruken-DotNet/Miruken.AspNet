@@ -9,9 +9,12 @@
         public static HttpConfiguration UseMiruken(
             this HttpConfiguration configuration, IContext context)
         {
+            var services  = configuration.Services;
             var activator = (IHttpControllerActivator)
-                configuration.Services .GetService(typeof(IHttpControllerActivator));
-            configuration.DependencyResolver = new ContextualResolver(context, activator);
+                services.GetService(typeof(IHttpControllerActivator));
+            var resolver  = new ContextualResolver(context, activator);
+            services.Replace(typeof(IHttpControllerActivator), resolver);
+            configuration.DependencyResolver = resolver;
             return configuration;
         }
     }

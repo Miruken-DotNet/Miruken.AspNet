@@ -11,19 +11,44 @@
     using Infrastructure;
 
     public class ContextualResolver
-        : IDependencyResolver, IHttpControllerActivator
+        : ContextualScope, IDependencyResolver,
+          IHttpControllerActivator
     {
-        private readonly IContext _context;
         private readonly IHttpControllerActivator _defaultActivator;
 
         public ContextualResolver(
-            IContext context,
+            IContext parent,
             IHttpControllerActivator defaultActivator)
+            : base(parent)
         {
-            if (context == null)
-                throw new ArgumentNullException(nameof(context));
-            _context          = context;
             _defaultActivator = defaultActivator;
+        }
+
+        IHttpController IHttpControllerActivator.Create(
+            HttpRequestMessage request,
+            HttpControllerDescriptor controllerDescriptor,
+            Type controllerType)
+        {
+            if (controllerType.Is<IContextual>())
+            {
+                var scope = (ContextualScope)request.GetDependencyScope();
+                scope.AdjustScope(request);
+                return (IHttpController)scope.GetService(controllerType);
+            }
+            return _defaultActivator?.Create(
+                request, controllerDescriptor, controllerType);
+        }
+    }
+
+    public class ContextualScope : IDependencyScope
+    {
+        protected IContext _context;
+
+        public ContextualScope(IContext parent)
+        {
+            if (parent == null)
+                throw new ArgumentNullException(nameof(parent));
+            _context = parent.CreateChild();
         }
 
         public IDependencyScope BeginScope()
@@ -41,65 +66,20 @@
         public IEnumerable<object> GetServices(Type serviceType)
         {
             return _context.ResolveAll(serviceType);
-        }
+        } 
 
-        IHttpController IHttpControllerActivator.Create(
-            HttpRequestMessage request,
-            HttpControllerDescriptor controllerDescriptor,
-            Type controllerType)
+        internal void AdjustScope(HttpRequestMessage request)
         {
-            if (controllerType.Is<IContextual>())
-            {
-                var scope = (ContextualScope) request.GetDependencyScope();
-                scope.ConfigureScope(request);
-                return (IHttpController)scope.GetService(controllerType);
-            }
-            return _defaultActivator?.Create(
-                request, controllerDescriptor, controllerType);
+            _context = _context.BestEffort()
+                    .Proxy<IHttpContextSelector>()
+                    .SelectApiContext(request)
+                    ?.CreateChild()
+                 ?? _context;
         }
 
         public void Dispose()
         {
-            // Don't own root context
-        }
-    }
-
-    public class ContextualScope : IDependencyScope
-    {
-        protected readonly IContext _context;
-        private IContext _clientContext;
-
-        public ContextualScope(IContext context)
-        {
-            _context = context;
-        }
-
-        public object GetService(Type serviceType)
-        {
-            return GetClientContext().Resolve(serviceType);
-        }
-
-        public IEnumerable<object> GetServices(Type serviceType)
-        {
-            return GetClientContext().ResolveAll(serviceType);
-        }
-
-        internal void ConfigureScope(HttpRequestMessage request)
-        {
-            _clientContext = _context.BestEffort()
-                                 .Proxy<IHttpContextSelector>()
-                                 .SelectApiContext(request)
-                          ?? _context.CreateChild();
-        }
-
-        private IContext GetClientContext()
-        {
-            return _clientContext ?? _context;
-        }
-
-        public void Dispose()
-        {
-            _clientContext?.End();
+            _context.End();
         }
     }
 }
