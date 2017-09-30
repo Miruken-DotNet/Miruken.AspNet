@@ -70,11 +70,14 @@
 
         internal void AdjustScope(HttpRequestMessage request)
         {
-            _context = _context.BestEffort()
-                    .Proxy<IHttpContextSelector>()
-                    .SelectApiContext(request)
-                    ?.CreateChild()
-                 ?? _context;
+            var context = _context.BestEffort()
+                .Proxy<IHttpContextSelector>()
+                .SelectApiContext(request);
+            if (context != null && context != _context.Parent)
+            {
+                _context.End();
+                _context = context.CreateChild();
+            }
         }
 
         public void Dispose()
