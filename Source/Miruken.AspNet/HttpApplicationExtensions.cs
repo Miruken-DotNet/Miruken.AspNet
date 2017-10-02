@@ -15,7 +15,7 @@
             this HttpApplication application, IContext context)
         {
             ControllerBuilder.Current.SetControllerFactory(new ContextualControllerFactory());
-            SetRootMirukenContext(application, context);
+            application.Application[RootContextKey] = context;
             return application;
         }
 
@@ -29,12 +29,6 @@
             return rootContext;
         }
 
-        public static void SetRootMirukenContext(
-            this HttpApplication application, IContext context)
-        {
-            application.Application[RootContextKey] = context;
-        }
-
         public static IContext GetMirukenContext(this RequestContext request)
         {
             var items   = request.HttpContext.Items;
@@ -44,18 +38,12 @@
                 var app = request.HttpContext.ApplicationInstance;
                 var rootContext = GetRootMirukenContext(app);
                 items[RequestContextKey] = context
-                    = rootContext.BestEffort()?.Proxy<IHttpContextSelector>()
+                    = rootContext.BestEffort()?.Proxy<ILogicalContextSelector>()
                         .SelectMvcContext(app)
                     ?? rootContext?.CreateChild() 
                     ?? new Context();
             }
             return context;
-        }
-
-        public static void SetMirukenContext(
-            this RequestContext request, IContext context)
-        {
-            request.HttpContext.Items[RequestContextKey] = context;
         }
     }
 }

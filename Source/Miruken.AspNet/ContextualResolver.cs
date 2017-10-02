@@ -71,7 +71,7 @@
         internal void AdjustScope(HttpRequestMessage request)
         {
             var context = _context.BestEffort()
-                .Proxy<IHttpContextSelector>()
+                .Proxy<ILogicalContextSelector>()
                 .SelectApiContext(request);
             if (context != null && context != _context.Parent)
             {

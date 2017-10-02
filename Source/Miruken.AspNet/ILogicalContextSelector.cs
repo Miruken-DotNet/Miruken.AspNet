@@ -5,7 +5,7 @@
     using Callback;
     using Context;
 
-    public interface IHttpContextSelector : IResolving
+    public interface ILogicalContextSelector : IResolving
     {
         IContext SelectApiContext(HttpRequestMessage request);
         IContext SelectMvcContext(HttpApplication request);

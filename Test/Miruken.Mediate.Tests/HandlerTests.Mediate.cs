@@ -142,6 +142,16 @@
             }
         }
 
+        private class MetricsMiddleware<TReq, TResp> : DynamicMiddleware<TReq, TResp>
+        {
+            public Task<TResp> Next(TReq request, NextDelegate<Task<TResp>> next,
+                                    [Proxy]IStash stash)
+            {
+                stash.Put("Hello");
+                return next();
+            }
+        }
+
         private class MiddlewareProvider : Handler
         {
             [Provides]
@@ -149,7 +159,8 @@
             {
                  return new IMiddleware<TReq, TResp>[]
                  {
-                    new ValidateMiddleware<TReq, TResp>()
+                    new ValidateMiddleware<TReq, TResp>(),
+                    new MetricsMiddleware<TReq, TResp>()
                  };
             }
 
