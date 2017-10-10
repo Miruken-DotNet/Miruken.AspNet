@@ -11,7 +11,7 @@ namespace Miruken.Mediate.Tests
         private readonly Random random = new Random();
 
         [Mediates]
-        public Promise<StockQuote> Handle(GetStockQuote quote)
+        public Promise<StockQuote> GetQuote(GetStockQuote quote)
         {
             ++Called;
 
@@ -21,8 +21,19 @@ namespace Miruken.Mediate.Tests
             return Promise.Resolved(new StockQuote
             {
                 Symbol = quote.Symbol,
-                Value  = Convert.ToDecimal(random.NextDouble() * 10.0)
+                Value = Convert.ToDecimal(random.NextDouble() * 10.0)
             });
+        }
+
+        [Mediates]
+        public Promise SellStock(SellStock sell)
+        {
+            ++Called;
+
+            if (sell.Symbol == "EX")
+                throw new Exception("Stock Exchange is down");
+
+            return Promise.Empty;
         }
     }
 }

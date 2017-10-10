@@ -72,6 +72,7 @@
             }
         }
 
+        [Mediates]
         public Task Publish(Publish publish, IHandler composer)
         {
             return composer.Publish(publish.Message);

@@ -2,7 +2,7 @@
 {
     using System;
     using FluentValidation;
-    using Miruken.Mediate;
+    using Mediate;
 
     public class StockQuote
     {
@@ -27,6 +27,23 @@
         {
             return Symbol == other?.Symbol;
         }
+    }
+
+    public class SellStock
+    {
+        public SellStock()
+        {
+            
+        }
+
+        public SellStock(string symbol, int numShares)
+        {
+            Symbol       = symbol;
+            NumberShares = numShares;
+        }
+
+        public string Symbol       { get; set; }
+        public int    NumberShares { get; set; }
     }
 
     public class GetStockQuoteIntegrity : AbstractValidator<GetStockQuote>

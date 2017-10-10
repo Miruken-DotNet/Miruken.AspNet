@@ -6,9 +6,17 @@
         {
         }
 
-        public Publish(object request)
-            : base(request)
+        public Publish(object message)
+            : base(message)
         {
+        }
+    }
+
+    public static class PublishExtensions
+    {
+        public static Publish Publish(this object message)
+        {
+            return new Publish(message);
         }
     }
 }
