@@ -1,0 +1,21 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Miruken.Polly</id>
+    <version>$version$</version>
+    <title>Miruken Polly</title>
+    <authors>cneuwirt</authors>
+    <owners>cneuwirt</owners>
+    <licenseUrl>https://github.com/Miruken-DotNet/Miruken.Mediate/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/Miruken-DotNet/Miruken.Mediate</projectUrl>
+    <iconUrl>https://avatars0.githubusercontent.com/u/20844317</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Miruken Polly Integration</description>
+    <copyright>Copyright 2016</copyright>
+    <tags>Miruken Polly</tags>
+    <dependencies>
+      <dependency id="Miruken" version="1.0"/>
+      <dependency id="Policy" version="5.3.1"/>
+    </dependencies>
+  </metadata>
+</package>

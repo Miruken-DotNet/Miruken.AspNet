@@ -8,7 +8,7 @@
     using ValidationException = Validate.ValidationException;
 
     public class ValidateMiddleware<TRequest, TResponse>
-        : IMiddleware<TRequest, TResponse>
+        : IGlobalMiddleware<TRequest, TResponse>
     {
         public int? Order { get; set; } = Stage.Validation;
 

@@ -3,21 +3,21 @@
     using System.Threading.Tasks;
     using Callback;
 
-    public class SendReturnMessage : WorkflowAttribute
+    public class PublishReturnMessage : WorkflowAttribute
     {
-        public SendReturnMessage()
-            : base(typeof(SendReturnMessage<,>))
+        public PublishReturnMessage()
+            : base(typeof(PublishReturnMessage<,>))
         {          
         }
     }
 
-    public class SendReturnMessage<TRequest, TResponse> 
+    public class PublishReturnMessage<TRequest, TResponse> 
         : WorkflowMiddleware<TRequest, TResponse>
     {
         protected override Task Orchestrate(TRequest request, 
             TResponse result, IHandler composer)
         {
-            return composer.Send(result);
+            return composer.Publish(result);
         }
     }
 }

@@ -27,11 +27,6 @@
         [Mediates]
         public Task<object> Route(Routed routed, Command command)
         {
-            return command.Many ? null : Batch(routed);
-        }
-
-        public Task<object> Batch(Routed routed)
-        {
             Tuple<List<object>,
             List<Promise<object>.ResolveCallbackT>,
             List<Promise<object>>> group;
@@ -44,7 +39,9 @@
                     new List<Promise<object>>());
                 _groups.Add(route, group);
             }
-            group.Item1.Add(routed.Message);
+            var message = routed.Message;
+            if (command.Many) message = new Publish(message);
+            group.Item1.Add(message);
             var promise = new Promise<object>(
                 (resolve, reject) => group.Item2.Add(resolve));
             group.Item3.Add(promise);
@@ -55,7 +52,7 @@
         {
             return Promise.All(_groups.Select(group =>
             {
-                var uri = group.Key;
+                var uri      = group.Key;
                 var requests = group.Value.Item1;
                 var resolves = group.Value.Item2;
                 return requests.Count == 1

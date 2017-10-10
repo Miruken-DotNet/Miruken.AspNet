@@ -14,7 +14,7 @@
     using Validate;
 
     public class LogMiddleware<TRequest, TResponse>
-        : IMiddleware<TRequest, TResponse>
+        : IGlobalMiddleware<TRequest, TResponse>
     {
         public int? Order { get; set; } = Stage.Logging;
 

@@ -42,6 +42,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miruken.AspNet.Castle.Tests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miruken.AspNet.Swagger", "Source\Miruken.AspNet.Swagger\Miruken.AspNet.Swagger.csproj", "{6E0934F2-3EC5-4BDF-B290-D03949498DDB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miruken.Polly", "Source\Miruken.Polly\Miruken.Polly.csproj", "{07778D99-2386-49B6-8E22-BE5C6825AF1F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -104,6 +106,10 @@ Global
 		{6E0934F2-3EC5-4BDF-B290-D03949498DDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E0934F2-3EC5-4BDF-B290-D03949498DDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E0934F2-3EC5-4BDF-B290-D03949498DDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07778D99-2386-49B6-8E22-BE5C6825AF1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07778D99-2386-49B6-8E22-BE5C6825AF1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07778D99-2386-49B6-8E22-BE5C6825AF1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07778D99-2386-49B6-8E22-BE5C6825AF1F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

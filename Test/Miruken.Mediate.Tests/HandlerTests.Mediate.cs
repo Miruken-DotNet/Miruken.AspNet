@@ -1,6 +1,5 @@
 ﻿namespace Miruken.Mediate.Tests
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -142,7 +141,7 @@
             }
         }
 
-        private class MetricsMiddleware<TReq, TResp> : DynamicMiddleware<TReq, TResp>
+        private class MetricsMiddleware<TReq, TResp> : DynamicGlobalMiddleware<TReq, TResp>
         {
             public Task<TResp> Next(TReq request, NextDelegate<Task<TResp>> next,
                                     [Proxy]IStash stash)
@@ -155,9 +154,9 @@
         private class MiddlewareProvider : Handler
         {
             [Provides]
-            public IMiddleware<TReq, TResp>[] GetMiddleware<TReq, TResp>()
+            public IGlobalMiddleware<TReq, TResp>[] GetMiddleware<TReq, TResp>()
             {
-                 return new IMiddleware<TReq, TResp>[]
+                 return new IGlobalMiddleware<TReq, TResp>[]
                  {
                     new ValidateMiddleware<TReq, TResp>(),
                     new MetricsMiddleware<TReq, TResp>()

@@ -72,6 +72,11 @@
             }
         }
 
+        public Task Publish(Publish publish, IHandler composer)
+        {
+            return composer.Publish(publish.Message);
+        }
+
         private static Task<object> Process(object request, IHandler composer)
         {
             return composer.Send(request);

@@ -8,7 +8,7 @@
     public class PipelineAttribute : FilterAttribute
     {
         public PipelineAttribute()
-            : base(typeof(IMiddleware<,>))
+            : base(typeof(IGlobalMiddleware<,>))
         {
             Many = true;
         }

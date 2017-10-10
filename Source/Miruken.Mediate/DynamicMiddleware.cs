@@ -8,4 +8,10 @@
           IMiddleware<TRequest, TResponse>
     {
     }
+
+    public class DynamicGlobalMiddleware<TRequest, TResponse>
+        : DynamicMiddleware<TRequest, TResponse>,
+          IGlobalMiddleware<TRequest, TResponse>
+    {
+    }
 }

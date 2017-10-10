@@ -129,9 +129,9 @@
         private class MiddlewareProvider : Handler
         {
             [Provides]
-            public IMiddleware<TReq, TResp>[] GetMiddleware<TReq, TResp>()
+            public IGlobalMiddleware<TReq, TResp>[] GetMiddleware<TReq, TResp>()
             {
-                return new IMiddleware<TReq, TResp>[]
+                return new IGlobalMiddleware<TReq, TResp>[]
                 {
                     new ValidateMiddleware<TReq, TResp>()
                 };

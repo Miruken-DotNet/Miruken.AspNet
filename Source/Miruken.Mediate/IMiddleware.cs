@@ -7,4 +7,10 @@
         : IFilter<TRequest, Task<TResponse>>
     {
     }
+
+    public interface IGlobalMiddleware<in TRequest, TResponse>
+        : IMiddleware<TRequest, TResponse>,
+          IGlobalFilter<TRequest, Task<TResponse>>
+    {
+    }
 }
