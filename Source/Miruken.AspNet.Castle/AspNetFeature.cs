@@ -45,7 +45,7 @@
             return this;
         }
 
-        protected override IEnumerable<FromDescriptor> GetFeatures()
+        public override IEnumerable<FromDescriptor> GetFeatures()
         {
             yield return Classes.FromAssemblyContaining<HttpRouter>();
             yield return Classes.FromAssemblyContaining<HttpRouteController>();
