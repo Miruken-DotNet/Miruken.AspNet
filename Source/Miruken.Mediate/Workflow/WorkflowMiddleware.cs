@@ -1,5 +1,7 @@
 ﻿namespace Miruken.Mediate.Workflow
 {
+    using System.Collections;
+    using System.Linq;
     using System.Threading.Tasks;
     using Callback;
     using Callback.Policy;
@@ -26,5 +28,19 @@
 
         protected abstract Task Orchestrate(TRequest request,
             TResponse result, IHandler composer);
+    }
+
+    public abstract class WorkflowManyMiddleware<TRequest, TResponse>
+        : WorkflowMiddleware<TRequest, TResponse>
+    {
+        protected override Task Orchestrate(TRequest request,
+            TResponse result, IHandler composer)
+        {
+            var results = (result as IEnumerable)?.Cast<object>().ToArray();
+            if (results == null || results.Length == 0) return null;
+            return composer.Send(Combine(request, results));
+        }
+
+        protected abstract object Combine(TRequest request, object[] results);
     }
 }

@@ -1,10 +1,5 @@
 ﻿namespace Miruken.Mediate.Workflow
 {
-    using System.Collections;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using Callback;
-
     public class SendAllParallelReturnAttribute : WorkflowAttribute
     {
         public SendAllParallelReturnAttribute()
@@ -14,17 +9,14 @@
     }
 
     public class SendAllParallelReturn<TRequest, TResponse> 
-        : WorkflowMiddleware<TRequest, TResponse>
+        : WorkflowManyMiddleware<TRequest, TResponse>
     {
-        protected override Task Orchestrate(TRequest request, 
-            TResponse result, IHandler composer)
+        protected override object Combine(TRequest request, object[] results)
         {
-            var messages = (result as IEnumerable)?.Cast<object>().ToArray();
-            if (messages == null || messages.Length == 0) return null;
-            return composer.Send(new Schedule.Parallel
+            return new Schedule.Parallel
             {
-                Requests = messages
-            });
+                Requests = results
+            };
         }
     }
 }

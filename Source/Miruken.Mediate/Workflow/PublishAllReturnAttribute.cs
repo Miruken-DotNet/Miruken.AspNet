@@ -1,9 +1,6 @@
 ﻿namespace Miruken.Mediate.Workflow
 {
-    using System.Collections;
     using System.Linq;
-    using System.Threading.Tasks;
-    using Callback;
     using Schedule;
 
     public class PublishAllReturnAttribute : WorkflowAttribute
@@ -15,17 +12,14 @@
     }
 
     public class PublishAllReturn<TRequest, TResponse> 
-        : WorkflowMiddleware<TRequest, TResponse>
+        : WorkflowManyMiddleware<TRequest, TResponse>
     {
-        protected override Task Orchestrate(TRequest request, 
-            TResponse result, IHandler composer)
+        protected override object Combine(TRequest request, object[] results)
         {
-            var messages = (result as IEnumerable)?.Cast<object>().ToArray();
-            if (messages == null || messages.Length == 0) return null;
-            return composer.Send(new Concurrent
+            return new Concurrent
             {
-                Requests = messages.Select(m => new Publish(m)).ToArray()
-            });
+                Requests = results.Select(r => new Publish(r)).ToArray()
+            };
         }
     }
 }

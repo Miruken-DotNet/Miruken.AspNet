@@ -1,9 +1,12 @@
 ﻿namespace Miruken.Mediate.Tests.Workflow
 {
+    using System;
+    using System.Collections;
     using System.Threading.Tasks;
     using Callback;
     using Callback.Policy;
     using Concurrency;
+    using Mediate.Schedule;
     using Mediate.Workflow;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -23,7 +26,6 @@
             var handler = saga + new MiddlewareProvider();
             var result  = await handler.Send(new StepOne());
             Assert.IsInstanceOfType(result, typeof(StepTwo));
-            Assert.IsFalse(saga.Complete);
         }
 
         [TestMethod]
@@ -33,6 +35,51 @@
             var handler = saga + new MiddlewareProvider();
             var result  = await handler.Send(new StepOne());
             Assert.IsInstanceOfType(result, typeof(StepTwo));
+            Assert.IsTrue(saga.Complete);
+        }
+
+        [TestMethod]
+        public async Task Should_Send_All_Return()
+        {
+            var saga    = new SagaAll();
+            var handler = saga 
+                        + new ScheduleHandler()
+                        + new MiddlewareProvider();
+            var result  = await handler.Send(new StepOne());
+            Assert.IsInstanceOfType(result, typeof(IEnumerable));
+        }
+
+        [TestMethod]
+        public async Task Should_Join_All_Return()
+        {
+            var saga = new SagaAllJoin();
+            var handler = saga
+                        + new ScheduleHandler()
+                        + new MiddlewareProvider();
+            var result = await handler.Send(new StepOne());
+            Assert.IsInstanceOfType(result, typeof(IEnumerable));
+            Assert.IsTrue(saga.Complete);
+        }
+
+        [TestMethod,
+         ExpectedException(typeof(NotSupportedException))]
+        public async Task Should_Reject_Join_All_Without_Scheduler()
+        {
+            var saga = new SagaAllJoin();
+            var handler = saga
+                        + new MiddlewareProvider();
+            await handler.Send(new StepOne());
+        }
+
+        [TestMethod,
+         ExpectedException(typeof(NotSupportedException))]
+        public async Task Should_Reject_Join_All_Missing_Step()
+        {
+            var saga = new SagaAllMissingJoin();
+            var handler = saga
+                        + new ScheduleHandler()
+                        + new MiddlewareProvider();
+            await handler.Send(new StepOne());
         }
 
         public class StepOne {}
@@ -93,12 +140,88 @@
             }
         }
 
+        public class SagaAll : PipelineHandler
+        {
+            public bool Complete { get; private set; }
+
+            [Mediates,
+             SendAllReturn]
+            public IEnumerable Do(StepOne stepOne)
+            {
+                yield return new StepTwo();
+                yield return new StepThree();
+            }
+
+            [Mediates]
+            public void Do(StepTwo stepTwo)
+            {
+            }
+
+            [Mediates]
+            public Promise Do(StepThree stepThree)
+            {
+                Complete = true;
+                return Promise.Empty;
+            }
+        }
+
+        public class SagaAllJoin : PipelineHandler
+        {
+            public bool Complete { get; private set; }
+
+            [Mediates,
+             SendAllReturn(Join = true)]
+            public IEnumerable Do(StepOne stepOne)
+            {
+                yield return new StepTwo();
+                yield return new StepThree();
+            }
+
+            [Mediates]
+            public void Do(StepTwo stepTwo)
+            {
+            }
+
+            [Mediates]
+            public Promise Do(StepThree stepThree)
+            {
+                Complete = true;
+                return Promise.Empty;
+            }
+        }
+
+        public class SagaAllMissingJoin : PipelineHandler
+        {
+            public bool Complete { get; private set; }
+
+            [Mediates,
+             SendAllReturn(Join = true)]
+            public IEnumerable Do(StepOne stepOne)
+            {
+                yield return new StepTwo();
+                yield return new StepThree();
+            }
+
+            [Mediates]
+            public Promise Do(StepThree stepThree)
+            {
+                Complete = true;
+                return Promise.Empty;
+            }
+        }
+
         public class MiddlewareProvider : Handler
         {
             [Provides]
-            public SendReturn<TReq, TResp> GetMiddleware<TReq, TResp>()
+            public SendReturn<TReq, TResp> GetSendReturn<TReq, TResp>()
             {
                 return new SendReturn<TReq, TResp>();
+            }
+
+            [Provides]
+            public SendAllReturn<TReq, TResp> GetSendAllReturn<TReq, TResp>()
+            {
+                return new SendAllReturn<TReq, TResp>();
             }
         }
     }

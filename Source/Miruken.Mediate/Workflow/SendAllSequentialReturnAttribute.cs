@@ -1,9 +1,5 @@
 ﻿namespace Miruken.Mediate.Workflow
 {
-    using System.Collections;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using Callback;
     using Schedule;
 
     public class SendAllSequentialReturnAttribute : WorkflowAttribute
@@ -15,17 +11,14 @@
     }
 
     public class SendAllSequentialReturn<TRequest, TResponse> 
-        : WorkflowMiddleware<TRequest, TResponse>
+        : WorkflowManyMiddleware<TRequest, TResponse>
     {
-        protected override Task Orchestrate(TRequest request, 
-            TResponse result, IHandler composer)
+        protected override object Combine(TRequest request, object[] results)
         {
-            var messages = (result as IEnumerable)?.Cast<object>().ToArray();
-            if (messages == null || messages.Length == 0) return null;
-            return composer.Send(new Sequential
+            return new Sequential
             {
-                Requests = messages
-            });
+                Requests = results
+            };
         }
     }
 }
