@@ -6,15 +6,15 @@
     using Callback;
     using Schedule;
 
-    public class PublishReturnMessages : WorkflowAttribute
+    public class SendAllSequentialReturnAttribute : WorkflowAttribute
     {
-        public PublishReturnMessages()
-            : base(typeof(PublishReturnMessages<,>))
+        public SendAllSequentialReturnAttribute()
+            : base(typeof(SendAllSequentialReturn<,>))
         {          
         }
     }
 
-    public class PublishReturnMessages<TRequest, TResponse> 
+    public class SendAllSequentialReturn<TRequest, TResponse> 
         : WorkflowMiddleware<TRequest, TResponse>
     {
         protected override Task Orchestrate(TRequest request, 
@@ -22,9 +22,9 @@
         {
             var messages = (result as IEnumerable)?.Cast<object>().ToArray();
             if (messages == null || messages.Length == 0) return null;
-            return composer.Send(new Concurrent
+            return composer.Send(new Sequential
             {
-                Requests = messages.Select(m => new Publish(m)).ToArray()
+                Requests = messages
             });
         }
     }

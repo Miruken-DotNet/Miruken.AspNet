@@ -3,15 +3,15 @@
     using System.Threading.Tasks;
     using Callback;
 
-    public class PublishReturnMessage : WorkflowAttribute
+    public class PublishReturnAttribute : WorkflowAttribute
     {
-        public PublishReturnMessage()
-            : base(typeof(PublishReturnMessage<,>))
+        public PublishReturnAttribute()
+            : base(typeof(PublishReturn<,>))
         {          
         }
     }
 
-    public class PublishReturnMessage<TRequest, TResponse> 
+    public class PublishReturn<TRequest, TResponse> 
         : WorkflowMiddleware<TRequest, TResponse>
     {
         protected override Task Orchestrate(TRequest request, 

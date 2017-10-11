@@ -4,16 +4,17 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Callback;
+    using Schedule;
 
-    public class SendParallelReturnMessages : WorkflowAttribute
+    public class SendAllReturnAttribute : WorkflowAttribute
     {
-        public SendParallelReturnMessages()
-            : base(typeof(SendParallelReturnMessages<,>))
+        public SendAllReturnAttribute()
+            : base(typeof(SendAllReturn<,>))
         {          
         }
     }
 
-    public class SendParallelReturnMessages<TRequest, TResponse> 
+    public class SendAllReturn<TRequest, TResponse> 
         : WorkflowMiddleware<TRequest, TResponse>
     {
         protected override Task Orchestrate(TRequest request, 
@@ -21,7 +22,7 @@
         {
             var messages = (result as IEnumerable)?.Cast<object>().ToArray();
             if (messages == null || messages.Length == 0) return null;
-            return composer.Send(new Schedule.Parallel
+            return composer.Send(new Concurrent
             {
                 Requests = messages
             });

@@ -8,7 +8,7 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
-    public class SendReturnMessageTests
+    public class SendReturnTests
     {
         [TestInitialize]
         public void TestInitialize()
@@ -45,14 +45,14 @@
             public bool Complete { get; private set; }
 
             [Mediates,
-             SendReturnMessage]
+             SendReturn]
             public StepTwo Do(StepOne stepOne)
             {
                 return new StepTwo();
             }
 
             [Mediates,
-             SendReturnMessage]
+             SendReturn]
             public async Task<StepThree> Do(StepTwo stepTwo)
             {
                 await Task.Delay(10);
@@ -72,14 +72,14 @@
             public bool Complete { get; private set; }
 
             [Mediates,
-             SendReturnMessage(Join = true)]
+             SendReturn(Join = true)]
             public StepTwo Do(StepOne stepOne)
             {
                 return new StepTwo();
             }
 
             [Mediates,
-             SendReturnMessage(Join = true)]
+             SendReturn(Join = true)]
             public async Task<StepThree> Do(StepTwo stepTwo)
             {
                 await Task.Delay(10);
@@ -97,9 +97,9 @@
         public class MiddlewareProvider : Handler
         {
             [Provides]
-            public SendReturnMessage<TReq, TResp> GetMiddleware<TReq, TResp>()
+            public SendReturn<TReq, TResp> GetMiddleware<TReq, TResp>()
             {
-                return new SendReturnMessage<TReq, TResp>();
+                return new SendReturn<TReq, TResp>();
             }
         }
     }

@@ -35,8 +35,8 @@
       <HintPath>..\..\packages\FluentValidation.7.1.1\lib\net45\FluentValidation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Miruken, Version=1.8.1.39, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.1.8.1.39-prerelease\lib\net461\Miruken.dll</HintPath>
+    <Reference Include="Miruken, Version=1.8.1.40, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.1.8.1.40-prerelease\lib\net461\Miruken.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Miruken.Validate, Version=1.5.1.17, Culture=neutral, processorArchitecture=MSIL">
@@ -79,14 +79,14 @@
     <Compile Include="Schedule\Scheduled.cs" />
     <Compile Include="Schedule\ScheduleHandler.cs" />
     <Compile Include="Schedule\Sequential.cs" />
-    <Compile Include="Workflow\PublishReturnMessage.cs" />
-    <Compile Include="Workflow\PublishParallelReturnMessages.cs" />
-    <Compile Include="Workflow\PublishReturnMessages.cs" />
-    <Compile Include="Workflow\SendParallelReturnMessages.cs" />
-    <Compile Include="Workflow\PublishSequentialRturnMessages.cs" />
-    <Compile Include="Workflow\SendSequentialReturnMessages.cs" />
-    <Compile Include="Workflow\SendReturnMessages.cs" />
-    <Compile Include="Workflow\SendReturnMessage.cs" />
+    <Compile Include="Workflow\PublishReturnAttribute.cs" />
+    <Compile Include="Workflow\PublishAllParallelReturnAttribute.cs" />
+    <Compile Include="Workflow\PublishAllReturnAttribute.cs" />
+    <Compile Include="Workflow\SendAllParallelReturnAttribute.cs" />
+    <Compile Include="Workflow\PublishAllSequentialReturnAttribute.cs" />
+    <Compile Include="Workflow\SendAllSequentialReturnAttribute.cs" />
+    <Compile Include="Workflow\SendAllReturnAttribute.cs" />
+    <Compile Include="Workflow\SendReturnAttribute.cs" />
     <Compile Include="Stash.cs" />
     <Compile Include="ValidateMiddleware.cs" />
     <Compile Include="Stage.cs" />

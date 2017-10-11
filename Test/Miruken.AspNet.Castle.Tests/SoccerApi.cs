@@ -14,7 +14,17 @@
         public Player Player { get; set; }
     }
 
+    public class PlayerCreated
+    {
+        public Player Player { get; set; }
+    }
+
     public class UpdatePlayer : IRequest<PlayerResponse>
+    {
+        public Player Player { get; set; }
+    }
+
+    public class PlayerUpdated
     {
         public Player Player { get; set; }
     }

@@ -210,6 +210,36 @@
         }
 
         [TestMethod]
+        public async Task Should_Batch_Publications()
+        {
+            using (WebApp.Start("http://localhost:9000/", Configuration))
+            {
+                var player1 = new Player
+                {
+                    Name = "Paul Pogba"
+                };
+                var player2 = new Player
+                {
+                    Id   = 1,
+                    Name = "Eden Hazard"
+                };
+                var results = await _handler.Batch(batch =>
+                {
+                    batch.Publish(new PlayerCreated { Player = player1 }
+                            .RouteTo("http://localhost:9000"));
+                    batch.Publish(new PlayerUpdated { Player = player2 }
+                            .RouteTo("http://localhost:9000"));
+                });
+                Assert.AreEqual(1, results.Length);
+                var groups = (object[])results[0];
+                Assert.AreEqual(1, groups.Length);
+                var group = (Tuple<string, object[]>)groups[0];
+                Assert.AreEqual("http://localhost:9000", group.Item1);
+                Assert.AreEqual(2, group.Item2.Length);
+            }
+        }
+
+        [TestMethod]
         public async Task Should_Propogate_Failure()
         {
             using (WebApp.Start("http://localhost:9000/", Configuration))
