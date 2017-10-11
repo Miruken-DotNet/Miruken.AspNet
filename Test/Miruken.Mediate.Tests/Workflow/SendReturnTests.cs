@@ -17,7 +17,7 @@
         }
 
         [TestMethod]
-        public async Task Should_Send_Return_As_Message()
+        public async Task Should_Send_Return()
         {
             var saga    = new Saga();
             var handler = saga + new MiddlewareProvider();
@@ -27,13 +27,12 @@
         }
 
         [TestMethod]
-        public async Task Should_Join_Return_As_Message()
+        public async Task Should_Join_Return()
         {
             var saga    = new SagaJoin();
             var handler = saga + new MiddlewareProvider();
             var result  = await handler.Send(new StepOne());
             Assert.IsInstanceOfType(result, typeof(StepTwo));
-            Assert.IsTrue(saga.Complete);
         }
 
         public class StepOne {}
