@@ -4,7 +4,6 @@
     using System.Collections;
     using System.Threading.Tasks;
     using Callback;
-    using Callback.Policy;
     using Concurrency;
     using Mediate.Schedule;
     using Mediate.Workflow;
@@ -13,17 +12,11 @@
     [TestClass]
     public class SendReturnTests
     {
-        [TestInitialize]
-        public void TestInitialize()
-        {
-            HandlerDescriptor.GetDescriptor<Saga>();
-        }
-
         [TestMethod]
         public async Task Should_Send_Return()
         {
-            var saga    = new Saga();
-            var handler = saga + new MiddlewareProvider();
+            var handler = new Saga() 
+                        + new MiddlewareProvider();
             var result  = await handler.Send(new StepOne());
             Assert.IsInstanceOfType(result, typeof(StepTwo));
         }
@@ -41,8 +34,7 @@
         [TestMethod]
         public async Task Should_Send_All_Return()
         {
-            var saga    = new SagaAll();
-            var handler = saga 
+            var handler = new SagaAll()
                         + new ScheduleHandler()
                         + new MiddlewareProvider();
             var result  = await handler.Send(new StepOne());
@@ -52,7 +44,7 @@
         [TestMethod]
         public async Task Should_Join_All_Return()
         {
-            var saga = new SagaAllJoin();
+            var saga    = new SagaAllJoin();
             var handler = saga
                         + new ScheduleHandler()
                         + new MiddlewareProvider();
@@ -65,7 +57,7 @@
          ExpectedException(typeof(NotSupportedException))]
         public async Task Should_Reject_Join_All_Without_Scheduler()
         {
-            var saga = new SagaAllJoin();
+            var saga    = new SagaAllJoin();
             var handler = saga
                         + new MiddlewareProvider();
             await handler.Send(new StepOne());
@@ -75,7 +67,7 @@
          ExpectedException(typeof(NotSupportedException))]
         public async Task Should_Reject_Join_All_Missing_Step()
         {
-            var saga = new SagaAllMissingJoin();
+            var saga    = new SagaAllMissingJoin();
             var handler = saga
                         + new ScheduleHandler()
                         + new MiddlewareProvider();
