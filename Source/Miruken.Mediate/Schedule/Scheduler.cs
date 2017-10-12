@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
     using Callback;
 
-    public class ScheduleHandler : PipelineHandler
+    public class Scheduler : PipelineHandler
     {
         [Mediates]
         public async Task<ScheduleResult> Concurrent(
@@ -50,7 +50,7 @@
         }
 
         [Mediates]
-        public ScheduleResult Parallel(Parallel parallel, IHandler composer)
+        public async Task<ScheduleResult> Parallel(Parallel parallel, IHandler composer)
         {
             var requests = parallel.Requests;
             if (requests == null || requests.Length == 0)
@@ -58,17 +58,19 @@
                 {
                     Responses = Array.Empty<object>()
                 };
+            var all = Task.WhenAll(requests.AsParallel()
+                .WithExecutionMode(ParallelExecutionMode.ForceParallelism)
+                .Select(req => Process(req, composer)).ToArray());
             try
             {
                 return new ScheduleResult
                 {
-                    Responses = requests.AsParallel().Select(
-                        req => Process(req, composer).Result).ToArray()
+                    Responses = await all
                 };
             }
-            catch (AggregateException e) when (e.InnerExceptions.Count == 1)
+            catch when (all.Exception != null)
             {
-                throw e.InnerExceptions[0];
+                throw all.Exception;
             }
         }
 

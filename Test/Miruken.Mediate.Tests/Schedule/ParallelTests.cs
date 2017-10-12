@@ -15,7 +15,7 @@
         public void TestInitialize()
         {
             HandlerDescriptor.GetDescriptor<StockQuoteHandler>();
-            HandlerDescriptor.GetDescriptor<ScheduleHandler>();
+            HandlerDescriptor.GetDescriptor<Scheduler>();
             StockQuoteHandler.Called = 0;
         }
 
@@ -23,7 +23,7 @@
         public async Task Should_Execute_In_Parallel()
         {
             var handler = new StockQuoteHandler()
-                        + new ScheduleHandler();
+                        + new Scheduler();
             var result  = await handler.Send(new Parallel
             {
                 Requests = new[]
@@ -44,7 +44,7 @@
         public async Task Should_Propogate_Single_Exception()
         {
             var handler = new StockQuoteHandler()
-                        + new ScheduleHandler();
+                        + new Scheduler();
             try
             {
                 await handler.Send(new Parallel
@@ -67,7 +67,7 @@
         public async Task Should_Propogate_Multiple_Exceptions()
         {
             var handler = new StockQuoteHandler()
-                        + new ScheduleHandler();
+                        + new Scheduler();
             try
             {
                 await handler.Send(new Parallel
@@ -92,7 +92,7 @@
         {
             var handler = new StockQuoteHandler()
                         + new StockQuoteHandler()
-                        + new ScheduleHandler();
+                        + new Scheduler();
             var result = await handler.Send(new Parallel
             {
                 Requests = new[]

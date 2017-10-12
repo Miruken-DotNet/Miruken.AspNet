@@ -21,7 +21,7 @@
         {
             yield return Types.From(
                 typeof(CachedHandler), typeof(OnewayHandler),
-                typeof(ScheduleHandler));
+                typeof(Scheduler));
 
             if (_standardMiddleware)
                 yield return Types.From(

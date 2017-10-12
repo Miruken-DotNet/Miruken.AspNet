@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using Callback;
     using Callback.Policy;
+    using Schedule;
 
     public abstract class WorkflowMiddleware<TRequest, TResponse>
         : WorkflowConfig, IMiddleware<TRequest, TResponse>
@@ -42,5 +43,10 @@
         }
 
         protected abstract object Combine(TRequest request, object[] results);
+
+        protected Publish[] Published(object[] results)
+        {
+            return results.Select(r => new Publish(r)).ToArray();
+        }
     }
 }

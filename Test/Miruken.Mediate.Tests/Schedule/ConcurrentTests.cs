@@ -14,7 +14,7 @@
         public void TestInitialize()
         {
             HandlerDescriptor.GetDescriptor<StockQuoteHandler>();
-            HandlerDescriptor.GetDescriptor<ScheduleHandler>();
+            HandlerDescriptor.GetDescriptor<Scheduler>();
             StockQuoteHandler.Called = 0;
         }
 
@@ -22,7 +22,7 @@
         public async Task Should_Execute_Concurrently()
         {
             var handler = new StockQuoteHandler()
-                        + new ScheduleHandler();
+                        + new Scheduler();
             var result  = await handler.Send(new Concurrent
             {
                 Requests = new[]
@@ -43,7 +43,7 @@
         public async Task Should_Propogate_Single_Exception()
         {
             var handler = new StockQuoteHandler()
-                        + new ScheduleHandler();
+                        + new Scheduler();
             try
             {
                 await handler.Send(new Concurrent
@@ -66,7 +66,7 @@
         public async Task Should_Propogate_Multiple_Exceptions()
         {
             var handler = new StockQuoteHandler()
-                        + new ScheduleHandler();
+                        + new Scheduler();
             try
             {
                 await handler.Send(new Concurrent
@@ -93,7 +93,7 @@
         {
             var handler = new StockQuoteHandler()
                         + new StockQuoteHandler()
-                        + new ScheduleHandler();
+                        + new Scheduler();
             var result = await handler.Send(new Concurrent
             {
                 Requests = new[]

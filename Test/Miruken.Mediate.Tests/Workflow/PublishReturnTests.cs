@@ -44,7 +44,7 @@
             var store1   = new EventStoreAll();
             var store2   = new EventStoreAll();
             var handler  = store1 + store2 
-                         + new ScheduleHandler()
+                         + new Scheduler()
                          + new MiddlewareProvider();
             var eventOne = new EventOne();
             await handler.Publish(eventOne);
@@ -58,7 +58,7 @@
             var store1  = new EventStoreAllJoin();
             var store2  = new EventStoreAllJoin();
             var handler = store1 + store2
-                        + new ScheduleHandler()
+                        + new Scheduler()
                         + new MiddlewareProvider();
             await handler.Publish(new EventOne());
             Assert.AreEqual(5, store1.Events.Count);

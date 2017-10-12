@@ -35,7 +35,7 @@
         public async Task Should_Send_All_Return()
         {
             var handler = new SagaAll()
-                        + new ScheduleHandler()
+                        + new Scheduler()
                         + new MiddlewareProvider();
             var result  = await handler.Send(new StepOne());
             Assert.IsInstanceOfType(result, typeof(IEnumerable));
@@ -46,7 +46,7 @@
         {
             var saga    = new SagaAllJoin();
             var handler = saga
-                        + new ScheduleHandler()
+                        + new Scheduler()
                         + new MiddlewareProvider();
             var result = await handler.Send(new StepOne());
             Assert.IsInstanceOfType(result, typeof(IEnumerable));
@@ -69,7 +69,7 @@
         {
             var saga    = new SagaAllMissingJoin();
             var handler = saga
-                        + new ScheduleHandler()
+                        + new Scheduler()
                         + new MiddlewareProvider();
             await handler.Send(new StepOne());
         }

@@ -1,6 +1,5 @@
 ﻿namespace Miruken.Mediate.Workflow
 {
-    using System.Linq;
     using Schedule;
 
     public class PublishAllReturnAttribute : WorkflowAttribute
@@ -18,7 +17,7 @@
         {
             return new Concurrent
             {
-                Requests = results.Select(r => new Publish(r)).ToArray()
+                Requests = Published(results)
             };
         }
     }
