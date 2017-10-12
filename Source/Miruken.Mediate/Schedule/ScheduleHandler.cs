@@ -80,7 +80,10 @@
 
         private static Task<object> Process(object request, IHandler composer)
         {
-            return composer.Send(request);
+            var publish = request as Publish;
+            return publish != null
+                 ? composer.Publish(publish.Message)
+                 : composer.Send(request);
         }
     }
 }
