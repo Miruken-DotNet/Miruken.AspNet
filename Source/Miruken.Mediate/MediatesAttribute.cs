@@ -3,7 +3,7 @@
     using Callback;
     using Callback.Policy;
 
-    public class MediatesAttribute : DefinitionAttribute
+    public class MediatesAttribute : CategoryAttribute
     {
         public MediatesAttribute()
         {          

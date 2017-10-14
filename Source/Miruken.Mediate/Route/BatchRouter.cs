@@ -61,10 +61,9 @@
                          resolves[0](resp, s);
                          return Tuple.Create(uri, new[] { resp });
                      })
-                     : composer.Send(new Concurrent
-                     {
-                         Requests = group.Value.Item1.ToArray()
-                     }.RouteTo(uri)).Then((result, s) =>
+                     : composer.Send(
+                         CreateBatch(group.Value.Item1.ToArray())
+                        .RouteTo(uri)).Then((result, s) =>
                      {
                          var responses = result.Responses;
                          for (var i = 0; i < responses.Length; ++i)
@@ -72,6 +71,11 @@
                          return Tuple.Create(uri, responses);
                      });
             }).ToArray());
+        }
+
+        protected virtual Scheduled CreateBatch(object[] requests)
+        {
+            return new Concurrent { Requests = requests };
         }
     }
 }

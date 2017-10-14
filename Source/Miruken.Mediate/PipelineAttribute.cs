@@ -21,7 +21,7 @@
         protected override bool AllowFilterType(Type filterType, MethodBinding binding)
         {
             var policyBinding = binding as PolicyMethodBinding;
-            return policyBinding?.Definition is MediatesAttribute;
+            return policyBinding?.Category is MediatesAttribute;
         }
 
         protected override void ValidateFilterType(Type middlewareType)
