@@ -13,7 +13,7 @@
     public class PublishAllParallelReturn<TRequest, TResponse> 
         : WorkflowManyMiddleware<TRequest, TResponse>
     {
-        protected override object Combine(TRequest request, object[] results)
+        protected override Scheduled Combine(TRequest request, object[] results)
         {
             return new Parallel
             {

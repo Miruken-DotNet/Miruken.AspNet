@@ -2,7 +2,6 @@
 {
     using System.Web;
     using System.Web.Mvc;
-    using System.Web.Routing;
     using Callback;
     using Context;
 
@@ -29,13 +28,13 @@
             return rootContext;
         }
 
-        public static IContext GetMirukenContext(this RequestContext request)
+        public static IContext GetMirukenContext(this HttpContextBase request)
         {
-            var items   = request.HttpContext.Items;
+            var items   = request.Items;
             var context = items[RequestContextKey] as IContext;
             if (context == null)
             {
-                var app = request.HttpContext.ApplicationInstance;
+                var app = request.ApplicationInstance;
                 var rootContext = GetRootMirukenContext(app);
                 items[RequestContextKey] = context
                     = rootContext.BestEffort()?.Proxy<ILogicalContextSelector>()

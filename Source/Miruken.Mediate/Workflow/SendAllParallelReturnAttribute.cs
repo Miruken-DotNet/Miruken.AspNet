@@ -1,5 +1,7 @@
 ﻿namespace Miruken.Mediate.Workflow
 {
+    using Schedule;
+
     public class SendAllParallelReturnAttribute : WorkflowAttribute
     {
         public SendAllParallelReturnAttribute()
@@ -11,9 +13,9 @@
     public class SendAllParallelReturn<TRequest, TResponse> 
         : WorkflowManyMiddleware<TRequest, TResponse>
     {
-        protected override object Combine(TRequest request, object[] results)
+        protected override Scheduled Combine(TRequest request, object[] results)
         {
-            return new Schedule.Parallel
+            return new Parallel
             {
                 Requests = results
             };

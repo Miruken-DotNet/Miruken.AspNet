@@ -17,7 +17,7 @@
         {
             if (controllerType == null)
                 return ControllerNotFound(requestContext);
-            var context    = requestContext.GetMirukenContext();
+            var context    = requestContext.HttpContext.GetMirukenContext();
             var controller = (IController)context.Resolve(controllerType);
             if (controller == null && !controllerType.Is<IContextual>())
                 controller = base.GetControllerInstance(requestContext, controllerType);

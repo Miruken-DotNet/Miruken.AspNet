@@ -27,40 +27,39 @@
             {
                 Requests = new[]
                 {
-                    new GetStockQuote("AAPL"),
+                    new GetStockQuote("APPL"),
                     new GetStockQuote("MSFT"),
                     new GetStockQuote("GOOGL")
                 }
             });
-
-            CollectionAssert.AreEquivalent(
-                new[] {"AAPL", "MSFT", "GOOGL"},
-                result.Responses.Cast<StockQuote>().Select(q => q.Symbol)
+            CollectionAssert.AreEqual(
+                new[] { "APPL", "MSFT", "GOOGL" },
+                result.Responses.Select(r => r.Match(
+                        error => error.Message,
+                        quote => ((StockQuote)quote).Symbol))
                     .ToArray());
         }
 
         [TestMethod]
-        public async Task Should_Propogate_Exception()
+        public async Task Should_Stop_At_First_Exception()
         {
             var handler = new StockQuoteHandler()
                         + new Scheduler();
-            try
+            var result  = await handler.Send(new Sequential
             {
-                await handler.Send(new Sequential
+                Requests = new[]
                 {
-                    Requests = new[]
-                    {
-                        new GetStockQuote("AAPL"),
-                        new GetStockQuote("EX"),
-                        new GetStockQuote("GOOGL")
-                    }
-                });
-                Assert.Fail("Expected an exception");
-            }
-            catch (Exception ex)
-            {
-                Assert.AreEqual("Stock Exchange is down", ex.Message);
-            }
+                    new GetStockQuote("APPL"),
+                    new GetStockQuote("EX"),
+                    new GetStockQuote("GOOGL")
+                }
+            });
+            CollectionAssert.AreEqual(
+                new[] { "APPL", "Stock Exchange is down" },
+                result.Responses.Select(r => r.Match(
+                        error => error.Message,
+                        quote => ((StockQuote)quote).Symbol))
+                    .ToArray());
         }
 
         [TestMethod]

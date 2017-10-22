@@ -39,8 +39,8 @@
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Miruken, Version=1.8.1.42, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.1.8.1.42-prerelease\lib\net461\Miruken.dll</HintPath>
+    <Reference Include="Miruken, Version=1.8.1.49, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.1.8.1.49-prerelease\lib\net461\Miruken.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Miruken.Validate, Version=1.5.1.19, Culture=neutral, processorArchitecture=MSIL">
@@ -107,7 +107,7 @@
     <Compile Include="HttpRouteAttribute.cs" />
     <Compile Include="HttpRouteController.cs" />
     <Compile Include="ILogicalContextSelector.cs" />
-    <Compile Include="JsonContentNegotiator.cs" />
+    <Compile Include="HttpRouteContentNegotiator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

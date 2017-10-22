@@ -13,9 +13,9 @@
             HttpControllerDescriptor controllerDescriptor)
         {
             controllerSettings.Formatters.Clear();
-            controllerSettings.Formatters.Add(HttpFormatters.JsonTyped);
+            controllerSettings.Formatters.Add(HttpFormatters.Route);
             controllerSettings.Services.Replace(typeof(IContentNegotiator), 
-                new JsonContentNegotiator(HttpFormatters.JsonTyped));
+                new HttpRouteContentNegotiator());
         }
     }
 }

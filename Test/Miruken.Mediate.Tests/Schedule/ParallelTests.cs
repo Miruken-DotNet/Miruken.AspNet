@@ -1,6 +1,5 @@
 ﻿namespace Miruken.Mediate.Tests.Schedule
 {
-    using System;
     using System.Linq;
     using System.Threading.Tasks;
     using Callback.Policy;
@@ -28,15 +27,16 @@
             {
                 Requests = new[]
                 {
-                    new GetStockQuote("AAPL"),
+                    new GetStockQuote("APPL"),
                     new GetStockQuote("MSFT"),
                     new GetStockQuote("GOOGL")
                 }
             });
-
-            CollectionAssert.AreEquivalent(
-                new[] {"AAPL", "MSFT", "GOOGL"},
-                result.Responses.Cast<StockQuote>().Select(q => q.Symbol)
+            CollectionAssert.AreEqual(
+                new[] { "APPL", "MSFT", "GOOGL" },
+                result.Responses.Select(r => r.Match(
+                        error => error.Message,
+                        quote => ((StockQuote)quote).Symbol))
                     .ToArray());
         }
 
@@ -45,22 +45,20 @@
         {
             var handler = new StockQuoteHandler()
                         + new Scheduler();
-            try
+            var result  = await handler.Send(new Parallel
             {
-                await handler.Send(new Parallel
+                Requests = new[]
                 {
-                    Requests = new[]
-                    {
-                        new GetStockQuote("AAPL"),
-                        new GetStockQuote("EX")
-                    }
-                });
-                Assert.Fail("Expected an exception");
-            }
-            catch (Exception ex)
-            {
-                Assert.AreEqual("Stock Exchange is down", ex.Message);
-            }
+                    new GetStockQuote("APPL"),
+                    new GetStockQuote("EX")
+                }
+            });
+            CollectionAssert.AreEqual(
+                new[] { "APPL", "Stock Exchange is down" },
+                result.Responses.Select(r => r.Match(
+                        error => error.Message,
+                        quote => ((StockQuote)quote).Symbol))
+                    .ToArray());
         }
 
         [TestMethod]
@@ -68,23 +66,21 @@
         {
             var handler = new StockQuoteHandler()
                         + new Scheduler();
-            try
+            var result  = await handler.Send(new Parallel
             {
-                await handler.Send(new Parallel
+                Requests = new[]
                 {
-                    Requests = new[]
-                    {
-                        new GetStockQuote("EX"),
-                        new GetStockQuote("GOOGL"),
-                        new GetStockQuote("EX")
-                    }
-                });
-                Assert.Fail("Expected an exception");
-            }
-            catch (AggregateException ex)
-            {
-                Assert.AreEqual("Stock Exchange is down", ex.InnerException?.Message);
-            }
+                    new GetStockQuote("EX"),
+                    new GetStockQuote("APPL"),
+                    new GetStockQuote("EX")
+                }
+            });
+            CollectionAssert.AreEqual(
+                new[] { "Stock Exchange is down", "APPL", "Stock Exchange is down" },
+                result.Responses.Select(r => r.Match(
+                        error => error.Message,
+                        quote => ((StockQuote)quote).Symbol))
+                    .ToArray());
         }
 
         [TestMethod]

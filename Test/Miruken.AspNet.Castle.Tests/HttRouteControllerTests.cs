@@ -48,8 +48,9 @@
                 .AddFacility<LoggingFacility>(f => f.LogUsing(new NLogFactory(_config)))
                 .Install(new FeaturesInstaller(
                     new HandleFeature(), new ValidateFeature(),
-                    new MediateFeature().WithStandardMiddleware()).Use(
+                    new MediateFeature()).Use(
                         Classes.FromAssemblyContaining<HttpRouter>(),
+                        Types.From(typeof(LogMiddleware<,>)),
                         Classes.FromThisAssembly()))
             );
         }
@@ -171,6 +172,34 @@
         }
 
         [TestMethod]
+        public async Task Should_Batch_Single_Request()
+        {
+            using (WebApp.Start("http://localhost:9000/", Configuration))
+            {
+                var player = new Player
+                {
+                    Name = "Paul Pogba"
+                };
+                var results = await _handler.Batch(batch =>
+                {
+                    batch.Send(new CreatePlayer { Player = player }
+                            .RouteTo("http://localhost:9000"))
+                        .Then((response, s) =>
+                        {
+                            Assert.AreEqual("Paul Pogba", response.Player.Name);
+                            Assert.IsTrue(response.Player.Id > 0);
+                        });
+                });
+                Assert.AreEqual(1, results.Length);
+                var groups = (object[])results[0];
+                Assert.AreEqual(1, groups.Length);
+                var group = (Tuple<string, object[]>)groups[0];
+                Assert.AreEqual("http://localhost:9000", group.Item1);
+                Assert.AreEqual(1, group.Item2.Length);
+            }
+        }
+
+        [TestMethod]
         public async Task Should_Batch_Requests()
         {
             using (WebApp.Start("http://localhost:9000/", Configuration))
@@ -244,19 +273,18 @@
         {
             using (WebApp.Start("http://localhost:9000/", Configuration))
             {
-                try
-                {
-                    await _handler.Batch(batch =>
-                        batch.Send(new CreatePlayer { Player = new Player() }
-                            .RouteTo("http://localhost:9000")));
-                }
-                catch (ValidationException vex)
-                {
-                    var outcome = vex.Outcome;
-                    Assert.IsNotNull(outcome);
-                    CollectionAssert.AreEqual(new[] { "Player" }, outcome.Culprits);
-                    Assert.AreEqual("'Player. Name' should not be empty.", outcome["Player.Name"]);
-                }
+                await _handler.Batch(batch =>
+                    batch.Send(new CreatePlayer { Player = new Player() }
+                        .RouteTo("http://localhost:9000"))
+                        .Then((_, s) => Assert.Fail("Should have failed"))
+                        .Catch((ValidationException vex, bool s) =>
+                        {
+                            var outcome = vex.Outcome;
+                            Assert.IsNotNull(outcome);
+                            CollectionAssert.AreEqual(new[] { "Player" }, outcome.Culprits);
+                            Assert.AreEqual("'Player. Name' should not be empty.", outcome["Player.Name"]);
+                        })
+                        .Catch((ex, s) => Assert.Fail("Unexpected exception")));
             }
         }
 
@@ -265,24 +293,33 @@
         {
             using (WebApp.Start("http://localhost:9000/", Configuration))
             {
-                try
+                await _handler.Batch(batch =>
                 {
-                    await _handler.Batch(batch =>
-                    {
-                        batch.Send(new CreatePlayer { Player = new Player() }
-                            .RouteTo("http://localhost:9000"));
-                        batch.Send(new CreatePlayer { Player = new Player
-                                   {
-                                       Id   = 3,
-                                       Name = "Sergio Ramos"
-                                   }}
-                            .RouteTo("http://localhost:9000"));
-                    });
-                }
-                catch (AggregateException ex)
-                {
-                    Assert.AreEqual(2, ex.InnerExceptions.Count);
-                }
+                    batch.Send(new CreatePlayer { Player = new Player() }
+                        .RouteTo("http://localhost:9000"))
+                        .Catch((ValidationException vex, bool s) =>
+                        {
+                            var outcome = vex.Outcome;
+                            Assert.IsNotNull(outcome);
+                            CollectionAssert.AreEqual(new[] { "Player" }, outcome.Culprits);
+                            Assert.AreEqual("'Player. Name' should not be empty.", outcome["Player.Name"]);
+                        })
+                        .Catch((ex, s) => Assert.Fail("Unexpected exception"));
+                    batch.Send(new CreatePlayer { Player = new Player
+                        {
+                            Id   = 3,
+                            Name = "Sergio Ramos"
+                        }}
+                        .RouteTo("http://localhost:9000"))
+                        .Catch((ValidationException vex, bool s) =>
+                        {
+                            var outcome = vex.Outcome;
+                            Assert.IsNotNull(outcome);
+                            CollectionAssert.AreEqual(new[] { "Player" }, outcome.Culprits);
+                            Assert.AreEqual("'Player. Id' should be equal to '0'.", outcome["Player.Id"]);
+                        })
+                        .Catch((ex, s) => Assert.Fail("Unexpected exception"));
+                });
             }
         }
     }
