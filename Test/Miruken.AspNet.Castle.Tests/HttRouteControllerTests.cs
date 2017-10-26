@@ -35,8 +35,8 @@
         [TestInitialize]
         public void TestInitialize()
         {
-            _config = new LoggingConfiguration();
-            _memoryTarget   = new MemoryTarget
+            _config       = new LoggingConfiguration();
+            _memoryTarget = new MemoryTarget
             {
                 Layout = "${date} [${threadid}] ${level:uppercase=true} ${logger} ${message} ${exception:format=tostring}"
             };
@@ -239,6 +239,36 @@
         }
 
         [TestMethod]
+        public async Task Should_Not_Batch_Awaited_Requests()
+        {
+            using (WebApp.Start("http://localhost:9000/", Configuration))
+            {
+                var player1 = new Player
+                {
+                    Name = "Paul Pogba"
+                };
+                var player2 = new Player
+                {
+                    Name = "Eden Hazard"
+                };
+                await _handler.Batch(async batch =>
+                {
+                    var response = await batch.Send(new CreatePlayer { Player = player1 }
+                            .RouteTo("http://localhost:9000"));
+                    Assert.AreEqual("Paul Pogba", response.Player.Name);
+                    Assert.IsTrue(response.Player.Id > 0);
+                    await batch.Send(new CreatePlayer { Player = player2 }
+                            .RouteTo("http://localhost:9000"))
+                        .Then((resp, s) =>
+                        {
+                            Assert.AreEqual("Eden Hazard", resp.Player.Name);
+                            Assert.IsTrue(response.Player.Id > 0);
+                        });
+                });
+            }
+        }
+
+        [TestMethod]
         public async Task Should_Batch_Publications()
         {
             using (WebApp.Start("http://localhost:9000/", Configuration))
@@ -273,7 +303,7 @@
         {
             using (WebApp.Start("http://localhost:9000/", Configuration))
             {
-                await _handler.Batch(batch =>
+                var results = await _handler.Batch(batch =>
                     batch.Send(new CreatePlayer { Player = new Player() }
                         .RouteTo("http://localhost:9000"))
                         .Then((_, s) => Assert.Fail("Should have failed"))
@@ -285,6 +315,12 @@
                             Assert.AreEqual("'Player. Name' should not be empty.", outcome["Player.Name"]);
                         })
                         .Catch((ex, s) => Assert.Fail("Unexpected exception")));
+                Assert.AreEqual(1, results.Length);
+                var groups = (object[])results[0];
+                Assert.AreEqual(1, groups.Length);
+                var group = (Tuple<string, object[]>)groups[0];
+                Assert.AreEqual("http://localhost:9000", group.Item1);
+                Assert.AreEqual(1, group.Item2.Length);
             }
         }
 
@@ -293,7 +329,7 @@
         {
             using (WebApp.Start("http://localhost:9000/", Configuration))
             {
-                await _handler.Batch(batch =>
+                var results = await _handler.Batch(batch =>
                 {
                     batch.Send(new CreatePlayer { Player = new Player() }
                         .RouteTo("http://localhost:9000"))
@@ -320,6 +356,12 @@
                         })
                         .Catch((ex, s) => Assert.Fail("Unexpected exception"));
                 });
+                Assert.AreEqual(1, results.Length);
+                var groups = (object[])results[0];
+                Assert.AreEqual(1, groups.Length);
+                var group = (Tuple<string, object[]>)groups[0];
+                Assert.AreEqual("http://localhost:9000", group.Item1);
+                Assert.AreEqual(2, group.Item2.Length);
             }
         }
     }

@@ -3,21 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
     using Callback;
     using Concurrency;
     using Schedule;
 
     public abstract class BatchRouter : PipelineHandler, IBatching
     {
-        private class Request
-        {
-            public object                           Message;
-            public Promise                          Promise;
-            public Promise<object>.ResolveCallbackT Resolve;
-            public RejectCallback                   Reject;
-        }
-
         private readonly Dictionary<string, List<Request>> _groups;
 
         protected BatchRouter()
@@ -26,7 +17,8 @@
         }
 
         [Mediates]
-        public Task<object> Route(Routed routed, Command command)
+        public Promise<object> Route(Routed routed,
+            Command command, IHandler composer)
         {
             List<Request> group;
             var route = routed.Route;
@@ -37,22 +29,15 @@
             }
             var message = command.Many
                         ? new Publish(routed.Message)
-                        : routed.Message;            
-            var request = new Request { Message = message };
-            var promise = new Promise<object>(
-                ChildCancelMode.Any, (resolve, reject) =>
-            {
-                request.Resolve = resolve;
-                request.Reject  = reject;
-            });
-            request.Promise = promise;
+                        : routed.Message;
+            var request = new Request(message);
             group.Add(request);
-            return promise;
+            return request.Promise;
         }
 
         public object Complete(IHandler composer)
         {
-            return Promise.All(_groups.Select(group =>
+            var complete = Promise.All(_groups.Select(group =>
             {
                 var uri      = group.Key;
                 var requests = group.Value;
@@ -92,11 +77,31 @@
                             })).ToArray());
                 });
             }).ToArray());
+            _groups.Clear();
+            return complete;
         }
 
         protected virtual Scheduled CreateBatch(object[] requests)
         {
             return new Concurrent { Requests = requests };
+        }
+
+        private class Request
+        {
+            public object                           Message { get; }
+            public Promise<object>                  Promise { get; }
+            public Promise<object>.ResolveCallbackT Resolve { get; private set; }
+            public RejectCallback                   Reject  { get; private set; }
+
+            public Request(object message)
+            {
+                Message = message;
+                Promise = new Promise<object>((resolve, reject) =>
+                {
+                    Resolve = resolve;
+                    Reject  = reject;
+                });
+            }
         }
     }
 }

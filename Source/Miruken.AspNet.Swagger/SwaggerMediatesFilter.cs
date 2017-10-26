@@ -19,7 +19,7 @@
         private readonly Fixture _examples;
 
         private static readonly MethodInfo CreateExampleMethod =
-            typeof(SwaggerMediatesFilter).GetMethod("CreateExample",
+            typeof(SwaggerMediatesFilter).GetMethod(nameof(CreateExample),
          BindingFlags.Static | BindingFlags.NonPublic);
 
         private static readonly JsonSerializerSettings SerializerSettings
