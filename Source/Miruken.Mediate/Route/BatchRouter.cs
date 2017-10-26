@@ -7,6 +7,7 @@
     using Concurrency;
     using Schedule;
 
+    [Unmanaged]
     public abstract class BatchRouter : PipelineHandler, IBatching
     {
         private readonly Dictionary<string, List<Request>> _groups;
