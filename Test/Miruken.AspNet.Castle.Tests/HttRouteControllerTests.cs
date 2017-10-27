@@ -53,6 +53,10 @@
                         Types.From(typeof(LogMiddleware<,>)),
                         Classes.FromThisAssembly()))
             );
+
+            AppDomain.CurrentDomain
+                .Load(typeof(Microsoft.Owin.Host.HttpListener.OwinHttpListener)
+                .Assembly.GetName());
         }
 
         [TestCleanup]
