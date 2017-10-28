@@ -19,12 +19,6 @@
             _filters = new [] { new AcceptsRouteMiddleware(schemes) };
         }
 
-        public bool NoBatching
-        {
-            get { return _filters[0].NoBatching; }
-            set { _filters[0].NoBatching = value; }
-        }
-
         public IEnumerable<IFilter> GetFilters(MethodBinding binding, 
             Type callbackType, Type logicalResultType, IHandler composer)
         {
@@ -42,13 +36,11 @@
                 _schemes = schemes;
             }
 
-            public bool NoBatching { get; set; }
-
             public Task<object> Next(Routed routed, MethodBinding method,
                 IHandler composer, NextDelegate<Task<object>> next)
             {
                 var matches = Array.IndexOf(_schemes, GetScheme(routed)) >= 0;
-                if (matches && !NoBatching)
+                if (matches)
                 {
                     var batch = composer.GetBatch<BatchRouter>();
                     if (batch != null)
