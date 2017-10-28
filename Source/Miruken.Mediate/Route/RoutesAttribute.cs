@@ -8,15 +8,21 @@
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method,
         Inherited = false)]
-    public class AcceptsRouteAttribute : Attribute, IFilterProvider
+    public class RoutesAttribute : Attribute, IFilterProvider
     {
         private readonly AcceptsRouteMiddleware[] _filters;
 
-        public AcceptsRouteAttribute(params string[] schemes)
+        public RoutesAttribute(params string[] schemes)
         {
             if (schemes == null || schemes.Length == 0)
                 throw new ArgumentException("Schemes cannot be empty", nameof(schemes));
             _filters = new [] { new AcceptsRouteMiddleware(schemes) };
+        }
+
+        public bool NoBatching
+        {
+            get { return _filters[0].NoBatching; }
+            set { _filters[0].NoBatching = value; }
         }
 
         public IEnumerable<IFilter> GetFilters(MethodBinding binding, 
@@ -36,10 +42,18 @@
                 _schemes = schemes;
             }
 
+            public bool NoBatching { get; set; }
+
             public Task<object> Next(Routed routed, MethodBinding method,
                 IHandler composer, NextDelegate<Task<object>> next)
             {
                 var matches = Array.IndexOf(_schemes, GetScheme(routed)) >= 0;
+                if (matches && !NoBatching)
+                {
+                    var batch = composer.GetBatch<BatchRouter>();
+                    if (batch != null)
+                        return batch.Send(routed);
+                }
                 return next(matches);
             }
 
