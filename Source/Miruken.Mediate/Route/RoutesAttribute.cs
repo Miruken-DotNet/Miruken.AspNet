@@ -10,13 +10,13 @@
         Inherited = false)]
     public class RoutesAttribute : Attribute, IFilterProvider
     {
-        private readonly AcceptsRouteMiddleware[] _filters;
+        private readonly RoutesMiddleware[] _filters;
 
         public RoutesAttribute(params string[] schemes)
         {
             if (schemes == null || schemes.Length == 0)
                 throw new ArgumentException("Schemes cannot be empty", nameof(schemes));
-            _filters = new [] { new AcceptsRouteMiddleware(schemes) };
+            _filters = new [] { new RoutesMiddleware(schemes) };
         }
 
         public IEnumerable<IFilter> GetFilters(MethodBinding binding, 
@@ -25,13 +25,13 @@
             return _filters;
         }
 
-        private class AcceptsRouteMiddleware : IMiddleware<Routed, object>
+        private class RoutesMiddleware : IMiddleware<Routed, object>
         {
             private readonly string[] _schemes;
 
             public int? Order { get; set; } = Stage.Logging - 1;
 
-            public AcceptsRouteMiddleware(string[] schemes)
+            public RoutesMiddleware(string[] schemes)
             {
                 _schemes = schemes;
             }
