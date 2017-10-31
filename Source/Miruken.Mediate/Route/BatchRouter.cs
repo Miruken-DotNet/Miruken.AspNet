@@ -57,7 +57,7 @@
                         });
                 }
                 var messages = requests.Select(r => r.Message).ToArray();
-                return composer.Send(CreateBatch(messages)
+                return composer.Send(new Concurrent {Requests  = messages}
                     .RouteTo(uri)).Then((result, s) =>
                 {
                     var responses = result.Responses;
@@ -79,11 +79,6 @@
             }).ToArray());
             _groups.Clear();
             return complete;
-        }
-
-        protected virtual Scheduled CreateBatch(object[] requests)
-        {
-            return new Concurrent { Requests = requests };
         }
 
         private class Request
