@@ -39,12 +39,12 @@
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Miruken, Version=1.8.1.72, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.1.8.1.72-prerelease\lib\net461\Miruken.dll</HintPath>
+    <Reference Include="Miruken, Version=1.9.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.1.9.0.3\lib\net461\Miruken.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Miruken.Validate, Version=1.5.1.19, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.Validate.1.5.1.19-prerelease\lib\net461\Miruken.Validate.dll</HintPath>
+    <Reference Include="Miruken.Validate, Version=1.6.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.Validate.1.6.0.4\lib\net461\Miruken.Validate.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
