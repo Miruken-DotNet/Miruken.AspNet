@@ -87,7 +87,7 @@
     <Compile Include="Workflow\SendAllSequentialReturnAttribute.cs" />
     <Compile Include="Workflow\SendAllReturnAttribute.cs" />
     <Compile Include="Workflow\SendReturnAttribute.cs" />
-    <Compile Include="StashOf.cs" />
+    <Compile Include="Stash.cs" />
     <Compile Include="ValidateMiddleware.cs" />
     <Compile Include="Stage.cs" />
     <Compile Include="Workflow\WorkflowAttribute.cs" />

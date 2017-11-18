@@ -57,19 +57,33 @@
     public class StashOf<T>
         where T : class
     {
+        private readonly IHandler _handler;
         private readonly IStash _stash;
 
         public StashOf(IHandler handler)
         {
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
+            _handler = handler;
             _stash = handler.Proxy<IStash>();
         }
 
         public T Value
         {
-            get { return _stash.Get<T>(); }
+            get { return _stash.TryGet<T>(); }
             set { _stash.Put(value); }
+        }
+
+        public T GetOrPut(T value)
+        {
+            return _stash.GetOrPut(value);
+        }
+
+        public T GetOrPut(Func<IHandler, T> put)
+        {
+            if (put == null)
+                throw new ArgumentNullException(nameof(put));
+            return _stash.GetOrPut(() => put(_handler));
         }
 
         public void Drop()
