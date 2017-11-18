@@ -54,7 +54,7 @@
             [Mediates]
             public Order Cancel(
                 CancelOrder cancel, IHandler composer, 
-                Stash<Order> order)
+                StashOf<Order> order)
             {
                 order.Value.Status = OrderStatus.Cancelled;
                 return order;

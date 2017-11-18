@@ -31,9 +31,9 @@
         }
 
         [Provides]
-        public Stash<T> Wraps<T>(IHandler composer) where T : class
+        public StashOf<T> Wraps<T>(IHandler composer) where T : class
         {
-            return new Stash<T>(composer);
+            return new StashOf<T>(composer);
         }
 
         public T Get<T>() where T : class
@@ -54,12 +54,12 @@
         }
     }
 
-    public class Stash<T>
+    public class StashOf<T>
         where T : class
     {
         private readonly IStash _stash;
 
-        public Stash(IHandler handler)
+        public StashOf(IHandler handler)
         {
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
@@ -77,9 +77,9 @@
             _stash.Drop<T>();
         }
 
-        public static implicit operator T(Stash<T> stash)
+        public static implicit operator T(StashOf<T> stashOf)
         {
-            return stash.Value;
+            return stashOf.Value;
         }
     }
 
