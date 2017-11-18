@@ -22,6 +22,20 @@
             _data = new Dictionary<Type, object>();
         }
 
+        [Provides]
+        public T Provides<T>() where T : class
+        {
+            object data;
+            return _data.TryGetValue(typeof(T), out data)
+                 ? (T)data : null;
+        }
+
+        [Provides]
+        public Stash<T> Wraps<T>(IHandler composer) where T : class
+        {
+            return new Stash<T>(composer);
+        }
+
         public T Get<T>() where T : class
         {
             object data;
@@ -37,6 +51,35 @@
         public bool Drop<T>() where T : class
         {
             return _data.Remove(typeof(T));
+        }
+    }
+
+    public class Stash<T>
+        where T : class
+    {
+        private readonly IStash _stash;
+
+        public Stash(IHandler handler)
+        {
+            if (handler == null)
+                throw new ArgumentNullException(nameof(handler));
+            _stash = handler.Proxy<IStash>();
+        }
+
+        public T Value
+        {
+            get { return _stash.Get<T>(); }
+            set { _stash.Put(value); }
+        }
+
+        public void Drop()
+        {
+            _stash.Drop<T>();
+        }
+
+        public static implicit operator T(Stash<T> stash)
+        {
+            return stash.Value;
         }
     }
 

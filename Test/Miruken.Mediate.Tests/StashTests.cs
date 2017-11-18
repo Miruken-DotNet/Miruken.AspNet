@@ -52,10 +52,11 @@
         public class OrderHandler : PipelineHandler
         {
             [Mediates]
-            public Order Cancel(CancelOrder cancel, IHandler composer)
+            public Order Cancel(
+                CancelOrder cancel, IHandler composer, 
+                Stash<Order> order)
             {
-                var order = composer.Proxy<IStash>().Get<Order>();
-                order.Status = OrderStatus.Cancelled;
+                order.Value.Status = OrderStatus.Cancelled;
                 return order;
             }
         }
@@ -136,8 +137,6 @@
         [TestMethod]
         public async Task Should_Access_Stash()
         {
-            HandlerDescriptor.GetDescriptor<OrderHandler>();
-
             var handler = new OrderHandler()
                         + new ValidationHandler()
                         + new FluentValidationValidator()
