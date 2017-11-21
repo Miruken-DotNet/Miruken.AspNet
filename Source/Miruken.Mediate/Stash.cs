@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Callback;
 
     public interface IStash
@@ -86,6 +87,13 @@
             return _stash.GetOrPut(() => put(_handler));
         }
 
+        public Task<T> GetOrPut(Func<IHandler, Task<T>> put)
+        {
+            if (put == null)
+                throw new ArgumentNullException(nameof(put));
+            return _stash.GetOrPut(() => put(_handler));
+        }
+
         public void Drop()
         {
             _stash.Drop<T>();
@@ -100,7 +108,7 @@
     public static class StashExtensions
     {
         public static T TryGet<T>(this IStash stash)
-          where T : class
+            where T : class
         {
             try
             {
@@ -133,6 +141,20 @@
             if (data == null)
             {
                 data = put();
+                stash.Put(data);
+            }
+            return data;
+        }
+
+        public static async Task<T> GetOrPut<T>(this IStash stash, Func<Task<T>> put)
+            where T : class
+        {
+            if (put == null)
+                throw new ArgumentNullException(nameof(put));
+            var data = stash.TryGet<T>();
+            if (data == null)
+            {
+                data = await put();
                 stash.Put(data);
             }
             return data;
