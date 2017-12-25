@@ -66,7 +66,7 @@
             if (handler == null)
                 throw new ArgumentNullException(nameof(handler));
             _handler = handler;
-            _stash = handler.Proxy<IStash>();
+            _stash   = handler.Proxy<IStash>();
         }
 
         public T Value
