@@ -17,7 +17,7 @@ The MediatorInstaller lives in Miruken.Mediate.Castle so add a reference to its 
 
 In the Container.Install() method, add your feature assemblies, and then pass in an instance of MediatorInstaller. 
 
-.. literalinclude:: /example/configuration/installingMediator.cs
+.. literalinclude:: ../../examples/configuration/installingMediator.cs
    :emphasize-lines: 19-21
 
 Installing Validation Middleware
@@ -29,6 +29,6 @@ The ValidationInstalling lives in the Miruken.Validate.Castle so add a reference
 
 In the Container.Install() method, add your feature assemblies, and then pass in an instance of ValidationInstaller. 
 
-.. literalinclude:: /example/configuration/installingValidationMiddleware.cs
+.. literalinclude:: ../../examples/configuration/installingValidateMiddleware.cs
    :emphasize-lines: 20-23
 

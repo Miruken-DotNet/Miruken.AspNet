@@ -6,4 +6,4 @@ Publish
 
 In this example we are executing :code:`Publish()` off of the :code:`IHandler composer` that is passed in to the :code:`[Mediates]` method.  Mediator will find and execute all handlers that can handle TeamCreated.
 
-.. literalinclude:: /example/handler/withComposer/teamHandler.cs
+.. literalinclude:: ../../examples/handler/withComposer/teamHandler.cs
