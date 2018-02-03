@@ -9,6 +9,7 @@
     using AutoFixture.Kernel;
     using Callback.Policy;
     using Http;
+    using Http.Format;
     using Mediate;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
@@ -25,9 +26,11 @@
         private static readonly JsonSerializerSettings SerializerSettings
             = new JsonSerializerSettings
             {
+                NullValueHandling              = NullValueHandling.Ignore,
                 ContractResolver               = new CamelCasePropertyNamesContractResolver(),
                 TypeNameHandling               = TypeNameHandling.Auto,
-                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
+                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
+                Converters                     = { EitherJsonConverter.Instance }
             };
 
         private static readonly string[] JsonFormats = { "application/json" };

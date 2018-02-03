@@ -105,10 +105,10 @@
         }
     }
 
+    #region Formatting
+
     public abstract class LogMiddleware
     {
-        #region Formatting
-
         protected static readonly JsonSerializerSettings JsonSettings =
             new JsonSerializerSettings
             {
@@ -136,8 +136,6 @@
             return SimpleNames.TryGetValue(type, out var name) ? name : type.Name;
         }
 
-        #endregion
-
         protected static readonly Dictionary<Type, string>
             SimpleNames = new Dictionary<Type, string>
             {
@@ -164,8 +162,6 @@
             typeof(ValidationException)
         };
 
-        #region ByteArrayFormatter
-
         protected class ByteArrayFormatter : JsonConverter
         {
             public override bool CanRead => false;
@@ -186,8 +182,7 @@
                 throw new NotImplementedException("Unnecessary because CanRead is false.");
             }
         }
-
-        #endregion
     }
 
+    #endregion
 }
