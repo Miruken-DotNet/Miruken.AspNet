@@ -14,7 +14,7 @@
     using Validate;
 
     public class LogMiddleware<TRequest, TResponse>
-        : IGlobalMiddleware<TRequest, TResponse>
+        : LogMiddleware, IGlobalMiddleware<TRequest, TResponse>
     {
         public int? Order { get; set; } = Stage.Logging;
 
@@ -103,57 +103,61 @@
             var type = method.Dispatcher.Method.ReflectedType;
             return LoggerFactory?.Create(type) ?? NullLogger.Instance;
         }
+    }
 
+    public abstract class LogMiddleware
+    {
         #region Formatting
 
-        private static readonly JsonSerializerSettings JsonSettings =
+        protected static readonly JsonSerializerSettings JsonSettings =
             new JsonSerializerSettings
             {
                 Formatting            = Formatting.Indented,
                 DateFormatString      = "MM-dd-yyyy hh:mm:ss",
                 NullValueHandling     = NullValueHandling.Ignore,
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                Converters = {
+                Converters            = {
                     new StringEnumConverter(),
                     new ByteArrayFormatter()
                 }
             };
 
-        private static string PrettyName(Type type)
+        protected static string PrettyName(Type type)
         {
             if (type.IsGenericType)
             {
                 return (type.GetGenericTypeDefinition() == typeof(Nullable<>))
-                     ? $"{PrettyName(Nullable.GetUnderlyingType(type))}?"
-                     : $"{type.Name.Split('`')[0]}<{string.Join(", ", type.GenericTypeArguments.Select(PrettyName).ToArray())}>";
+                    ? $"{PrettyName(Nullable.GetUnderlyingType(type))}?"
+                    : $"{type.Name.Split('`')[0]}<{string.Join(", ", type.GenericTypeArguments.Select(PrettyName).ToArray())}>";
             }
             if (type.IsArray)
                 return $"{PrettyName(type.GetElementType())}[]";
 
-            string name;
-            return SimpleNames.TryGetValue(type, out name) ? name : type.Name;
+            return SimpleNames.TryGetValue(type, out var name) ? name : type.Name;
         }
 
-        private static readonly Dictionary<Type, string>
-            SimpleNames = new Dictionary<Type, string>
-        {
-            { typeof (bool),    "bool" },
-            { typeof (byte),    "byte" },
-            { typeof (char),    "char" },
-            { typeof (decimal), "decimal" },
-            { typeof (double),  "double" },
-            { typeof (float),   "float" },
-            { typeof (int),     "int" },
-            { typeof (long),    "long" },
-            { typeof (sbyte),   "sbyte" },
-            { typeof (short),   "short" },
-            { typeof (string),  "string "},
-            { typeof (uint),    "uint" },
-            { typeof (ulong),   "ulong" },
-            { typeof (ushort),  "ushort" }
-        };
+        #endregion
 
-        private static readonly Type[] WarningExceptions =
+        protected static readonly Dictionary<Type, string>
+            SimpleNames = new Dictionary<Type, string>
+            {
+                { typeof (bool),    "bool" },
+                { typeof (byte),    "byte" },
+                { typeof (char),    "char" },
+                { typeof (decimal), "decimal" },
+                { typeof (double),  "double" },
+                { typeof (float),   "float" },
+                { typeof (int),     "int" },
+                { typeof (long),    "long" },
+                { typeof (sbyte),   "sbyte" },
+                { typeof (short),   "short" },
+                { typeof (string),  "string "},
+                { typeof (uint),    "uint" },
+                { typeof (ulong),   "ulong" },
+                { typeof (ushort),  "ushort" }
+            };
+
+        protected static readonly Type[] WarningExceptions =
         {
             typeof(ArgumentException),
             typeof(InvalidOperationException),
@@ -162,7 +166,7 @@
 
         #region ByteArrayFormatter
 
-        private class ByteArrayFormatter : JsonConverter
+        protected class ByteArrayFormatter : JsonConverter
         {
             public override bool CanRead => false;
 
@@ -184,7 +188,6 @@
         }
 
         #endregion
-
-        #endregion
     }
+
 }

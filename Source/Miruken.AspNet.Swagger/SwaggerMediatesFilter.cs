@@ -5,13 +5,13 @@
     using System.Linq;
     using System.Reflection;
     using System.Web.Http.Description;
+    using AutoFixture;
+    using AutoFixture.Kernel;
     using Callback.Policy;
     using Http;
     using Mediate;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
-    using Ploeh.AutoFixture;
-    using Ploeh.AutoFixture.Kernel;
     using Swashbuckle.Swagger;
 
     public class SwaggerMediatesFilter : IDocumentFilter
@@ -151,7 +151,7 @@
             try
             {
                 var creator = CreateExampleMethod.MakeGenericMethod(message);
-                var example = creator.Invoke(null, new[] { _examples });
+                var example = creator.Invoke(null, new object[] { _examples });
                 var jsonString = JsonConvert.SerializeObject(example, SerializerSettings);
                 return JsonConvert.DeserializeObject(jsonString);
             }

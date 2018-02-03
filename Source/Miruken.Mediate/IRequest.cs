@@ -12,9 +12,8 @@
 
         public MessageDecorator(object message)
         {
-            if (message == null)
-                throw new ArgumentNullException(nameof(message));
-            Message = message;
+            Message = message
+                   ?? throw new ArgumentNullException(nameof(message));
         }
 
         public object Message { get; set; }
@@ -35,8 +34,8 @@
 
         public IRequest<TResponse> Request
         {
-            get { return (IRequest<TResponse>)Message; }
-            set { Message = value; }
+            get => (IRequest<TResponse>)Message;
+            set => Message = value;
         }
     }
 }

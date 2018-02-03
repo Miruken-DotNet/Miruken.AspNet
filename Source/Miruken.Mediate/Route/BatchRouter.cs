@@ -20,9 +20,8 @@
         [Mediates]
         public Promise<object> Route(Routed routed, Command command)
         {
-            List<Request> group;
             var route = routed.Route;
-            if (!_groups.TryGetValue(route, out group))
+            if (!_groups.TryGetValue(route, out var group))
             {
                 group = new List<Request>();
                 _groups.Add(route, group);
@@ -76,7 +75,7 @@
                                 return success;
                             })).ToArray());
                 });
-            }).ToArray());
+            }).Cast<object>().ToArray());
             _groups.Clear();
             return complete;
         }

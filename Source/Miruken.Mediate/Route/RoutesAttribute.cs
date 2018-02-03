@@ -51,8 +51,7 @@
 
             private static string GetScheme(Routed routed)
             {
-                Uri uri;
-                return Uri.TryCreate(routed.Route, UriKind.Absolute, out uri)
+                return Uri.TryCreate(routed.Route, UriKind.Absolute, out var uri)
                      ? uri.Scheme : null;
             }
         }

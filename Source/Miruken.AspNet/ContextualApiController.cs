@@ -9,7 +9,7 @@
 
         public IContext Context
         {
-            get { return _context; }
+            get => _context;
             set
             {
                 if (_context == value) return;
