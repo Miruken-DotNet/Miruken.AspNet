@@ -14,7 +14,7 @@
     using Validate;
 
     public class LogMiddleware<TRequest, TResponse>
-        : IGlobalMiddleware<TRequest, TResponse>
+        : LogMiddleware, IGlobalMiddleware<TRequest, TResponse>
     {
         public int? Order { get; set; } = Stage.Logging;
 
@@ -103,23 +103,24 @@
             var type = method.Dispatcher.Method.ReflectedType;
             return LoggerFactory?.Create(type) ?? NullLogger.Instance;
         }
+    }
 
-        #region Formatting
-
-        private static readonly JsonSerializerSettings JsonSettings =
+    public abstract class LogMiddleware
+    {
+        protected static readonly JsonSerializerSettings JsonSettings =
             new JsonSerializerSettings
             {
                 Formatting            = Formatting.Indented,
                 DateFormatString      = "MM-dd-yyyy hh:mm:ss",
                 NullValueHandling     = NullValueHandling.Ignore,
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                Converters = {
+                Converters            = {
                     new StringEnumConverter(),
                     new ByteArrayFormatter()
                 }
             };
 
-        private static string PrettyName(Type type)
+        protected static string PrettyName(Type type)
         {
             if (type.IsGenericType)
             {
@@ -134,7 +135,7 @@
             return SimpleNames.TryGetValue(type, out name) ? name : type.Name;
         }
 
-        private static readonly Dictionary<Type, string>
+        protected static readonly Dictionary<Type, string>
             SimpleNames = new Dictionary<Type, string>
         {
             { typeof (bool),    "bool" },
@@ -153,16 +154,14 @@
             { typeof (ushort),  "ushort" }
         };
 
-        private static readonly Type[] WarningExceptions =
+        protected static readonly Type[] WarningExceptions =
         {
             typeof(ArgumentException),
             typeof(InvalidOperationException),
             typeof(ValidationException)
         };
 
-        #region ByteArrayFormatter
-
-        private class ByteArrayFormatter : JsonConverter
+        protected class ByteArrayFormatter : JsonConverter
         {
             public override bool CanRead => false;
 
@@ -182,9 +181,5 @@
                 throw new NotImplementedException("Unnecessary because CanRead is false.");
             }
         }
-
-        #endregion
-
-        #endregion
     }
 }
