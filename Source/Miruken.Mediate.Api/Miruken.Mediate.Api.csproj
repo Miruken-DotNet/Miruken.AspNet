@@ -47,7 +47,7 @@
     <Compile Include="Resources.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Miruken.Mediate.nuspec" />
+    <None Include="Miruken.Mediate.Api.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
