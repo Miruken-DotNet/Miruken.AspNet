@@ -162,6 +162,10 @@
       <Project>{34893034-98ef-4768-bcea-c4f6a582732f}</Project>
       <Name>Miruken.Http</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Source\Miruken.Mediate.Api\Miruken.Mediate.Api.csproj">
+      <Project>{19449E0C-2617-440F-A0A6-E69D108F3EC6}</Project>
+      <Name>Miruken.Mediate.Api</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Source\Miruken.Mediate.Castle\Miruken.Mediate.Castle.csproj">
       <Project>{5ffd9bee-9b56-4c8a-88e3-cca10a5a0199}</Project>
       <Name>Miruken.Mediate.Castle</Name>

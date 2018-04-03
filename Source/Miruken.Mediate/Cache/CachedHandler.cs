@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Concurrent;
+    using Api;
     using Callback;
     using Concurrency;
 

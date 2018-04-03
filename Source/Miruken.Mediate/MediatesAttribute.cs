@@ -1,12 +1,13 @@
 ﻿namespace Miruken.Mediate
 {
+    using Api;
     using Callback;
     using Callback.Policy;
 
     public class MediatesAttribute : CategoryAttribute
     {
         public MediatesAttribute()
-        {          
+        {
         }
 
         public MediatesAttribute(object key)

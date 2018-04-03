@@ -1,5 +1,7 @@
 ﻿namespace Miruken.Mediate.Route
 {
+    using Api;
+
     public static class RouteExtensions
     {
         public static Routed RouteTo(

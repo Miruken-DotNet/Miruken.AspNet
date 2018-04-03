@@ -111,6 +111,10 @@
     <Compile Include="handler\withHandlerBaseClass\teamHandler.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Source\Miruken.Mediate.Api\Miruken.Mediate.Api.csproj">
+      <Project>{19449e0c-2617-440f-a0a6-e69d108f3ec6}</Project>
+      <Name>Miruken.Mediate.Api</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Source\Miruken.Mediate.Castle\Miruken.Mediate.Castle.csproj">
       <Project>{5FFD9BEE-9B56-4C8A-88E3-CCA10A5A0199}</Project>
       <Name>Miruken.Mediate.Castle</Name>
