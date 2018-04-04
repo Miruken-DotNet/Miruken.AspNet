@@ -1,21 +1,19 @@
 ﻿<?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Miruken.AspNet</id>
+    <id>Miruken.Mediate.Api</id>
     <version>$version$</version>
-    <title>Miruken AspNet</title>
-    <authors>cneuwirt</authors>
-    <owners>cneuwirt</owners>
+    <title>Miruken Mediate Api</title>
+    <authors>cneuwirt, provenstyle</authors>
+    <owners>cneuwirt, provenstyle</owners>
     <licenseUrl>https://github.com/Miruken-DotNet/Miruken.Mediate/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/Miruken-DotNet/Miruken.Mediate</projectUrl>
     <iconUrl>https://avatars0.githubusercontent.com/u/20844317</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Miruken Asp.Net Support</description>
-    <copyright>Copyright 2016</copyright>
-    <tags>Miruken AspNet</tags>
+    <description>Miruken Mediate Api</description>
+    <copyright>Copyright 2018</copyright>
+    <tags>Miruken Mediate</tags>
     <dependencies>
-      <dependency id="Miruken.Http" version="1.0"/>
-      <dependency id="Miruken.Mediate" version="1.0"/>
     </dependencies>
   </metadata>
 </package>

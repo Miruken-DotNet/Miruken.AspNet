@@ -15,6 +15,7 @@
     <tags>Miruken Mediate</tags>
     <dependencies>
       <dependency id="Miruken.Validate" version="1.0"/>
+      <dependency id="Miruken.Mediate.Api" version="1.0"/>
     </dependencies>
   </metadata>
 </package>

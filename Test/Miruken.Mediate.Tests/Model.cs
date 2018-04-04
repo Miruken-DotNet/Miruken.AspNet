@@ -1,5 +1,6 @@
 ﻿namespace Miruken.Mediate.Tests
 {
+    using Api;
     using FluentValidation;
     using Validate;
     using Validate.FluentValidation;

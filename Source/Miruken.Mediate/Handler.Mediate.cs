@@ -1,6 +1,7 @@
 ﻿namespace Miruken.Mediate
 {
     using System;
+    using Api;
     using Callback;
     using Concurrency;
 

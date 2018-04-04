@@ -2,6 +2,7 @@
 {
     using FluentValidation;
     using Mediate;
+    using Mediate.Api;
 
     public class Player
     {

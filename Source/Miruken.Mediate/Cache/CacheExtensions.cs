@@ -1,6 +1,7 @@
 ﻿namespace Miruken.Mediate.Cache
 {
     using System;
+    using Api;
 
     public static class CacheExtensions
     {
