@@ -14,7 +14,7 @@
     <copyright>Copyright 2016</copyright>
     <tags>Miruken Mediate Castle</tags>
     <dependencies>
-      <dependency id="Miruken.Mediate" version="1.0"/>
+      <dependency id="Miruken.Mediate" version="2.0"/>
       <dependency id="Miruken.Castle" version="1.0"/>
     </dependencies>
   </metadata>
