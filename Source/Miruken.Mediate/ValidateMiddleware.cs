@@ -13,7 +13,7 @@
         public int? Order { get; set; } = Stage.Validation;
 
         public Task<TResponse> Next(TRequest request, MethodBinding method,
-            IHandler composer, NextDelegate<Task<TResponse>> next)
+            IHandler composer, Next<Task<TResponse>> next)
         {
             var validator = composer.Proxy<IValidating>();
             return Validate(request, validator)

@@ -13,7 +13,7 @@
     {
         public async Task<TResponse> Next(TRequest request,
             MethodBinding method, IHandler composer,
-            NextDelegate<Task<TResponse>> next)
+            Next<Task<TResponse>> next)
         {
             var result = await next();
             if (result != null)
