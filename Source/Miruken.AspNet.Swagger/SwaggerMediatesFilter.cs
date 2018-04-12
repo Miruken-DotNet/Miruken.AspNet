@@ -11,8 +11,8 @@
     using Mediate;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
-    using Ploeh.AutoFixture;
-    using Ploeh.AutoFixture.Kernel;
+    using AutoFixture;
+    using AutoFixture.Kernel;
     using Swashbuckle.Swagger;
 
     public class SwaggerMediatesFilter : IDocumentFilter
@@ -30,7 +30,7 @@
                 ContractResolver               = new CamelCasePropertyNamesContractResolver(),
                 TypeNameHandling               = TypeNameHandling.Auto,
                 TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
-                Converters                     = { EitherJsonConverter.Instance }              
+                Converters                     = { EitherJsonConverter.Instance }
             };
 
         private static readonly string[] JsonFormats = { "application/json" };
