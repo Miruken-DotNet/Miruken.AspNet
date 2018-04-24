@@ -86,6 +86,7 @@
     <Compile Include="Schedule\Concurrent.cs" />
     <Compile Include="Schedule\Parallel.cs" />
     <Compile Include="Schedule\Scheduled.cs" />
+    <Compile Include="Schedule\ScheduleExtensions.cs" />
     <Compile Include="Schedule\Scheduler.cs" />
     <Compile Include="Schedule\Sequential.cs" />
     <Compile Include="Workflow\PublishReturnAttribute.cs" />

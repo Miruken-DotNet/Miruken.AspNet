@@ -40,6 +40,23 @@
         }
 
         [TestMethod]
+        public async Task Should_Execute_Concurrently_Shortcut()
+        {
+            var handler = new StockQuoteHandler()
+                          + new Scheduler();
+            var result  = await handler.Concurrent(
+                new GetStockQuote("APPL"),
+                new GetStockQuote("MSFT"),
+                new GetStockQuote("GOOGL"));
+            CollectionAssert.AreEqual(
+                new[] { "APPL", "MSFT", "GOOGL" },
+                result.Responses.Select(r => r.Match(
+                        error => error.Message,
+                        quote => ((StockQuote)quote).Symbol))
+                    .ToArray());
+        }
+
+        [TestMethod]
         public async Task Should_Propogate_Single_Exception()
         {
             var handler = new StockQuoteHandler()

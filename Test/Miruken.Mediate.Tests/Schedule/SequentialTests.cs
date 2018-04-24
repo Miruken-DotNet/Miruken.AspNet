@@ -41,6 +41,23 @@
         }
 
         [TestMethod]
+        public async Task Should_Execute_Sequentially_Shortcut()
+        {
+            var handler = new StockQuoteHandler()
+                          + new Scheduler();
+            var result  = await handler.Sequential(
+                new GetStockQuote("APPL"),
+                new GetStockQuote("MSFT"),
+                new GetStockQuote("GOOGL"));
+            CollectionAssert.AreEqual(
+                new[] { "APPL", "MSFT", "GOOGL" },
+                result.Responses.Select(r => r.Match(
+                        error => error.Message,
+                        quote => ((StockQuote)quote).Symbol))
+                    .ToArray());
+        }
+
+        [TestMethod]
         public async Task Should_Stop_At_First_Exception()
         {
             var handler = new StockQuoteHandler()
