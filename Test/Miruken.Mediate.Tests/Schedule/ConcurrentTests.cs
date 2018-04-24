@@ -43,7 +43,7 @@
         public async Task Should_Execute_Concurrently_Shortcut()
         {
             var handler = new StockQuoteHandler()
-                          + new Scheduler();
+                        + new Scheduler();
             var result  = await handler.Concurrent(
                 new GetStockQuote("APPL"),
                 new GetStockQuote("MSFT"),
