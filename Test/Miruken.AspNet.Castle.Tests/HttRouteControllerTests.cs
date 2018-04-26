@@ -364,5 +364,51 @@
                 Assert.AreEqual(2, group.Item2.Length);
             }
         }
+
+        [TestMethod]
+        public async Task Should_Propogate_Multiple_Unknown_Failures()
+        {
+            var count = 0;
+            using (WebApp.Start("http://localhost:9000/", Configuration))
+            {
+                var results = await _handler.Batch(batch =>
+                {
+                    batch.Send(new UpdatePlayer { Player = new Player() }
+                        .RouteTo("http://localhost:9000"))
+                        .Catch((NotSupportedException ex, bool s) =>
+                        {
+                            ++count;
+                            Assert.AreEqual(
+                                "Miruken.AspNet.Castle.Tests.UpdatePlayer not handled",
+                                ex.Message);
+                        })
+                        .Catch((ex, s) => Assert.Fail("Unexpected exception"));
+                    batch.Send(new UpdatePlayer
+                        {
+                            Player = new Player
+                            {
+                                Id   = 3,
+                                Name = "Sergio Ramos"
+                            }
+                        }
+                        .RouteTo("http://localhost:9000"))
+                        .Catch((NotSupportedException ex, bool s) =>
+                        {
+                            ++count;
+                            Assert.AreEqual(
+                                "Miruken.AspNet.Castle.Tests.UpdatePlayer not handled",
+                                ex.Message);
+                        })
+                        .Catch((ex, s) => Assert.Fail("Unexpected exception"));
+                });
+                Assert.AreEqual(1, results.Length);
+                var groups = (object[])results[0];
+                Assert.AreEqual(1, groups.Length);
+                var group = (Tuple<string, object[]>)groups[0];
+                Assert.AreEqual("http://localhost:9000", group.Item1);
+                Assert.AreEqual(2, group.Item2.Length);
+                Assert.AreEqual(2, count);
+            }
+        }
     }
 }
