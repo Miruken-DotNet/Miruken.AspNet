@@ -57,7 +57,7 @@
                         });
                 }
                 var messages = requests.Select(r => r.Message).ToArray();
-                return composer.Send(new Concurrent {Requests  = messages}
+                return composer.Send(new Concurrent {Requests = messages}
                     .RouteTo(uri)).Then((result, s) =>
                 {
                     var responses = result.Responses;
