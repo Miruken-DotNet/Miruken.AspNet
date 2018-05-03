@@ -41,7 +41,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Miruken, Version=1.12.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.1.12.6-Alpha.0\lib\net461\Miruken.dll</HintPath>
+      <HintPath>..\..\packages\Miruken.1.12.6\lib\net461\Miruken.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
