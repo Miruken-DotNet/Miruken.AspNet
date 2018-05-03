@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
     using System.Web.Http;
     using Callback;
+    using Concurrency;
     using Context;
     using global::Castle.Facilities.Logging;
     using global::Castle.MicroKernel.Registration;
@@ -368,11 +369,11 @@
         [TestMethod]
         public async Task Should_Propogate_Multiple_Unknown_Failures()
         {
-            var count = 0;
+            var count     = 0;
+            var completed = false;
             using (WebApp.Start("http://localhost:9000/", Configuration))
             {
-                var results = await _handler.Batch(batch =>
-                {
+                var results = await _handler.Batch(batch => Promise.All(
                     batch.Send(new UpdatePlayer { Player = new Player() }
                         .RouteTo("http://localhost:9000"))
                         .Catch((NotSupportedException ex, bool s) =>
@@ -382,7 +383,7 @@
                                 "Miruken.AspNet.Castle.Tests.UpdatePlayer not handled",
                                 ex.Message);
                         })
-                        .Catch((ex, s) => Assert.Fail("Unexpected exception"));
+                        .Catch((ex, s) => Assert.Fail("Unexpected exception")),
                     batch.Send(new UpdatePlayer
                         {
                             Player = new Player
@@ -399,7 +400,11 @@
                                 "Miruken.AspNet.Castle.Tests.UpdatePlayer not handled",
                                 ex.Message);
                         })
-                        .Catch((ex, s) => Assert.Fail("Unexpected exception"));
+                        .Catch((ex, s) => Assert.Fail("Unexpected exception")))
+                ).Then((r, s) =>
+                {
+                    Assert.AreEqual(2, count);
+                    completed = true;
                 });
                 Assert.AreEqual(1, results.Length);
                 var groups = (object[])results[0];
@@ -407,7 +412,7 @@
                 var group = (Tuple<string, object[]>)groups[0];
                 Assert.AreEqual("http://localhost:9000", group.Item1);
                 Assert.AreEqual(2, group.Item2.Length);
-                Assert.AreEqual(2, count);
+                Assert.IsTrue(completed);
             }
         }
     }
