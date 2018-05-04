@@ -46,7 +46,7 @@
                     if (batch != null)
                         return batch.Send(routed);
                 }
-                return next(matches);
+                return next(composer, matches);
             }
 
             private static string GetScheme(Routed routed)
