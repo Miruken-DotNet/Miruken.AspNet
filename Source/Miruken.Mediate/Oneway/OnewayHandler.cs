@@ -1,5 +1,6 @@
 ﻿namespace Miruken.Mediate.Oneway
 {
+    using Api;
     using Callback;
     using Concurrency;
 

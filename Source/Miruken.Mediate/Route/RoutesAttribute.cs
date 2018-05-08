@@ -37,7 +37,7 @@
             }
 
             public Task<object> Next(Routed routed, MethodBinding method,
-                IHandler composer, NextDelegate<Task<object>> next)
+                IHandler composer, Next<Task<object>> next)
             {
                 var matches = Array.IndexOf(_schemes, GetScheme(routed)) >= 0;
                 if (matches)
@@ -46,7 +46,7 @@
                     if (batch != null)
                         return batch.Send(routed);
                 }
-                return next(matches);
+                return next(composer, matches);
             }
 
             private static string GetScheme(Routed routed)

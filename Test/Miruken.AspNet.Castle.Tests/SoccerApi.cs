@@ -1,7 +1,7 @@
 ﻿namespace Miruken.AspNet.Castle.Tests
 {
     using FluentValidation;
-    using Mediate;
+    using Mediate.Api;
 
     public class Player
     {
@@ -34,9 +34,9 @@
         public Player Player { get; set; }
     }
 
-    public class TeamIntegrity : AbstractValidator<CreatePlayer>
+    public class CreatePlayerIntegrity : AbstractValidator<CreatePlayer>
     {
-        public TeamIntegrity()
+        public CreatePlayerIntegrity()
         {
             RuleFor(p => p.Player).NotNull();
             When(p => p.Player != null, () =>

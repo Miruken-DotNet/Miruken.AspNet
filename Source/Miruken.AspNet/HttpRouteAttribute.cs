@@ -9,12 +9,14 @@
         : Attribute, IControllerConfiguration
     {
         public void Initialize(
-            HttpControllerSettings controllerSettings, 
+            HttpControllerSettings controllerSettings,
             HttpControllerDescriptor controllerDescriptor)
         {
+            if (string.IsNullOrEmpty(controllerDescriptor.ControllerName)) return;
+
             controllerSettings.Formatters.Clear();
             controllerSettings.Formatters.Add(HttpFormatters.Route);
-            controllerSettings.Services.Replace(typeof(IContentNegotiator), 
+            controllerSettings.Services.Replace(typeof(IContentNegotiator),
                 new HttpRouteContentNegotiator());
         }
     }

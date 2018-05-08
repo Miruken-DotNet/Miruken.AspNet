@@ -1,6 +1,7 @@
 ﻿namespace Miruken.Mediate.Schedule
 {
     using System;
+    using Api;
 
     public abstract class Scheduled : IRequest<ScheduledResult>
     {

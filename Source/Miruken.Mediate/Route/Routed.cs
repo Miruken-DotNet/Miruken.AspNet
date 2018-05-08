@@ -1,5 +1,7 @@
 ﻿namespace Miruken.Mediate.Route
 {
+    using Api;
+
     public class Routed : MessageDecorator
     {
         public Routed()

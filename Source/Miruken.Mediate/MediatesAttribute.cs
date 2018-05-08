@@ -1,12 +1,13 @@
 ﻿namespace Miruken.Mediate
 {
+    using Api;
     using Callback;
     using Callback.Policy;
 
     public class MediatesAttribute : CategoryAttribute
     {
         public MediatesAttribute()
-        {          
+        {
         }
 
         public MediatesAttribute(object key)
@@ -18,7 +19,7 @@
 
         public static readonly CallbackPolicy Policy =
             ContravariantPolicy.Create<Command>(r => r.Callback,
-                x => x.MatchCallbackMethod(Return.Is("resp"),
+                x => x.MatchCallbackMethod(Return.Alias("resp"),
                            x.Target.OfType(typeof(IRequest<>), "resp"))
                       .MatchCallbackMethod(x.Target)
                       .MatchMethod(x.Callback)

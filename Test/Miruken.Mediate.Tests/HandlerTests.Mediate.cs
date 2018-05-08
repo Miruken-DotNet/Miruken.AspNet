@@ -143,7 +143,7 @@
 
         private class MetricsMiddleware<TReq, TResp> : DynamicGlobalMiddleware<TReq, TResp>
         {
-            public Task<TResp> Next(TReq request, NextDelegate<Task<TResp>> next,
+            public Task<TResp> Next(TReq request, Next<Task<TResp>> next,
                                     [Proxy]IStash stash)
             {
                 stash.Put("Hello");

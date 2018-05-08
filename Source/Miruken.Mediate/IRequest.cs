@@ -1,8 +1,7 @@
 ﻿namespace Miruken.Mediate
 {
     using System;
-
-    public interface IRequest<out TResponse> { }
+    using Api;
 
     public class MessageDecorator : IDecorator
     {
