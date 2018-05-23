@@ -38,7 +38,7 @@
             {
                 return Task.FromResult(
                     Request.CreateErrorResponse(HttpStatusCode.BadRequest,
-                        "A notification is required to publish"));
+                        "A notification is required to publish."));
             }
             Context.Store(User ?? Thread.CurrentPrincipal);
             return Context.Publish(notification).Then((_, s) =>
