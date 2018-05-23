@@ -3,6 +3,7 @@
     using System;
     using System.Net;
     using System.Net.Http;
+    using System.Threading;
     using System.Threading.Tasks;
     using System.Web.Http;
     using Callback;
@@ -17,6 +18,7 @@
         public Task<HttpResponseMessage> Process(Message message, string rest)
         {
             var request = message.Payload;
+            Context.Store(User ?? Thread.CurrentPrincipal);
             return Context.Send(request).Then((response, s) => 
                 Request.CreateResponse(new Message(response)))
                 .Catch((ex, s) => CreateErrorResponse(ex));
@@ -26,6 +28,7 @@
         public Task<HttpResponseMessage> Publish(Message message, string rest)
         {
             var notification = message.Payload;
+            Context.Store(User ?? Thread.CurrentPrincipal);
             return Context.Publish(notification).Then((_, s) =>
                 Request.CreateResponse(new Message()))
                 .Catch((ex, s) => CreateErrorResponse(ex));

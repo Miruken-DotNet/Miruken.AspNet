@@ -1,5 +1,6 @@
 ﻿namespace Miruken.AspNet.Castle.Tests
 {
+    using System.Security.Principal;
     using System.Threading;
     using Mediate;
 
@@ -8,7 +9,8 @@
         private static int _id;
 
         [Mediates]
-        public PlayerResponse Create(CreatePlayer create)
+        public PlayerResponse Create(
+            CreatePlayer create, IPrincipal principal)
         {
             var player = create.Player;
             player.Id  = Interlocked.Increment(ref _id);
