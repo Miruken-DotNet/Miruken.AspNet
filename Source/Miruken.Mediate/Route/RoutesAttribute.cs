@@ -37,7 +37,8 @@
             }
 
             public Task<object> Next(Routed routed, MethodBinding method,
-                IHandler composer, Next<Task<object>> next)
+                IHandler composer, Next<Task<object>> next,
+                IFilterProvider provider)
             {
                 var matches = Array.IndexOf(_schemes, GetScheme(routed)) >= 0;
                 if (matches)

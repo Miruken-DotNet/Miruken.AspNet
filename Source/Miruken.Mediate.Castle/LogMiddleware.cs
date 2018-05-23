@@ -21,7 +21,8 @@
         public ILoggerFactory LoggerFactory { get; set; }
 
         public async Task<TResponse> Next(TRequest request, MethodBinding method,
-            IHandler composer, Next<Task<TResponse>> next)
+            IHandler composer, Next<Task<TResponse>> next,
+            IFilterProvider provider)
         {
             var logger = GetLogger(method);
             var debug  = logger.IsDebugEnabled;

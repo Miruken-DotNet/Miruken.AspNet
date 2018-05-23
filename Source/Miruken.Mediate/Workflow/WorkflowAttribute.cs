@@ -2,15 +2,13 @@
 {
     using System;
     using Callback;
-    using Callback.Policy;
 
-    public class WorkflowConfig
+    public interface IWorkflowConfig
     {
-        public int? Order { get; set; }
-        public bool Join  { get; internal set; }
+        bool Join { get; }
     }
 
-    public abstract class WorkflowAttribute : FilterAttribute
+    public abstract class WorkflowAttribute : FilterAttribute, IWorkflowConfig
     {
         protected WorkflowAttribute(Type workflow)
             : base(workflow)
@@ -18,13 +16,5 @@
         }
 
         public bool Join { get; set; }
-
-        protected override bool UseFilterInstance(
-            IFilter filter, MethodBinding binding)
-        {
-            var send = (WorkflowConfig)filter;
-            send.Join = Join;
-            return true;
-        }
     }
 }
