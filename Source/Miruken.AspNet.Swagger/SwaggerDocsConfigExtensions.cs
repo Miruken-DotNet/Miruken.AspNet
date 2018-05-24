@@ -9,10 +9,13 @@
     public static class SwaggerDocsConfigExtensions
     {
         public static SwaggerDocsConfig UseMiruken(
-            this SwaggerDocsConfig config)
+            this SwaggerDocsConfig config,
+            Action<SwaggerMediatesFilter> configure = null)
         {
+            var documentFilter = new SwaggerMediatesFilter();
+            configure?.Invoke(documentFilter);
             config.SchemaId(SwaggerMediatesFilter.ModelToSchemaId);
-            config.DocumentFilter<SwaggerMediatesFilter>();
+            config.DocumentFilter(() => documentFilter);
             config.IncludeApiComments("Miruken.Mediate");
             return config;
         }

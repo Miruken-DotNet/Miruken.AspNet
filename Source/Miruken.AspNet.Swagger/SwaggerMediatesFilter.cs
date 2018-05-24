@@ -51,6 +51,8 @@
             return type.FullName;
         }
 
+        public event Action<Operation> Operations;
+
         public void Apply(SwaggerDocument document,
             SchemaRegistry registry, IApiExplorer apiExplorer)
         {
@@ -97,37 +99,42 @@
                 var handlerAssembly = handler.Assembly.GetName();
                 var handlerNotes    = $"Handled by {handler.FullName} in {handlerAssembly.Name} - {handlerAssembly.Version}";
 
-                return Tuple.Create($"/{resource}/{requestPath}", new PathItem
+                var operation = new Operation
                 {
-                    post = new Operation
+                    summary     = requestSummary,
+                    operationId = requestType.FullName,
+                    description = handlerNotes,
+                    tags        = new List<string> {tag},
+                    consumes    = JsonFormats,
+                    produces    = JsonFormats,
+                    parameters  = new List<Parameter>
                     {
-                        summary     = requestSummary,
-                        operationId = requestType.FullName,
-                        description = handlerNotes,
-                        tags        = new[] { tag },
-                        consumes    = JsonFormats,
-                        produces    = JsonFormats,
-                        parameters  = new[]
+                        new Parameter
                         {
-                            new Parameter
-                            {
-                                @in         = "body",
-                                name        = "message",
-                                description = "request to process",
-                                schema      = requestSchema,
-                                required    = true
-                            }
-                        },
-                        responses = new Dictionary<string, Response>
+                            @in         = "body",
+                            name        = "message",
+                            description = "request to process",
+                            schema      = requestSchema,
+                            required    = true
+                        }
+                    },
+                    responses = new Dictionary<string, Response>
+                    {
                         {
+                            "200", new Response
                             {
-                                "200", new Response {
-                                    description = "OK",
-                                    schema      = responseSchema
-                                }
+                                description = "OK",
+                                schema      = responseSchema
                             }
                         }
                     }
+                };
+           
+                Operations?.Invoke(operation);
+
+                return Tuple.Create($"/{resource}/{requestPath}", new PathItem
+                {
+                    post = operation
                 });
             }).Where(p => p != null);
         }
