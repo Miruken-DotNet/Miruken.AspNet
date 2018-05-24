@@ -11,6 +11,7 @@
     using global::Castle.Windsor;
     using Mediate.Castle;
     using Miruken.Castle;
+    using Security;
     using Validate.Castle;
 
     public class WebApiApplication : System.Web.HttpApplication
@@ -33,6 +34,7 @@
                         .WithMvc(this)
                         .WithWebApi(GlobalConfiguration.Configuration))
                 .Use(Classes.FromAssemblyContaining<PlayerHandler>(),
+                        Classes.FromAssemblyContaining(typeof(AuthorizeFilter<,>)),
                      Classes.FromThisAssembly()));
             container.Kernel.AddHandlersFilter(new ContravariantFilter());
             appContext.AddHandlers(new WindsorHandler(container));
