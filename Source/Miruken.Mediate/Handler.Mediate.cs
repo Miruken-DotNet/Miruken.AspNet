@@ -14,7 +14,6 @@
             var command = new Command(request)
             {
                 WantsAsync = true,
-                Policy     = MediatesAttribute.Policy
             };
             try
             {
@@ -36,7 +35,6 @@
             var command = new Command(request)
             {
                 WantsAsync = true,
-                Policy     = MediatesAttribute.Policy
             };
             try
             {
@@ -59,7 +57,6 @@
             var command = new Command(request)
             {
                 WantsAsync = true,
-                Policy     = MediatesAttribute.Policy
             };
             try
             {
@@ -82,7 +79,6 @@
             var command = new Command(notification, true)
             {
                 WantsAsync = true,
-                Policy     = MediatesAttribute.Policy
             };
             try
             {

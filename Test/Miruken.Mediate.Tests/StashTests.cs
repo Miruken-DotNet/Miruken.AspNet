@@ -49,9 +49,9 @@
             }
         }
 
-        public class OrderHandler : PipelineHandler
+        public class OrderHandler : Handler
         {
-            [Mediates]
+            [Handles]
             public Order Cancel(
                 CancelOrder cancel, IHandler composer, 
                 StashOf<Order> order)
@@ -61,14 +61,14 @@
             }
         }
 
-        public class MiddlewareProvider : Handler
+        public class FilterProvider : Handler
         {
             [Provides]
-            public IGlobalMiddleware<TReq, TResp>[] GetMiddleware<TReq, TResp>()
+            public IFilter<TReq, TResp>[] GetFilter<TReq, TResp>()
             {
-                return new IGlobalMiddleware<TReq, TResp>[]
+                return new IFilter<TReq, TResp>[]
                 {
-                    new ValidateMiddleware<TReq, TResp>()
+                    new ValidateFilter<TReq, TResp>()
                 };
             }
 
@@ -140,7 +140,7 @@
             var handler = new OrderHandler()
                         + new ValidationHandler()
                         + new FluentValidationValidator()
-                        + new MiddlewareProvider();
+                        + new FilterProvider();
 
             var order = await handler.Send<Order>(new CancelOrder(1));
             Assert.IsNotNull(order);

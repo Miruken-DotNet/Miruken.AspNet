@@ -3,7 +3,6 @@
     using System;
     using Api;
     using FluentValidation;
-    using Mediate;
 
     public class StockQuote
     {

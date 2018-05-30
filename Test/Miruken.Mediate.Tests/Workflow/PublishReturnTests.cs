@@ -19,7 +19,7 @@
             var store1   = new EventStore();
             var store2   = new EventStore();
             var handler  = store1 + store2
-                         + new MiddlewareProvider();
+                         + new FilterProvider();
             var eventOne = new EventOne();
             await handler.Publish(eventOne);
             CollectionAssert.Contains(store1.Events, eventOne);
@@ -32,7 +32,7 @@
             var store1  = new EventStoreJoin();
             var store2  = new EventStoreJoin();
             var handler = store1 + store2
-                        + new MiddlewareProvider();
+                        + new FilterProvider();
             await handler.Publish(new EventOne());
             Assert.AreEqual(7, store1.Events.Count);
             CollectionAssert.AreEquivalent(store1.Events, store2.Events);
@@ -45,7 +45,7 @@
             var store2   = new EventStoreAll();
             var handler  = store1 + store2 
                          + new Scheduler()
-                         + new MiddlewareProvider();
+                         + new FilterProvider();
             var eventOne = new EventOne();
             await handler.Publish(eventOne);
             CollectionAssert.Contains(store1.Events, eventOne);
@@ -59,7 +59,7 @@
             var store2  = new EventStoreAllJoin();
             var handler = store1 + store2
                         + new Scheduler()
-                        + new MiddlewareProvider();
+                        + new FilterProvider();
             await handler.Publish(new EventOne());
             Assert.AreEqual(5, store1.Events.Count);
             CollectionAssert.AreEquivalent(store1.Events, store2.Events);
@@ -71,7 +71,7 @@
         {
             var store   = new EventStoreAllJoin();
             var handler = store
-                        + new MiddlewareProvider();
+                        + new FilterProvider();
             await handler.Publish(new EventOne());
         }
 
@@ -79,11 +79,11 @@
         public class EventTwo {}
         public class EventThree {}
 
-        public class EventStore : PipelineHandler
+        public class EventStore : Handler
         {
             public List<object> Events { get; } = new List<object>();
 
-            [Mediates,
+            [Handles,
              PublishReturn]
             public EventTwo Consume(EventOne eventOne)
             {
@@ -91,7 +91,7 @@
                 return new EventTwo();
             }
 
-            [Mediates,
+            [Handles,
              PublishReturn]
             public async Task<EventThree> Consume(EventTwo eventTwo)
             {
@@ -100,7 +100,7 @@
                 return new EventThree();
             }
 
-            [Mediates]
+            [Handles]
             public Promise Consume(EventThree eventThree)
             {
                 Events.Add(eventThree);
@@ -108,11 +108,11 @@
             }
         }
 
-        public class EventStoreJoin : PipelineHandler
+        public class EventStoreJoin : Handler
         {
             public List<object> Events { get; } = new List<object>();
 
-            [Mediates,
+            [Handles,
              PublishReturn(Join = true)]
             public EventTwo Consume(EventOne eventOne)
             {
@@ -120,7 +120,7 @@
                 return new EventTwo();
             }
 
-            [Mediates,
+            [Handles,
              PublishReturn(Join = true)]
             public async Task<EventThree> Consume(EventTwo eventTwo)
             {
@@ -129,7 +129,7 @@
                 return new EventThree();
             }
 
-            [Mediates]
+            [Handles]
             public Promise Consume(EventThree eventThree)
             {
                 Events.Add(eventThree);
@@ -137,11 +137,11 @@
             }
         }
 
-        public class EventStoreAll : PipelineHandler
+        public class EventStoreAll : Handler
         {
             public List<object> Events { get; } = new List<object>();
 
-            [Mediates,
+            [Handles,
              PublishAllReturn]
             public IEnumerable Consume(EventOne eventOne)
             {
@@ -150,25 +150,25 @@
                 yield return new EventThree();
             }
 
-            [Mediates]
+            [Handles]
             public void Consume(EventTwo eventTwo)
             {
                 Events.Add(eventTwo);
             }
 
-            [Mediates]
+            [Handles]
             public Promise Consume(EventThree eventThree)
             {
                 Events.Add(eventThree);
                 return Promise.Empty;
             }
         }
-
-        public class EventStoreAllJoin : PipelineHandler
+        
+        public class EventStoreAllJoin : Handler
         {
             public List<object> Events { get; } = new List<object>();
 
-            [Mediates,
+            [Handles,
              PublishAllReturn(Join = true)]
             public IEnumerable Consume(EventOne eventOne)
             {
@@ -177,13 +177,13 @@
                 yield return new EventThree();
             }
 
-            [Mediates]
+            [Handles]
             public void Consume(EventTwo eventTwo)
             {
                 Events.Add(eventTwo);
             }
 
-            [Mediates]
+            [Handles]
             public Promise Consume(EventThree eventThree)
             {
                 Events.Add(eventThree);
@@ -191,11 +191,11 @@
             }
         }
 
-        public class EventStoreAllMissingJoin : PipelineHandler
+        public class EventStoreAllMissingJoin : Handler
         {
             public List<object> Events { get; } = new List<object>();
 
-            [Mediates,
+            [Handles,
              PublishAllReturn(Join = true)]
             public IEnumerable Consume(EventOne eventOne)
             {
@@ -204,7 +204,7 @@
                 yield return new EventThree();
             }
 
-            [Mediates]
+            [Handles]
             public Promise Consume(EventThree eventThree)
             {
                 Events.Add(eventThree);
@@ -212,7 +212,7 @@
             }
         }
 
-        public class MiddlewareProvider : Handler
+        public class FilterProvider : Handler
         {
             [Provides]
             public PublishReturn<TEvent, TRes> GetPublishReturn<TEvent, TRes>()

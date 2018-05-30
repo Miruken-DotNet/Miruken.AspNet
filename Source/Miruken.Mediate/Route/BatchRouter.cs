@@ -8,7 +8,7 @@
     using Schedule;
 
     [Unmanaged]
-    public class BatchRouter : PipelineHandler, IBatching
+    public class BatchRouter : Handler, IBatching
     {
         private readonly Dictionary<string, List<Request>> _groups;
 
@@ -17,7 +17,7 @@
             _groups = new Dictionary<string, List<Request>>();
         }
 
-        [Mediates]
+        [Handles]
         public Promise<object> Route(Routed routed, Command command)
         {
             var route = routed.Route;

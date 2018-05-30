@@ -8,7 +8,6 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Miruken.Callback.Policy;
     using Miruken.Castle;
-    using Miruken.Mediate.Castle;
     using Miruken.Validate;
     using Miruken.Validate.Castle;
 
@@ -19,11 +18,9 @@
         public async Task CanHandleMessages()
         {
             var container = new WindsorContainer();
-            container.Install(new FeaturesInstaller(
-                new MediateFeature(), new ValidateFeature())
-                .Use(
-                    Classes.FromAssemblyContaining<CreateTeam>(),
-                    Classes.FromAssemblyContaining<Pipeline.TeamHandler>()));
+            container.Install(new FeaturesInstaller(new ValidateFeature())
+                .Use(Classes.FromAssemblyContaining<CreateTeam>(),
+                     Classes.FromAssemblyContaining<Pipeline.TeamHandler>()));
 
             HandlerDescriptor.GetDescriptor<Pipeline.TeamHandler>();
 

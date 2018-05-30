@@ -27,7 +27,7 @@
             _handler = new StockQuoteHandler()
                      + new PassThroughRouter()
                      + new TrashHandler()
-                     + new MiddlewareProvider()
+                     + new FilterProvider()
                      + new DataAnnotationsValidator()
                      + new FluentValidationValidator()
                      + new ValidationHandler();
@@ -89,21 +89,21 @@
         {
             public const string Scheme = "Trash";
 
-            [Mediates]
+            [Handles]
             public Promise Route(Routed request, IHandler composer)
             {
                 return request.Route == Scheme ? Promise.Empty : null;
             }
         }
 
-        private class MiddlewareProvider : Handler
+        private class FilterProvider : Handler
         {
             [Provides]
-            public IMiddleware<TReq, TResp>[] GetMiddleware<TReq, TResp>()
+            public IFilter<TReq, TResp>[] GetFilter<TReq, TResp>()
             {
-                return new IMiddleware<TReq, TResp>[]
+                return new IFilter<TReq, TResp>[]
                 {
-                    new ValidateMiddleware<TReq, TResp>()
+                    new ValidateFilter<TReq, TResp>()
                 };
             }
 
@@ -114,11 +114,11 @@
             }
         }
 
-        private class PassThroughRouter : PipelineHandler
+        private class PassThroughRouter : Handler
         {
             public const string Scheme = "pass-through";
 
-            [Mediates]
+            [Handles]
             public Promise Route(Routed request, IHandler composer)
             {
                 return request.Route == Scheme

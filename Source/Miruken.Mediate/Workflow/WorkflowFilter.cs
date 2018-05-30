@@ -8,14 +8,14 @@
     using Callback.Policy;
     using Schedule;
 
-    public abstract class WorkflowMiddleware<TRequest, TResponse>
-        : IMiddleware<TRequest, TResponse>
+    public abstract class WorkflowFilter<TRequest, TResponse>
+        : IFilter<TRequest, TResponse>
     {
         public int? Order { get; set; }
 
         public async Task<TResponse> Next(TRequest request,
             MethodBinding method, IHandler composer,
-            Next<Task<TResponse>> next, IFilterProvider provider)
+            Next<TResponse> next, IFilterProvider provider)
         {
             var result = await next();
             if (result != null)
@@ -35,8 +35,8 @@
             TResponse result, IHandler composer, IWorkflowConfig config);
     }
 
-    public abstract class WorkflowManyMiddleware<TRequest, TResponse>
-        : WorkflowMiddleware<TRequest, TResponse>
+    public abstract class WorkflowManyFilter<TRequest, TResponse>
+        : WorkflowFilter<TRequest, TResponse>
     {
         protected override async Task Orchestrate(TRequest request,
             TResponse result, IHandler composer, IWorkflowConfig config)

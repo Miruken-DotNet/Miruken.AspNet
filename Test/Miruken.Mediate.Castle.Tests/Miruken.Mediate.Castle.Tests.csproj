@@ -56,17 +56,23 @@
       <HintPath>..\..\packages\FluentValidation.7.5.2\lib\net45\FluentValidation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Miruken, Version=1.12.15.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.1.12.15\lib\net461\Miruken.dll</HintPath>
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Miruken.Castle, Version=1.12.15.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.Castle.1.12.15\lib\net461\Miruken.Castle.dll</HintPath>
+    <Reference Include="Miruken, Version=1.12.18.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.1.12.18\lib\net461\Miruken.dll</HintPath>
     </Reference>
-    <Reference Include="Miruken.Validate, Version=1.12.15.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.Validate.1.12.15\lib\net461\Miruken.Validate.dll</HintPath>
+    <Reference Include="Miruken.1.12.16.0.Fakes">
+      <HintPath>FakesAssemblies\Miruken.1.12.16.0.Fakes.dll</HintPath>
     </Reference>
-    <Reference Include="Miruken.Validate.Castle, Version=1.12.15.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.Validate.Castle.1.12.15\lib\net461\Miruken.Validate.Castle.dll</HintPath>
+    <Reference Include="Miruken.Castle, Version=1.12.18.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.Castle.1.12.18\lib\net461\Miruken.Castle.dll</HintPath>
+    </Reference>
+    <Reference Include="Miruken.Validate, Version=1.12.18.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.Validate.1.12.18\lib\net461\Miruken.Validate.dll</HintPath>
+    </Reference>
+    <Reference Include="Miruken.Validate.Castle, Version=1.12.18.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.Validate.Castle.1.12.18\lib\net461\Miruken.Validate.Castle.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -112,23 +118,18 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="LogMiddlewareTests.cs" />
     <Compile Include="MediateFeatureTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ValidateMiddlewareTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <Fakes Include="Fakes\Miruken.fakes" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Source\Miruken.Mediate.Api\Miruken.Mediate.Api.csproj">
       <Project>{19449e0c-2617-440f-a0a6-e69d108f3ec6}</Project>
       <Name>Miruken.Mediate.Api</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Source\Miruken.Mediate.Castle\Miruken.Mediate.Castle.csproj">
-      <Project>{5ffd9bee-9b56-4c8a-88e3-cca10a5a0199}</Project>
-      <Name>Miruken.Mediate.Castle</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Source\Miruken.Mediate\Miruken.Mediate.csproj">
       <Project>{96b8ac46-cd2a-4c72-b8b8-ff6151552df7}</Project>

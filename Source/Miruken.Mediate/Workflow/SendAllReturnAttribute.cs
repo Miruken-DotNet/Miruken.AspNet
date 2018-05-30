@@ -11,7 +11,7 @@
     }
 
     public class SendAllReturn<TRequest, TResponse> 
-        : WorkflowManyMiddleware<TRequest, TResponse>
+        : WorkflowManyFilter<TRequest, TResponse>
     {
         protected override Scheduled Combine(TRequest request, object[] results)
         {

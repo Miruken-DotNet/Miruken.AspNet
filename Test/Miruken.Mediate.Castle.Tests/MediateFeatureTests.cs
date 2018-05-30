@@ -4,12 +4,12 @@
     using System.Threading.Tasks;
     using Callback;
     using Callback.Policy;
-    using global::Castle.MicroKernel;
     using global::Castle.MicroKernel.Registration;
     using global::Castle.Windsor;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Miruken.Castle;
     using Mediate.Tests;
+    using Validate;
     using Validate.Castle;
     using ValidationException = Validate.ValidationException;
 
@@ -26,13 +26,14 @@
 
             _container = new WindsorContainer()
                 .Install(new FeaturesInstaller(
-                    new HandleFeature(), new ValidateFeature(),
-                    new MediateFeature().WithStandardMiddleware()).Use(
+                    new HandleFeature(),
+                    new ValidateFeature()).Use(
                         Types.From(typeof(TeamIntegrity),
                                    typeof(TeamActionIntegrity),
                                    typeof(RemoveTeamIntegrity),
                                    typeof(HandlerMediateTests.TeamHandler))));
             _container.Kernel.AddHandlersFilter(new ContravariantFilter());
+            HandlesAttribute.Policy.AddFilters(typeof(ValidateFilter<,>));
             _handler = new WindsorHandler(_container);
         }
 
@@ -43,27 +44,19 @@
         }
 
         [TestMethod]
-        public void Should_Register_Middleware_By_Interface()
+        public void Should_Register_Filters_By_Interface()
         {
-            var middleWare = _container.ResolveAll<IMiddleware<GetStockQuote, StockQuote>>();
-            Assert.AreEqual(2, middleWare.Length);
-            Assert.IsTrue(middleWare.Any(m => m is LogMiddleware<GetStockQuote, StockQuote>));
-            Assert.IsTrue(middleWare.Any(m => m is ValidateMiddleware<GetStockQuote, StockQuote>));
+            var filters = _container.ResolveAll<IFilter<GetStockQuote, StockQuote>>();
+            Assert.AreEqual(2, filters.Length);
+            Assert.IsTrue(filters.Any(m => m is LogFilter<GetStockQuote, StockQuote>));
+            Assert.IsTrue(filters.Any(m => m is ValidateFilter<GetStockQuote, StockQuote>));
         }
 
         [TestMethod]
-        public void Should_Register_Middleware_By_Class()
+        public void Should_Register_Filters_By_Class()
         {
-            Assert.IsNotNull(_container.Resolve<LogMiddleware<GetStockQuote, StockQuote>>());
-            Assert.IsNotNull(_container.Resolve<ValidateMiddleware<GetStockQuote, StockQuote>>());
-        }
-
-        [TestMethod,
-         ExpectedException(typeof(ComponentNotFoundException))]
-        public void Should_Not_Install_Middleware_By_Default()
-        {
-            var container = new WindsorContainer().Install(new MediateFeature());
-            container.Resolve<LogMiddleware<string, int>>();
+            Assert.IsNotNull(_container.Resolve<LogFilter<GetStockQuote, StockQuote>>());
+            Assert.IsNotNull(_container.Resolve<ValidateFilter<GetStockQuote, StockQuote>>());
         }
 
         [TestMethod]

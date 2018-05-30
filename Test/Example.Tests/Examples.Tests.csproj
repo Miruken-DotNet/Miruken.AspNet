@@ -48,17 +48,17 @@
       <HintPath>..\..\packages\FluentValidation.7.5.2\lib\net45\FluentValidation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Miruken, Version=1.12.15.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.1.12.15\lib\net461\Miruken.dll</HintPath>
+    <Reference Include="Miruken, Version=1.12.18.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.1.12.18\lib\net461\Miruken.dll</HintPath>
     </Reference>
-    <Reference Include="Miruken.Castle, Version=1.12.15.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.Castle.1.12.15\lib\net461\Miruken.Castle.dll</HintPath>
+    <Reference Include="Miruken.Castle, Version=1.12.18.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.Castle.1.12.18\lib\net461\Miruken.Castle.dll</HintPath>
     </Reference>
-    <Reference Include="Miruken.Validate, Version=1.12.15.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.Validate.1.12.15\lib\net461\Miruken.Validate.dll</HintPath>
+    <Reference Include="Miruken.Validate, Version=1.12.18.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.Validate.1.12.18\lib\net461\Miruken.Validate.dll</HintPath>
     </Reference>
-    <Reference Include="Miruken.Validate.Castle, Version=1.12.15.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.Validate.Castle.1.12.15\lib\net461\Miruken.Validate.Castle.dll</HintPath>
+    <Reference Include="Miruken.Validate.Castle, Version=1.12.18.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.Validate.Castle.1.12.18\lib\net461\Miruken.Validate.Castle.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -107,8 +107,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ConfigurationTests\InstallingValidateMiddlewareTests.cs" />
-    <Compile Include="ConfigurationTests\InstallingMediatorTests.cs" />
+    <Compile Include="ConfigurationTests\InstallingValidateFilterTests.cs" />
     <Compile Include="HandlerTests\HandlerTestScenario.cs" />
     <Compile Include="HandlerTests\WithoutInheritance\TeamHandlerTests.cs" />
     <Compile Include="HandlerTests\WithComposerTests\TeamHandlerTests.cs" />
@@ -126,10 +125,6 @@
     <ProjectReference Include="..\..\Doc\examples\examples.csproj">
       <Project>{f73c6936-e41e-49c6-9e2b-c7a87daf81d4}</Project>
       <Name>examples</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Source\Miruken.Mediate.Castle\Miruken.Mediate.Castle.csproj">
-      <Project>{5ffd9bee-9b56-4c8a-88e3-cca10a5a0199}</Project>
-      <Name>Miruken.Mediate.Castle</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Source\Miruken.Mediate\Miruken.Mediate.csproj">
       <Project>{96b8ac46-cd2a-4c72-b8b8-ff6151552df7}</Project>

@@ -9,7 +9,6 @@
     using Context;
     using global::Castle.MicroKernel.Registration;
     using global::Castle.Windsor;
-    using Mediate.Castle;
     using Miruken.Castle;
     using Security;
     using Validate.Castle;
@@ -28,8 +27,8 @@
 
             var container = new WindsorContainer()
                 .Install(new FeaturesInstaller(
-                    new HandleFeature(), new ValidateFeature(),
-                    new MediateFeature().WithStandardMiddleware(),
+                    new HandleFeature(),
+                    new ValidateFeature(),
                     new AspNetFeature(appContext)
                         .WithMvc(this)
                         .WithWebApi(GlobalConfiguration.Configuration))

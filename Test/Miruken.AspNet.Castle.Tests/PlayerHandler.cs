@@ -2,13 +2,13 @@
 {
     using System.Security.Principal;
     using System.Threading;
-    using Mediate;
+    using Callback;
 
-    public class PlayerHandler : PipelineHandler
+    public class PlayerHandler : Handler
     {
         private static int _id;
 
-        [Mediates]
+        [Handles]
         public PlayerResponse Create(
             CreatePlayer create, IPrincipal principal)
         {
@@ -17,12 +17,12 @@
             return new PlayerResponse { Player = player };
         }
 
-        [Mediates]
+        [Handles]
         public void Created(PlayerCreated created)
         {           
         }
 
-        [Mediates]
+        [Handles]
         public void Updated(PlayerUpdated updated)
         {
         }

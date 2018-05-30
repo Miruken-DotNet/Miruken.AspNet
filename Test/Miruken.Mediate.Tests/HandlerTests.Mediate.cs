@@ -23,9 +23,10 @@
         {
             HandlerDescriptor.ResetDescriptors();
             HandlerDescriptor.GetDescriptor<TeamHandler>();
+            HandlesAttribute.Policy.AddFilters(typeof(IFilter<,>));
 
             _handler = new TeamHandler()
-                     + new MiddlewareProvider()
+                     + new FilterProvider()
                      + new DataAnnotationsValidator()
                      + new FluentValidationValidator()
                      + new ValidationHandler();
@@ -108,14 +109,14 @@
             }
         }
 
-        public class TeamHandler : PipelineHandler
+        public class TeamHandler : Handler
         {
             public int _teamId;
             private readonly List<object> _notifications = new List<object>();
 
             public ICollection<object> Notifications => _notifications;
 
-            [Mediates]
+            [Handles]
             public Promise<Team> Create(CreateTeam create, IHandler composer)
             {
                 var team = create.Team;
@@ -126,7 +127,7 @@
                 return Promise.Resolved(team);
             }
 
-            [Mediates]
+            [Handles]
             public void Remove(RemoveTeam remove, Command command, IHandler composer)
             {
                 var team = remove.Team;
@@ -134,16 +135,17 @@
                 composer.Publish(new TeamRemoved {Team = team});
             }
 
-            [Mediates]
+            [Handles]
             public void Notify(object notification)
             {
                 _notifications.Add(notification);
             }
         }
 
-        private class MetricsMiddleware<TReq, TResp> : DynamicGlobalMiddleware<TReq, TResp>
+        private class MetricsFilter<TReq, TResp> 
+            : DynamicFilter<TReq, TResp>, IFilter<TReq, TResp>
         {
-            public Task<TResp> Next(TReq request, Next<Task<TResp>> next,
+            public Task<TResp> Next(TReq request, Next<TResp> next,
                                     [Proxy]IStash stash)
             {
                 stash.Put("Hello");
@@ -151,15 +153,15 @@
             }
         }
 
-        private class MiddlewareProvider : Handler
+        private class FilterProvider : Handler
         {
             [Provides]
-            public IGlobalMiddleware<TReq, TResp>[] GetMiddleware<TReq, TResp>()
+            public IFilter<TReq, TResp>[] GetFilter<TReq, TResp>()
             {
-                 return new IGlobalMiddleware<TReq, TResp>[]
+                 return new IFilter<TReq, TResp>[]
                  {
-                    new ValidateMiddleware<TReq, TResp>(),
-                    new MetricsMiddleware<TReq, TResp>()
+                    new ValidateFilter<TReq, TResp>(),
+                    new MetricsFilter<TReq, TResp>()
                  };
             }
 

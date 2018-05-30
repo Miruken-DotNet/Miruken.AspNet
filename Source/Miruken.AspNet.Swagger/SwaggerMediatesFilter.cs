@@ -7,10 +7,10 @@
     using System.Web.Http.Description;
     using AutoFixture;
     using AutoFixture.Kernel;
+    using Callback;
     using Callback.Policy;
     using Http;
     using Http.Format;
-    using Mediate;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using Swashbuckle.Swagger;
@@ -56,7 +56,7 @@
         public void Apply(SwaggerDocument document,
             SchemaRegistry registry, IApiExplorer apiExplorer)
         {
-            var bindings = MediatesAttribute.Policy.GetMethods();
+            var bindings = HandlesAttribute.Policy.GetMethods();
             AddPaths(document, registry, "Process", bindings);
 
             document.paths = document.paths.OrderBy(e => e.Key)

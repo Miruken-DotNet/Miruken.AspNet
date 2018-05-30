@@ -1,6 +1,5 @@
 ﻿namespace Miruken.Mediate.Tests.Schedule
 {
-    using System;
     using System.Linq;
     using System.Threading.Tasks;
     using Callback.Policy;

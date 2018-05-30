@@ -6,7 +6,7 @@
     using Callback;
     using Concurrency;
 
-    public class CachedHandler : PipelineHandler
+    public class CachedHandler : Handler
     {
         private readonly
             ConcurrentDictionary<object, CacheResponse> _cache
@@ -18,7 +18,7 @@
             public DateTime LastUpdated;
         }
 
-        [Mediates]
+        [Handles]
         public Promise<TResponse> Cached<TResponse>(
             Cached<TResponse> request, IHandler composer)
         {
