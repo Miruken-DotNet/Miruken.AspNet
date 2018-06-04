@@ -21,7 +21,8 @@
             if (result != null)
             {
                 var config   = provider as IWorkflowConfig;
-                var workflow = Orchestrate(request, result, composer, config);
+                var workflow = Orchestrate(request, result,
+                    composer.SkipFilters(false), config);
                 if (workflow != null && config?.Join == true)
                 {
                     await workflow;

@@ -43,11 +43,13 @@
                 var matches = Array.IndexOf(_schemes, GetScheme(routed)) >= 0;
                 if (matches)
                 {
-                    var batch = composer.GetBatch<BatchRouter>();
+                    var batch = composer
+                        .GetBatch<BatchRouter>();
                     if (batch != null)
-                        return batch.Send(routed);
+                        return batch.SkipFilters(false)
+                            .Send(routed);
                 }
-                return next(composer, matches);
+                return next(composer.SkipFilters(false), matches);
             }
 
             private static string GetScheme(Routed routed)

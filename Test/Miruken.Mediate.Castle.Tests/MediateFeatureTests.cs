@@ -26,14 +26,14 @@
 
             _container = new WindsorContainer()
                 .Install(new FeaturesInstaller(
-                    new HandleFeature(),
+                    new HandleFeature()
+                        .AddFilters(typeof(ValidateFilter <,>)),
                     new ValidateFeature()).Use(
                         Types.From(typeof(TeamIntegrity),
                                    typeof(TeamActionIntegrity),
                                    typeof(RemoveTeamIntegrity),
                                    typeof(HandlerMediateTests.TeamHandler))));
             _container.Kernel.AddHandlersFilter(new ContravariantFilter());
-            HandlesAttribute.Policy.AddFilters(typeof(ValidateFilter<,>));
             _handler = new WindsorHandler(_container);
         }
 
