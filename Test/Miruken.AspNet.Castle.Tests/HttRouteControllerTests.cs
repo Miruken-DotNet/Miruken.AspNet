@@ -45,12 +45,12 @@
             _config.LoggingRules.Add(new LoggingRule("*", LogLevel.Debug, _memoryTarget));
             LogManager.Configuration = _config;
 
-            HandlesAttribute.Policy.AddFilters(
-                typeof(LogFilter<,>), typeof(ValidateFilter<,>));
             _handler = new WindsorHandler(container => container
                 .AddFacility<LoggingFacility>(f => f.LogUsing(new NLogFactory(_config)))
                 .Install(new FeaturesInstaller(
-                    new HandleFeature(), new ValidateFeature()).Use(
+                    new HandleFeature().AddFilters(
+                        typeof(LogFilter<,>), typeof(ValidateFilter<,>)),
+                    new ValidateFeature()).Use(
                         Classes.FromAssemblyContaining<CachedHandler>(),
                         Classes.FromAssemblyContaining<HttpRouter>(),
                         Classes.FromThisAssembly()))
