@@ -6,7 +6,7 @@ namespace Example.Handler.WithComposer
 
     public class TeamHandler
     {
-        [Mediates]
+        [Handles]
         public TeamResult CreateTeam(CreateTeam request, IHandler composer)
         {
             var team = request.Team;

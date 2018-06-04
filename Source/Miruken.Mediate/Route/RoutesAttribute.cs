@@ -10,13 +10,13 @@
         Inherited = false)]
     public class RoutesAttribute : Attribute, IFilterProvider
     {
-        private readonly RoutesMiddleware[] _filters;
+        private readonly RoutesFilter[] _filters;
 
         public RoutesAttribute(params string[] schemes)
         {
             if (schemes == null || schemes.Length == 0)
                 throw new ArgumentException("Schemes cannot be empty", nameof(schemes));
-            _filters = new [] { new RoutesMiddleware(schemes) };
+            _filters = new [] { new RoutesFilter(schemes) };
         }
 
         public IEnumerable<IFilter> GetFilters(MethodBinding binding, 
@@ -25,34 +25,36 @@
             return _filters;
         }
 
-        private class RoutesMiddleware : IMiddleware<Routed, object>
+        private class RoutesFilter : IFilter<Routed, object>
         {
             private readonly string[] _schemes;
 
             public int? Order { get; set; } = Stage.Logging - 1;
 
-            public RoutesMiddleware(string[] schemes)
+            public RoutesFilter(string[] schemes)
             {
                 _schemes = schemes;
             }
 
             public Task<object> Next(Routed routed, MethodBinding method,
-                IHandler composer, Next<Task<object>> next)
+                IHandler composer, Next<object> next,
+                IFilterProvider provider)
             {
                 var matches = Array.IndexOf(_schemes, GetScheme(routed)) >= 0;
                 if (matches)
                 {
-                    var batch = composer.GetBatch<BatchRouter>();
+                    var batch = composer
+                        .GetBatch<BatchRouter>();
                     if (batch != null)
-                        return batch.Send(routed);
+                        return batch.SkipFilters(false)
+                            .Send(routed);
                 }
-                return next(composer, matches);
+                return next(composer.SkipFilters(false), matches);
             }
 
             private static string GetScheme(Routed routed)
             {
-                Uri uri;
-                return Uri.TryCreate(routed.Route, UriKind.Absolute, out uri)
+                return Uri.TryCreate(routed.Route, UriKind.Absolute, out var uri)
                      ? uri.Scheme : null;
             }
         }

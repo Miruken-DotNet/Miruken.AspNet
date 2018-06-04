@@ -9,8 +9,8 @@
     using Context;
     using global::Castle.MicroKernel.Registration;
     using global::Castle.Windsor;
-    using Mediate.Castle;
     using Miruken.Castle;
+    using Security;
     using Validate.Castle;
 
     public class WebApiApplication : System.Web.HttpApplication
@@ -27,12 +27,13 @@
 
             var container = new WindsorContainer()
                 .Install(new FeaturesInstaller(
-                    new HandleFeature(), new ValidateFeature(),
-                    new MediateFeature().WithStandardMiddleware(),
+                    new HandleFeature(),
+                    new ValidateFeature(),
                     new AspNetFeature(appContext)
                         .WithMvc(this)
                         .WithWebApi(GlobalConfiguration.Configuration))
                 .Use(Classes.FromAssemblyContaining<PlayerHandler>(),
+                        Classes.FromAssemblyContaining(typeof(AuthorizeFilter<,>)),
                      Classes.FromThisAssembly()));
             container.Kernel.AddHandlersFilter(new ContravariantFilter());
             appContext.AddHandlers(new WindsorHandler(container));

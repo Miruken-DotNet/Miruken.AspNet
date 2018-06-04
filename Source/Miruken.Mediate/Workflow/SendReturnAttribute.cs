@@ -12,10 +12,10 @@
     }
 
     public class SendReturn<TRequest, TResponse> 
-        : WorkflowMiddleware<TRequest, TResponse>
+        : WorkflowFilter<TRequest, TResponse>
     {
         protected override Task Orchestrate(TRequest request, 
-            TResponse result, IHandler composer)
+            TResponse result, IHandler composer, IWorkflowConfig config)
         {
             return composer.Send(result);
         }

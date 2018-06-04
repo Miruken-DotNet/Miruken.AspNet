@@ -14,7 +14,7 @@
     using global::Castle.Windsor;
     using Http;
     using Mediate;
-    using Mediate.Castle;
+    using Mediate.Cache;
     using Mediate.Route;
     using Microsoft.Owin.Hosting;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -48,10 +48,11 @@
             _handler = new WindsorHandler(container => container
                 .AddFacility<LoggingFacility>(f => f.LogUsing(new NLogFactory(_config)))
                 .Install(new FeaturesInstaller(
-                    new HandleFeature(), new ValidateFeature(),
-                    new MediateFeature()).Use(
+                    new HandleFeature().AddFilters(
+                        typeof(LogFilter<,>), typeof(ValidateFilter<,>)),
+                    new ValidateFeature()).Use(
+                        Classes.FromAssemblyContaining<CachedHandler>(),
                         Classes.FromAssemblyContaining<HttpRouter>(),
-                        Types.From(typeof(LogMiddleware<,>)),
                         Classes.FromThisAssembly()))
             );
         }
@@ -73,10 +74,11 @@
             var container = new WindsorContainer()
                   .AddFacility<LoggingFacility>(f => f.LogUsing(new NLogFactory(_config)))
                   .Install(new FeaturesInstaller(
-                      new HandleFeature(), new ValidateFeature(),
-                      new MediateFeature().WithStandardMiddleware(),
+                      new HandleFeature(),
+                      new ValidateFeature(),
                       new AspNetFeature(appContext).WithWebApi(config))
-                  .Use(Classes.FromThisAssembly()));
+                  .Use(Classes.FromAssemblyContaining<CachedHandler>(),
+                       Classes.FromThisAssembly()));
             container.Kernel.AddHandlersFilter(new ContravariantFilter());
             appContext.AddHandlers(new WindsorHandler(container));
         }

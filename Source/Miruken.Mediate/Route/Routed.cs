@@ -29,8 +29,8 @@
 
         public IRequest<TResponse> Request
         {
-            get { return (IRequest<TResponse>) Message; }
-            set { Message = value; }
+            get => (IRequest<TResponse>) Message;
+            set => Message = value;
         }
     }
 }

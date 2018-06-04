@@ -35,25 +35,24 @@
       <HintPath>..\..\packages\FluentValidation.7.5.2\lib\net45\FluentValidation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Miruken, Version=1.12.9.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.1.12.9\lib\net461\Miruken.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Miruken, Version=1.12.22.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.1.12.22-Alpha.4\lib\net461\Miruken.dll</HintPath>
     </Reference>
-    <Reference Include="Miruken.Validate, Version=1.12.9.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.Validate.1.12.9\lib\net461\Miruken.Validate.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Miruken.Validate, Version=1.12.22.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.Validate.1.12.22-Alpha.4\lib\net461\Miruken.Validate.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Annotations, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.ComponentModel.Annotations.4.4.1\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.ComponentModel.Primitives, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.ComponentModel.Primitives.4.3.0\lib\net45\System.ComponentModel.Primitives.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.ValueTuple.4.4.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -68,15 +67,10 @@
     <Compile Include="Cache\Cached.cs" />
     <Compile Include="Cache\CachedHandler.cs" />
     <Compile Include="Cache\CacheExtensions.cs" />
-    <Compile Include="DynamicMiddleware.cs" />
     <Compile Include="Handler.Mediate.cs" />
-    <Compile Include="IMiddleware.cs" />
-    <Compile Include="IRequest.cs" />
-    <Compile Include="MediatesAttribute.cs" />
+    <Compile Include="Decorator.cs" />
     <Compile Include="Oneway\Oneway.cs" />
     <Compile Include="Oneway\OnewayHandler.cs" />
-    <Compile Include="PipelineAttribute.cs" />
-    <Compile Include="PipelineHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Route\RoutesAttribute.cs" />
     <Compile Include="Route\BatchRouter.cs" />
@@ -98,10 +92,8 @@
     <Compile Include="Workflow\SendAllReturnAttribute.cs" />
     <Compile Include="Workflow\SendReturnAttribute.cs" />
     <Compile Include="Stash.cs" />
-    <Compile Include="ValidateMiddleware.cs" />
-    <Compile Include="Stage.cs" />
     <Compile Include="Workflow\WorkflowAttribute.cs" />
-    <Compile Include="Workflow\WorkflowMiddleware.cs" />
+    <Compile Include="Workflow\WorkflowFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Miruken.Mediate.nuspec" />
@@ -113,6 +105,7 @@
       <Name>Miruken.Mediate.Api</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

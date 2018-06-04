@@ -22,8 +22,7 @@
             this HttpApplication application)
         {
             var appState    = application.Application;
-            var rootContext = appState[RootContextKey] as IContext;
-            if (rootContext == null)
+            if (!(appState[RootContextKey] is IContext rootContext))
                 appState[RootContextKey] = rootContext = new Context();
             return rootContext;
         }
@@ -31,8 +30,7 @@
         public static IContext GetMirukenContext(this HttpContextBase request)
         {
             var items   = request.Items;
-            var context = items[RequestContextKey] as IContext;
-            if (context == null)
+            if (!(items[RequestContextKey] is IContext context))
             {
                 var app = request.ApplicationInstance;
                 var rootContext = GetRootMirukenContext(app);

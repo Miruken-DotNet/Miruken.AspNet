@@ -1,11 +1,11 @@
 namespace Example.Handler.WithPipeline
 {
     using League.Api.Team;
-    using Miruken.Mediate;
+    using Miruken.Callback;
 
-    public class TeamHandler : PipelineHandler
+    public class TeamHandler : Handler
     {
-        [Mediates]
+        [Handles]
         public TeamResult CreateTeam(CreateTeam request)
         {
             return new TeamResult
@@ -14,7 +14,7 @@ namespace Example.Handler.WithPipeline
             };
         }
 
-        [Mediates]
+        [Handles]
         public void RemoveTeam(RemoveTeam request)
         {
             //remove team

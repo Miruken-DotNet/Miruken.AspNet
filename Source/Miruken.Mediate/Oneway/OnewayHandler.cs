@@ -6,7 +6,7 @@
 
     public class OnewayHandler : Handler
     {
-        [Mediates]
+        [Handles]
         public Promise Oneway(Oneway request, IHandler composer)
         {
             return composer.Send(((IDecorator)request).Decoratee);

@@ -42,47 +42,47 @@
 
     public class ContextualScope : IDependencyScope
     {
-        protected IContext _context;
+        protected IContext Context;
 
         public ContextualScope(IContext parent)
         {
             if (parent == null)
                 throw new ArgumentNullException(nameof(parent));
-            _context = parent.CreateChild();
+            Context = parent.CreateChild();
         }
 
         public IDependencyScope BeginScope()
         {
-            return new ContextualScope(_context);
+            return new ContextualScope(Context);
         }
 
         public object GetService(Type serviceType)
         {
             return serviceType != typeof(IHttpControllerActivator)
-                 ? _context.Resolve(serviceType)
+                 ? Context.Resolve(serviceType)
                  : this;
         }
 
         public IEnumerable<object> GetServices(Type serviceType)
         {
-            return _context.ResolveAll(serviceType);
+            return Context.ResolveAll(serviceType);
         } 
 
         internal void AdjustScope(HttpRequestMessage request)
         {
-            var context = _context.BestEffort()
+            var context = Context.BestEffort()
                 .Proxy<ILogicalContextSelector>()
                 .SelectApiContext(request);
-            if (context != null && context != _context.Parent)
+            if (context != null && context != Context.Parent)
             {
-                _context.End();
-                _context = context.CreateChild();
+                Context.End();
+                Context = context.CreateChild();
             }
         }
 
         public void Dispose()
         {
-            _context.End();
+            Context.End();
         }
     }
 }

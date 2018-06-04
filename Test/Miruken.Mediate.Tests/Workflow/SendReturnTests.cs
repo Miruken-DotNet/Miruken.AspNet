@@ -16,7 +16,7 @@
         public async Task Should_Send_Return()
         {
             var handler = new Saga() 
-                        + new MiddlewareProvider();
+                        + new FilterProvider();
             var result  = await handler.Send(new StepOne());
             Assert.IsInstanceOfType(result, typeof(StepTwo));
         }
@@ -25,7 +25,7 @@
         public async Task Should_Join_Return()
         {
             var saga    = new SagaJoin();
-            var handler = saga + new MiddlewareProvider();
+            var handler = saga + new FilterProvider();
             var result  = await handler.Send(new StepOne());
             Assert.IsInstanceOfType(result, typeof(StepTwo));
             Assert.IsTrue(saga.Complete);
@@ -36,7 +36,7 @@
         {
             var handler = new SagaAll()
                         + new Scheduler()
-                        + new MiddlewareProvider();
+                        + new FilterProvider();
             var result  = await handler.Send(new StepOne());
             Assert.IsInstanceOfType(result, typeof(IEnumerable));
         }
@@ -47,7 +47,7 @@
             var saga    = new SagaAllJoin();
             var handler = saga
                         + new Scheduler()
-                        + new MiddlewareProvider();
+                        + new FilterProvider();
             var result = await handler.Send(new StepOne());
             Assert.IsInstanceOfType(result, typeof(IEnumerable));
             Assert.IsTrue(saga.Complete);
@@ -59,7 +59,7 @@
         {
             var saga    = new SagaAllJoin();
             var handler = saga
-                        + new MiddlewareProvider();
+                        + new FilterProvider();
             await handler.Send(new StepOne());
         }
 
@@ -70,7 +70,7 @@
             var saga    = new SagaAllMissingJoin();
             var handler = saga
                         + new Scheduler()
-                        + new MiddlewareProvider();
+                        + new FilterProvider();
             await handler.Send(new StepOne());
         }
 
@@ -78,18 +78,18 @@
         public class StepTwo {}
         public class StepThree {}
 
-        public class Saga : PipelineHandler
+        public class Saga : Handler
         {
             public bool Complete { get; private set; }
 
-            [Mediates,
+            [Handles,
              SendReturn]
             public StepTwo Do(StepOne stepOne)
             {
                 return new StepTwo();
             }
 
-            [Mediates,
+            [Handles,
              SendReturn]
             public async Task<StepThree> Do(StepTwo stepTwo)
             {
@@ -97,7 +97,7 @@
                 return new StepThree();
             }
 
-            [Mediates]
+            [Handles]
             public Promise Do(StepThree stepThree)
             {
                 Complete = true;
@@ -105,18 +105,18 @@
             }
         }
 
-        public class SagaJoin : PipelineHandler
+        public class SagaJoin : Handler
         {
             public bool Complete { get; private set; }
 
-            [Mediates,
+            [Handles,
              SendReturn(Join = true)]
             public StepTwo Do(StepOne stepOne)
             {
                 return new StepTwo();
             }
 
-            [Mediates,
+            [Handles,
              SendReturn(Join = true)]
             public async Task<StepThree> Do(StepTwo stepTwo)
             {
@@ -124,7 +124,7 @@
                 return new StepThree();
             }
 
-            [Mediates]
+            [Handles]
             public Promise Do(StepThree stepThree)
             {
                 Complete = true;
@@ -132,11 +132,11 @@
             }
         }
 
-        public class SagaAll : PipelineHandler
+        public class SagaAll : Handler
         {
             public bool Complete { get; private set; }
 
-            [Mediates,
+            [Handles,
              SendAllReturn]
             public IEnumerable Do(StepOne stepOne)
             {
@@ -144,12 +144,12 @@
                 yield return new StepThree();
             }
 
-            [Mediates]
+            [Handles]
             public void Do(StepTwo stepTwo)
             {
             }
 
-            [Mediates]
+            [Handles]
             public Promise Do(StepThree stepThree)
             {
                 Complete = true;
@@ -157,11 +157,11 @@
             }
         }
 
-        public class SagaAllJoin : PipelineHandler
+        public class SagaAllJoin : Handler
         {
             public bool Complete { get; private set; }
 
-            [Mediates,
+            [Handles,
              SendAllReturn(Join = true)]
             public IEnumerable Do(StepOne stepOne)
             {
@@ -169,12 +169,12 @@
                 yield return new StepThree();
             }
 
-            [Mediates]
+            [Handles]
             public void Do(StepTwo stepTwo)
             {
             }
 
-            [Mediates]
+            [Handles]
             public Promise Do(StepThree stepThree)
             {
                 Complete = true;
@@ -182,11 +182,11 @@
             }
         }
 
-        public class SagaAllMissingJoin : PipelineHandler
+        public class SagaAllMissingJoin : Handler
         {
             public bool Complete { get; private set; }
 
-            [Mediates,
+            [Handles,
              SendAllReturn(Join = true)]
             public IEnumerable Do(StepOne stepOne)
             {
@@ -194,7 +194,7 @@
                 yield return new StepThree();
             }
 
-            [Mediates]
+            [Handles]
             public Promise Do(StepThree stepThree)
             {
                 Complete = true;
@@ -202,7 +202,7 @@
             }
         }
 
-        public class MiddlewareProvider : Handler
+        public class FilterProvider : Handler
         {
             [Provides]
             public SendReturn<TReq, TResp> GetSendReturn<TReq, TResp>()

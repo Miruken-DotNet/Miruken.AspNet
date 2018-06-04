@@ -11,9 +11,8 @@
 
         protected Oneway(object request)
         {
-            if (request == null)
-                throw new ArgumentNullException(nameof(request));
-            Decoratee = request;
+            Decoratee = request 
+                     ?? throw new ArgumentNullException(nameof(request));
         }
 
         public object Decoratee { get; protected set; }
@@ -32,8 +31,8 @@
 
         public IRequest<TResp> Request
         {
-            get { return (IRequest<TResp>)Decoratee; }
-            set { Decoratee = value; }
+            get => (IRequest<TResp>)Decoratee;
+            set => Decoratee = value;
         }
     }
 }

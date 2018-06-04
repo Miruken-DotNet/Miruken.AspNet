@@ -6,10 +6,10 @@
     using Callback;
     using Concurrency;
 
-    public class CachedHandler : PipelineHandler
+    public class CachedHandler : Handler
     {
         private readonly
-            ConcurrentDictionary<object, CacheResponse> Cache
+            ConcurrentDictionary<object, CacheResponse> _cache
                 = new ConcurrentDictionary<object, CacheResponse>();
 
         private struct CacheResponse
@@ -18,7 +18,7 @@
             public DateTime LastUpdated;
         }
 
-        [Mediates]
+        [Handles]
         public Promise<TResponse> Cached<TResponse>(
             Cached<TResponse> request, IHandler composer)
         {
@@ -28,15 +28,14 @@
             if (request.Action == CacheAction.Invalidate ||
                 request.Action == CacheAction.Refresh)
             {
-                CacheResponse cached;
-                var response = Cache.TryRemove(request.Request, out cached)
+                var response = _cache.TryRemove(request.Request, out var cached)
                      ? (Promise<TResponse>)cached.Response
                      : Promise<TResponse>.Empty;
                 if (request.Action == CacheAction.Invalidate)
                     return response;
             }
 
-            return (Promise<TResponse>)Cache.AddOrUpdate(
+            return (Promise<TResponse>)_cache.AddOrUpdate(
                 request.Request,   // actual request
                 req => RefreshResponse<TResponse>(req, composer),   // add first time
                 (req, cached) =>   // update if stale or invalid

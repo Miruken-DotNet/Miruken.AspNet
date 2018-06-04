@@ -6,9 +6,9 @@
     using System.Threading.Tasks;
     using Callback;
 
-    public class Scheduler : PipelineHandler
+    public class Scheduler : Handler
     {
-        [Mediates]
+        [Handles]
         public async Task<ScheduledResult> Concurrent(
             Concurrent concurrent, IHandler composer)
         {
@@ -22,7 +22,7 @@
             };
         }
 
-        [Mediates]
+        [Handles]
         public async Task<ScheduledResult> Sequential(
             Sequential sequential, IHandler composer)
         {
@@ -43,7 +43,7 @@
             };
         }
 
-        [Mediates]
+        [Handles]
         public async Task<ScheduledResult> Parallel(Parallel parallel, IHandler composer)
         {
             var requests  = parallel.Requests;
@@ -58,7 +58,7 @@
             };
         }
 
-        [Mediates]
+        [Handles]
         public Task Publish(Publish publish, IHandler composer)
         {
             return composer.Publish(publish.Message);

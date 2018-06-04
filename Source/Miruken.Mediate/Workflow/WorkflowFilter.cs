@@ -8,18 +8,22 @@
     using Callback.Policy;
     using Schedule;
 
-    public abstract class WorkflowMiddleware<TRequest, TResponse>
-        : WorkflowConfig, IMiddleware<TRequest, TResponse>
+    public abstract class WorkflowFilter<TRequest, TResponse>
+        : IFilter<TRequest, TResponse>
     {
+        public int? Order { get; set; }
+
         public async Task<TResponse> Next(TRequest request,
             MethodBinding method, IHandler composer,
-            Next<Task<TResponse>> next)
+            Next<TResponse> next, IFilterProvider provider)
         {
             var result = await next();
             if (result != null)
             {
-                var workflow = Orchestrate(request, result, composer);
-                if (workflow != null && Join)
+                var config   = provider as IWorkflowConfig;
+                var workflow = Orchestrate(request, result,
+                    composer.SkipFilters(false), config);
+                if (workflow != null && config?.Join == true)
                 {
                     await workflow;
                     return result;
@@ -29,19 +33,19 @@
         }
 
         protected abstract Task Orchestrate(TRequest request,
-            TResponse result, IHandler composer);
+            TResponse result, IHandler composer, IWorkflowConfig config);
     }
 
-    public abstract class WorkflowManyMiddleware<TRequest, TResponse>
-        : WorkflowMiddleware<TRequest, TResponse>
+    public abstract class WorkflowManyFilter<TRequest, TResponse>
+        : WorkflowFilter<TRequest, TResponse>
     {
         protected override async Task Orchestrate(TRequest request,
-            TResponse result, IHandler composer)
+            TResponse result, IHandler composer, IWorkflowConfig config)
         {
             var results = (result as IEnumerable)?.Cast<object>().ToArray();
             if (results == null || results.Length == 0) return;
             var join = await composer.Send(Combine(request, results));
-            if (Join)
+            if (config?.Join == true)
             {
                 var exceptions = join.Responses
                     .Where(r => r.IsError)

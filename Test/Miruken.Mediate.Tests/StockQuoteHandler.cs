@@ -1,16 +1,16 @@
 namespace Miruken.Mediate.Tests
 {
     using System;
+    using Callback;
     using Concurrency;
-    using Mediate;
 
-    public class StockQuoteHandler : PipelineHandler
+    public class StockQuoteHandler : Handler
     {
         public static int Called;
 
         private readonly Random random = new Random();
 
-        [Mediates]
+        [Handles]
         public Promise<StockQuote> GetQuote(GetStockQuote quote)
         {
             ++Called;
@@ -25,7 +25,7 @@ namespace Miruken.Mediate.Tests
             });
         }
 
-        [Mediates]
+        [Handles]
         public Promise SellStock(SellStock sell)
         {
             ++Called;

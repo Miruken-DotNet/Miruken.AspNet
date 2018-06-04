@@ -4,12 +4,12 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
-    public class InstallingMediatorTests
+    public class InstallingValidateFilterTests
     {
         [TestMethod]
         public void CanConfigureContainer()
         {
-            var container = new InstallingMediator().Container;
+            var container = new InstallingValidateFilter().Container;
             Assert.IsNotNull(container);
         }
     }

@@ -5,14 +5,14 @@
     using System.Linq;
     using System.Reflection;
     using System.Web.Http.Description;
+    using AutoFixture;
+    using AutoFixture.Kernel;
+    using Callback;
     using Callback.Policy;
     using Http;
     using Http.Format;
-    using Mediate;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
-    using AutoFixture;
-    using AutoFixture.Kernel;
     using Swashbuckle.Swagger;
 
     public class SwaggerMediatesFilter : IDocumentFilter
@@ -51,10 +51,12 @@
             return type.FullName;
         }
 
+        public event Action<Operation> Operations;
+
         public void Apply(SwaggerDocument document,
             SchemaRegistry registry, IApiExplorer apiExplorer)
         {
-            var bindings = MediatesAttribute.Policy.GetMethods();
+            var bindings = HandlesAttribute.Policy.GetMethods();
             AddPaths(document, registry, "Process", bindings);
 
             document.paths = document.paths.OrderBy(e => e.Key)
@@ -97,37 +99,42 @@
                 var handlerAssembly = handler.Assembly.GetName();
                 var handlerNotes    = $"Handled by {handler.FullName} in {handlerAssembly.Name} - {handlerAssembly.Version}";
 
-                return Tuple.Create($"/{resource}/{requestPath}", new PathItem
+                var operation = new Operation
                 {
-                    post = new Operation
+                    summary     = requestSummary,
+                    operationId = requestType.FullName,
+                    description = handlerNotes,
+                    tags        = new List<string> {tag},
+                    consumes    = JsonFormats,
+                    produces    = JsonFormats,
+                    parameters  = new List<Parameter>
                     {
-                        summary     = requestSummary,
-                        operationId = requestType.FullName,
-                        description = handlerNotes,
-                        tags        = new[] { tag },
-                        consumes    = JsonFormats,
-                        produces    = JsonFormats,
-                        parameters  = new[]
+                        new Parameter
                         {
-                            new Parameter
-                            {
-                                @in         = "body",
-                                name        = "message",
-                                description = "request to process",
-                                schema      = requestSchema,
-                                required    = true
-                            }
-                        },
-                        responses = new Dictionary<string, Response>
+                            @in         = "body",
+                            name        = "message",
+                            description = "request to process",
+                            schema      = requestSchema,
+                            required    = true
+                        }
+                    },
+                    responses = new Dictionary<string, Response>
+                    {
                         {
+                            "200", new Response
                             {
-                                "200", new Response {
-                                    description = "OK",
-                                    schema      = responseSchema
-                                }
+                                description = "OK",
+                                schema      = responseSchema
                             }
                         }
                     }
+                };
+           
+                Operations?.Invoke(operation);
+
+                return Tuple.Create($"/{resource}/{requestPath}", new PathItem
+                {
+                    post = operation
                 });
             }).Where(p => p != null);
         }
@@ -154,7 +161,7 @@
             try
             {
                 var creator = CreateExampleMethod.MakeGenericMethod(message);
-                var example = creator.Invoke(null, new[] { _examples });
+                var example = creator.Invoke(null, new object[] { _examples });
                 var jsonString = JsonConvert.SerializeObject(example, SerializerSettings);
                 return JsonConvert.DeserializeObject(jsonString);
             }

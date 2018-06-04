@@ -5,21 +5,19 @@
     using Castle.Windsor;
     using League.Api.Team;
     using Miruken.Castle;
-    using Miruken.Mediate.Castle;
     using Miruken.Validate.Castle;
 
-    public class InstallingValidateMiddleware
+    public class InstallingValidateFilter
     {
         public IWindsorContainer Container { get; set; }
 
-        public InstallingValidateMiddleware()
+        public InstallingValidateFilter()
         {
             Container = new WindsorContainer();
             Container.Kernel.Resolver.AddSubResolver(
                 new CollectionResolver(Container.Kernel, true));
 
             Container.Install(new FeaturesInstaller(
-                new MediateFeature().WithStandardMiddleware(),
                 new ValidateFeature()).Use(
                     Classes.FromAssemblyContaining<CreateTeam>()));
         }

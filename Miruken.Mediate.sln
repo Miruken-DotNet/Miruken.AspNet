@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miruken.Mediate", "Source\Miruken.Mediate\Miruken.Mediate.csproj", "{96B8AC46-CD2A-4C72-B8B8-FF6151552DF7}"
 EndProject
@@ -11,8 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		NuGet.Config = NuGet.Config
 		README.rst = README.rst
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miruken.Mediate.Castle", "Source\Miruken.Mediate.Castle\Miruken.Mediate.Castle.csproj", "{5FFD9BEE-9B56-4C8A-88E3-CCA10A5A0199}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{567E2030-C79E-45FD-A7A4-CF5EB98C28C4}"
 EndProject
@@ -54,10 +52,6 @@ Global
 		{96B8AC46-CD2A-4C72-B8B8-FF6151552DF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96B8AC46-CD2A-4C72-B8B8-FF6151552DF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96B8AC46-CD2A-4C72-B8B8-FF6151552DF7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5FFD9BEE-9B56-4C8A-88E3-CCA10A5A0199}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5FFD9BEE-9B56-4C8A-88E3-CCA10A5A0199}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5FFD9BEE-9B56-4C8A-88E3-CCA10A5A0199}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5FFD9BEE-9B56-4C8A-88E3-CCA10A5A0199}.Release|Any CPU.Build.0 = Release|Any CPU
 		{420FF40B-FE91-4290-90B4-2D2503F98228}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{420FF40B-FE91-4290-90B4-2D2503F98228}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{420FF40B-FE91-4290-90B4-2D2503F98228}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -123,5 +117,8 @@ Global
 		{6C894E27-196C-4A88-9CDB-575D4F059CD3} = {567E2030-C79E-45FD-A7A4-CF5EB98C28C4}
 		{015B66FD-DBC0-40FB-9312-CCACC0488DA8} = {567E2030-C79E-45FD-A7A4-CF5EB98C28C4}
 		{F73C6936-E41E-49C6-9E2B-C7A87DAF81D4} = {2F38DC4A-D056-425D-9319-1AC3AE6478B8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FE5FF75B-5893-41C9-97A8-0539BFA1AEFD}
 	EndGlobalSection
 EndGlobal

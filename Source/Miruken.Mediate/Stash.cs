@@ -26,8 +26,7 @@
         [Provides]
         public T Provides<T>() where T : class
         {
-            object data;
-            return _data.TryGetValue(typeof(T), out data)
+            return _data.TryGetValue(typeof(T), out var data)
                  ? (T)data : null;
         }
 
@@ -39,8 +38,7 @@
 
         public T Get<T>() where T : class
         {
-            object data;
-            return _data.TryGetValue(typeof(T), out data)
+            return _data.TryGetValue(typeof(T), out var data)
                  ? (T)data : (_root ? null : Unhandled<T>());
         }
 
@@ -63,16 +61,15 @@
 
         public StashOf(IHandler handler)
         {
-            if (handler == null)
-                throw new ArgumentNullException(nameof(handler));
-            _handler = handler;
+            _handler = handler
+                    ?? throw new ArgumentNullException(nameof(handler));
             _stash   = handler.Proxy<IStash>();
         }
 
         public T Value
         {
-            get { return _stash.TryGet<T>(); }
-            set { _stash.Put(value); }
+            get => _stash.TryGet<T>();
+            set => _stash.Put(value);
         }
 
         public T GetOrPut(T value)
