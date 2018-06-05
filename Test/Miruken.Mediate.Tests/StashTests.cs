@@ -66,13 +66,13 @@
         public class FilterProvider : Handler
         {
             [Provides]
-            public ValidateFilter<TReq, TResp> GetFilter<TReq, TResp>()
+            public ValidateFilter<TReq, TResp> CreateValidateFilter<TReq, TResp>()
             {
                 return new ValidateFilter<TReq, TResp>();
             }
 
             [Provides]
-            public IValidator<CancelOrder>[] ChangeOrderValidator() => 
+            public IValidator<CancelOrder>[] CancelOrderValidator() => 
                 new[] { new CancelOrderIntegrity() };
         }
 
