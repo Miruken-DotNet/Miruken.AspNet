@@ -8,7 +8,6 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Miruken.Callback.Policy;
     using Miruken.Castle;
-    using Miruken.Validate;
     using Miruken.Validate.Castle;
 
     [TestClass]
@@ -26,7 +25,6 @@
 
             Controller.Context.AddHandlers(
                 new WindsorHandler(container),
-                new ValidationHandler(),
                 new Pipeline.TeamHandler());
 
             await AssertCanCreateTeam();

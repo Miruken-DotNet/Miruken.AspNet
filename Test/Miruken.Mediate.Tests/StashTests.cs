@@ -38,17 +38,19 @@
             {
                 RuleFor(co => co.OrderId)
                     .GreaterThan(0)
-                    .Must(Exist);
+                    .WithComposer(MustExist);
             }
 
-            private static bool Exist(int orderId)
+            private static bool MustExist(
+                CancelOrder cancel, int orderId, IHandler composer)
             {
                 var order = new Order { Id = orderId };
-                Handler.Composer.Proxy<IStash>().Put(order);
+                composer.Proxy<IStash>().Put(order);
                 return true;
             }
         }
 
+        [Validate]
         public class OrderHandler : Handler
         {
             [Handles]
@@ -64,12 +66,9 @@
         public class FilterProvider : Handler
         {
             [Provides]
-            public IFilter<TReq, TResp>[] GetFilter<TReq, TResp>()
+            public ValidateFilter<TReq, TResp> GetFilter<TReq, TResp>()
             {
-                return new IFilter<TReq, TResp>[]
-                {
-                    new ValidateFilter<TReq, TResp>()
-                };
+                return new ValidateFilter<TReq, TResp>();
             }
 
             [Provides]
@@ -138,7 +137,6 @@
         public async Task Should_Access_Stash()
         {
             var handler = new OrderHandler()
-                        + new ValidationHandler()
                         + new FluentValidationValidator()
                         + new FilterProvider();
 

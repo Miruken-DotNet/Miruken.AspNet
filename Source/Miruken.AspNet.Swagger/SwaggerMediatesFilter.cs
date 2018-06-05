@@ -56,7 +56,7 @@
         public void Apply(SwaggerDocument document,
             SchemaRegistry registry, IApiExplorer apiExplorer)
         {
-            var bindings = HandlesAttribute.Policy.GetMethods();
+            var bindings = Handles.Policy.GetMethods();
             AddPaths(document, registry, "Process", bindings);
 
             document.paths = document.paths.OrderBy(e => e.Key)
@@ -160,8 +160,8 @@
         {
             try
             {
-                var creator = CreateExampleMethod.MakeGenericMethod(message);
-                var example = creator.Invoke(null, new object[] { _examples });
+                var creator    = CreateExampleMethod.MakeGenericMethod(message);
+                var example    = creator.Invoke(null, new object[] { _examples });
                 var jsonString = JsonConvert.SerializeObject(example, SerializerSettings);
                 return JsonConvert.DeserializeObject(jsonString);
             }

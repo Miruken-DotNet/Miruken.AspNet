@@ -23,13 +23,12 @@
         {
             HandlerDescriptor.ResetDescriptors();
             HandlerDescriptor.GetDescriptor<TeamHandler>();
-            HandlesAttribute.Policy.AddFilters(typeof(IFilter<,>));
+            Handles.Policy.AddFilters(typeof(IFilter<,>));
 
             _handler = new TeamHandler()
                      + new FilterProvider()
                      + new DataAnnotationsValidator()
-                     + new FluentValidationValidator()
-                     + new ValidationHandler();
+                     + new FluentValidationValidator();
         }
 
         [TestMethod]

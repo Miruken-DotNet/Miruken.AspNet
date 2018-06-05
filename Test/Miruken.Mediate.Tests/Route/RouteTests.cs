@@ -29,8 +29,7 @@
                      + new TrashHandler()
                      + new FilterProvider()
                      + new DataAnnotationsValidator()
-                     + new FluentValidationValidator()
-                     + new ValidationHandler();
+                     + new FluentValidationValidator();
             StockQuoteHandler.Called = 0;
         }
 
