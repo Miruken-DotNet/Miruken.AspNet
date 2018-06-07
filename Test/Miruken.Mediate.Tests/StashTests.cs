@@ -54,11 +54,10 @@
         public class OrderHandler : Handler
         {
             [Handles]
-            public Order Cancel(
-                CancelOrder cancel, IHandler composer, 
-                StashOf<Order> order)
+            public Order Cancel(CancelOrder cancel,
+                IHandler composer, Order order)
             {
-                order.Value.Status = OrderStatus.Cancelled;
+                order.Status = OrderStatus.Cancelled;
                 return order;
             }
         }

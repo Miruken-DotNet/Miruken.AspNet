@@ -77,8 +77,7 @@
                       new HandleFeature(),
                       new ValidateFeature(),
                       new AspNetFeature(appContext).WithWebApi(config))
-                  .Use(Classes.FromAssemblyContaining<CachedHandler>(),
-                       Classes.FromThisAssembly()));
+                  .Use(Classes.FromThisAssembly()));
             container.Kernel.AddHandlersFilter(new ContravariantFilter());
             appContext.AddHandlers(new WindsorHandler(container));
         }

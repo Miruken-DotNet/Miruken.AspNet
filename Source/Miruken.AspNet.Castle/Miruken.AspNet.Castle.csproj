@@ -47,14 +47,14 @@
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Miruken, Version=1.12.23.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.1.12.23\lib\net461\Miruken.dll</HintPath>
+    <Reference Include="Miruken, Version=1.12.25.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.1.12.25\lib\net461\Miruken.dll</HintPath>
     </Reference>
-    <Reference Include="Miruken.Castle, Version=1.12.23.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.Castle.1.12.23\lib\net461\Miruken.Castle.dll</HintPath>
+    <Reference Include="Miruken.Castle, Version=1.12.25.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.Castle.1.12.25\lib\net461\Miruken.Castle.dll</HintPath>
     </Reference>
-    <Reference Include="Miruken.Validate, Version=1.12.23.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.Validate.1.12.23\lib\net461\Miruken.Validate.dll</HintPath>
+    <Reference Include="Miruken.Validate, Version=1.12.25.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.Validate.1.12.25\lib\net461\Miruken.Validate.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -127,6 +127,10 @@
     <ProjectReference Include="..\Miruken.Http\Miruken.Http.csproj">
       <Project>{34893034-98EF-4768-BCEA-C4F6A582732F}</Project>
       <Name>Miruken.Http</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Miruken.Mediate\Miruken.Mediate.csproj">
+      <Project>{96B8AC46-CD2A-4C72-B8B8-FF6151552DF7}</Project>
+      <Name>Miruken.Mediate</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

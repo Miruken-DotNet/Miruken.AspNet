@@ -33,7 +33,7 @@
                         .WithMvc(this)
                         .WithWebApi(GlobalConfiguration.Configuration))
                 .Use(Classes.FromAssemblyContaining<PlayerHandler>(),
-                        Classes.FromAssemblyContaining(typeof(AuthorizeFilter<,>)),
+                     Classes.FromAssemblyContaining(typeof(AuthorizeFilter<,>)),
                      Classes.FromThisAssembly()));
             container.Kernel.AddHandlersFilter(new ContravariantFilter());
             appContext.AddHandlers(new WindsorHandler(container));
