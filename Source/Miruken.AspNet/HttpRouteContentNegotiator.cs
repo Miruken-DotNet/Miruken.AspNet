@@ -19,7 +19,8 @@
             var scope     = request.GetDependencyScope();
             var context   = (IContext)scope.GetService(typeof(IContext));
             var formatter = context != null
-                          ? new HttpRouteMediaTypeFormatter(context.Resolve())
+                          ? new HttpRouteMediaTypeFormatter(
+                                context.Resolve(), HttpFormatters.Route)
                           : HttpFormatters.Route;
             return new ContentNegotiationResult(formatter, ContentType);
         }
