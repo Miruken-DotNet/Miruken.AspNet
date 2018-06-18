@@ -18,10 +18,25 @@
             return application;
         }
 
+        public static IContext UseMiruken(
+            this HttpContextBase request, IContext parent)
+        {
+            var items = request.Items;
+            if (!(items[RequestContextKey] is IContext context))
+            {
+                items[RequestContextKey] = context
+                    = parent.BestEffort()?.Proxy<ILogicalContextSelector>()
+                          .SelectMvcContext(request)
+                      ?? parent?.CreateChild()
+                      ?? new Context();
+            }
+            return context;
+        }
+
         public static IContext GetRootMirukenContext(
             this HttpApplication application)
         {
-            var appState    = application.Application;
+            var appState = application.Application;
             if (!(appState[RootContextKey] is IContext rootContext))
                 appState[RootContextKey] = rootContext = new Context();
             return rootContext;
@@ -29,18 +44,8 @@
 
         public static IContext GetMirukenContext(this HttpContextBase request)
         {
-            var items   = request.Items;
-            if (!(items[RequestContextKey] is IContext context))
-            {
-                var app = request.ApplicationInstance;
-                var rootContext = GetRootMirukenContext(app);
-                items[RequestContextKey] = context
-                    = rootContext.BestEffort()?.Proxy<ILogicalContextSelector>()
-                        .SelectMvcContext(app)
-                    ?? rootContext?.CreateChild() 
-                    ?? new Context();
-            }
-            return context;
+            var items = request.Items;
+            return items[RequestContextKey] as IContext;
         }
     }
 }

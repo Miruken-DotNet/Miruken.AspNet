@@ -2,46 +2,29 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Web;
-    using System.Web.Http;
     using System.Web.Http.Controllers;
     using System.Web.Mvc;
     using Context;
     using global::Castle.Core.Internal;
     using global::Castle.MicroKernel.Registration;
-    using global::Castle.MicroKernel.SubSystems.Configuration;
     using Http;
     using Mediate.Schedule;
     using Miruken.Castle;
 
     public class AspNetFeature : FeatureInstaller
     {
-        private readonly IContext _context;
-        private HttpApplication _application;
-        private HttpConfiguration _configuration;
-        private Action<ComponentRegistration> _configure;
+        private Action<ComponentRegistration> _configureMvc;
+        private Action<ComponentRegistration> _configureApi;
 
-        public AspNetFeature(IContext context)
+        public AspNetFeature ConfigureMvc(Action<ComponentRegistration> configure)
         {
-            _context = context 
-                    ?? throw new ArgumentNullException(nameof(context));
-        }
-
-        public AspNetFeature WithMvc(HttpApplication application)
-        {
-            _application = application;
+            _configureApi += configure;
             return this;
         }
 
-        public AspNetFeature WithWebApi(HttpConfiguration configuration)
+        public AspNetFeature ConfigureApi(Action<ComponentRegistration> configure)
         {
-            _configuration = configuration;
-            return this;
-        }
-
-        public AspNetFeature ConfigureControllers(Action<ComponentRegistration> configure)
-        {
-            _configure += configure;
+            _configureMvc += configure;
             return this;
         }
 
@@ -52,35 +35,23 @@
             yield return Classes.FromAssemblyContaining<Scheduler>();
         }
 
-        protected override void Install(IConfigurationStore store)
-        {
-            _application?.UseMiruken(_context);
-            _configuration?.UseMiruken(_context);
-        }
-
         public override void InstallFeatures(FromDescriptor from)
         {
-            if (_application != null)
-            {
-                var controllers = from
-                    .BasedOn(typeof(IController))
-                    .If(controller => controller.Is<IContextual>())
-                    .LifestyleCustom<ContextualLifestyleManager>()
-                    .WithServiceSelf();
-                if (_configure != null)
-                    controllers.Configure(_configure);
-            }
+            var mvcControllers = from
+                .BasedOn(typeof(IController))
+                .If(controller => controller.Is<IContextual>())
+                .LifestyleCustom<ContextualLifestyleManager>()
+                .WithServiceSelf();
+            if (_configureMvc != null)
+                mvcControllers.Configure(_configureMvc);
 
-            if (_configuration != null)
-            {
-                var controllers = from
-                    .BasedOn(typeof(IHttpController))
-                    .If(controller => controller.Is<IContextual>())
-                    .LifestyleCustom<ContextualLifestyleManager>()
-                    .WithServiceSelf();
-                if (_configure != null)
-                    controllers.Configure(_configure);
-            }     
+            var apiControllers = from
+                .BasedOn(typeof(IHttpController))
+                .If(controller => controller.Is<IContextual>())
+                .LifestyleCustom<ContextualLifestyleManager>()
+                .WithServiceSelf();
+            if (_configureApi != null)
+                apiControllers.Configure(_configureApi);
         }
     }
 }

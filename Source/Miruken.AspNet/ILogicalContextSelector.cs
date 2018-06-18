@@ -8,6 +8,6 @@
     public interface ILogicalContextSelector : IResolving
     {
         IContext SelectApiContext(HttpRequestMessage request);
-        IContext SelectMvcContext(HttpApplication request);
+        IContext SelectMvcContext(HttpContextBase request);
     }
 }

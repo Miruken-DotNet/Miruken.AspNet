@@ -18,6 +18,8 @@
         protected void Application_Start()
         {
             var appContext = new Context();
+            this.UseMiruken(appContext);
+            GlobalConfiguration.Configuration.UseMiruken(appContext);
 
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
@@ -29,9 +31,7 @@
                 .Install(new FeaturesInstaller(
                     new HandleFeature(),
                     new ValidateFeature(),
-                    new AspNetFeature(appContext)
-                        .WithMvc(this)
-                        .WithWebApi(GlobalConfiguration.Configuration))
+                    new AspNetFeature())
                 .Use(Classes.FromAssemblyContaining<PlayerHandler>(),
                      Classes.FromAssemblyContaining(typeof(AuthorizeFilter<,>)),
                      Classes.FromThisAssembly()));
