@@ -45,7 +45,10 @@
         public static IContext GetMirukenContext(this HttpContextBase request)
         {
             var items = request.Items;
-            return items[RequestContextKey] as IContext;
+            if (items[RequestContextKey] is IContext context)
+                return context;
+            var rootContext = request.ApplicationInstance.GetRootMirukenContext();
+            return request.UseMiruken(rootContext);
         }
     }
 }
