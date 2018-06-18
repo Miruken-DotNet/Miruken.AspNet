@@ -1,7 +1,6 @@
 ﻿namespace Miruken.AspNet
 {
     using System.Web;
-    using System.Web.Mvc;
     using Callback;
     using Context;
 
@@ -13,15 +12,16 @@
         public static HttpApplication UseMiruken(
             this HttpApplication application, IContext context)
         {
-            ControllerBuilder.Current.SetControllerFactory(new ContextualControllerFactory());
             application.Application[RootContextKey] = context;
             return application;
         }
 
         public static IContext UseMiruken(
-            this HttpContextBase request, IContext parent)
+            this HttpContextBase request, IContext parent = null)
         {
             var items = request.Items;
+            if (parent == null)
+                parent = request.ApplicationInstance.GetRootMirukenContext();
             if (!(items[RequestContextKey] is IContext context))
             {
                 items[RequestContextKey] = context

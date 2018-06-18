@@ -7,6 +7,7 @@
     using Context;
     using global::Castle.Core.Internal;
     using global::Castle.MicroKernel.Registration;
+    using global::Castle.MicroKernel.SubSystems.Configuration;
     using Http;
     using Mediate.Schedule;
     using Miruken.Castle;
@@ -26,6 +27,11 @@
         {
             _configureMvc += configure;
             return this;
+        }
+
+        protected override void Install(IConfigurationStore store)
+        {
+            ControllerBuilder.Current.SetControllerFactory(new ContextualControllerFactory());
         }
 
         public override IEnumerable<FromDescriptor> GetFeatures()
