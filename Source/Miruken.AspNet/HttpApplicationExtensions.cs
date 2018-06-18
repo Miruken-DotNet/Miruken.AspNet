@@ -33,15 +33,6 @@
             return context;
         }
 
-        public static IContext GetRootMirukenContext(
-            this HttpApplication application)
-        {
-            var appState = application.Application;
-            if (!(appState[RootContextKey] is IContext rootContext))
-                appState[RootContextKey] = rootContext = new Context();
-            return rootContext;
-        }
-
         public static IContext GetMirukenContext(this HttpContextBase request)
         {
             var items = request.Items;
@@ -49,6 +40,15 @@
                 return context;
             var rootContext = request.ApplicationInstance.GetRootMirukenContext();
             return request.UseMiruken(rootContext);
+        }
+
+        private static IContext GetRootMirukenContext(
+            this HttpApplication application)
+        {
+            var appState = application.Application;
+            if (!(appState[RootContextKey] is IContext rootContext))
+                appState[RootContextKey] = rootContext = new Context();
+            return rootContext;
         }
     }
 }
