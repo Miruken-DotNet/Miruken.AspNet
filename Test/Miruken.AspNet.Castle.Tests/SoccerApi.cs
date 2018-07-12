@@ -46,4 +46,16 @@
             });
         }
     }
+
+    public class UpdatePlayerIntegrity : AbstractValidator<UpdatePlayer>
+    {
+        public UpdatePlayerIntegrity()
+        {
+            RuleFor(p => p.Player).NotNull()
+                .DependentRules(() =>
+            {
+                RuleFor(p => p.Player.Id).GreaterThan(0);
+            });
+        }
+    }
 }
