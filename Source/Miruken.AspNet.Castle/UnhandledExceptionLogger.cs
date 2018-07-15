@@ -15,7 +15,8 @@
             _logger = logger;
         }
 
-        public Task LogAsync(ExceptionLoggerContext context, CancellationToken cancellationToken)
+        public Task LogAsync(ExceptionLoggerContext context,
+            CancellationToken cancellationToken)
         {
             if (!Equals(context.Exception?.Data[Stage.Logging], true))
                 _logger.Error("Unhandled exception", context.Exception);
