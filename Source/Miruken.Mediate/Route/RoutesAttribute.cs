@@ -19,6 +19,8 @@
             _filters = new [] { new RoutesFilter(schemes) };
         }
 
+        public bool Required => true;
+
         public IEnumerable<IFilter> GetFilters(MethodBinding binding, 
             Type callbackType, Type logicalResultType, IHandler composer)
         {
