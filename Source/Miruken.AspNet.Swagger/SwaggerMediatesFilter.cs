@@ -57,7 +57,7 @@
             SchemaRegistry registry, IApiExplorer apiExplorer)
         {
             var bindings = Handles.Policy.GetMethods();
-            AddPaths(document, registry, "Process", bindings);
+            AddPaths(document, registry, "process", bindings);
 
             document.paths = document.paths.OrderBy(e => e.Key)
                 .ToDictionary(e => e.Key, e => e.Value);
@@ -87,7 +87,7 @@
                     return null;
                 var responseType   = x.Dispatcher.LogicalReturnType;
                 var handler        = x.Dispatcher.Owner.HandlerType;
-                var assembly       = handler.Assembly.GetName();
+                var assembly       = requestType.Assembly.GetName();
                 var tag            = $"{assembly.Name} - {assembly.Version}";
                 var requestSchema  = GetMessageSchema(registry, requestType);
                 var responseSchema = GetMessageSchema(registry, responseType);
