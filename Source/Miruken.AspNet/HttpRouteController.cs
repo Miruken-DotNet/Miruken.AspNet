@@ -15,7 +15,7 @@
     public class HttpRouteController : ContextualApiController
     {
         [HttpPost, Route("Process/{*rest}")]
-        public Task<HttpResponseMessage> Process(Message message, string rest)
+        public Task<HttpResponseMessage> Process([FromBody]Message message)
         {
             var request = message?.Payload;
             if (request == null)
@@ -31,7 +31,7 @@
         }
 
         [HttpPost, Route("Publish/{*rest}")]
-        public Task<HttpResponseMessage> Publish(Message message, string rest)
+        public Task<HttpResponseMessage> Publish([FromBody]Message message)
         {
             var notification = message?.Payload;
             if (notification == null)
