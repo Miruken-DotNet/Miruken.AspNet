@@ -14,7 +14,9 @@
     [HttpRoute]
     public class HttpRouteController : ContextualApiController
     {
-        [HttpPost, Route("Process/{*rest}")]
+        [HttpPost,
+         Route("process/{*rest}", Name = "Process"),
+         Route("tag/{client}/{*args}", Name = "ProcessTag")]
         public Task<HttpResponseMessage> Process([FromBody]Message message)
         {
             var request = message?.Payload;
@@ -30,7 +32,7 @@
                 .Catch((ex, s) => CreateErrorResponse(ex));
         }
 
-        [HttpPost, Route("Publish/{*rest}")]
+        [HttpPost, Route("publish/{*rest}", Name = "Publish")]
         public Task<HttpResponseMessage> Publish([FromBody]Message message)
         {
             var notification = message?.Payload;
