@@ -130,8 +130,9 @@
                     }
                 };
 
-                if (Operations?.GetInvocationList().Cast<Func<Operation, bool>>()
-                        .Any(op => op(operation)) == false)
+                if (Operations != null && Operations.GetInvocationList()
+                        .Cast<Func<Operation, bool>>()
+                        .Any(op => !op(operation)))
                     return null;
 
                 return Tuple.Create($"/{resource}/{requestPath}", new PathItem

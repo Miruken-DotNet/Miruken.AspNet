@@ -7,6 +7,8 @@
     {
         public static void Register(HttpConfiguration config)
         {
+            SwaggerConfig.Register(config);
+
             // Web API configuration and services
             // Configure Web API to use only bearer token authentication.
             config.SuppressDefaultHostAuthentication();
