@@ -51,7 +51,7 @@
             return type.FullName;
         }
 
-        public event Action<Operation> Operations;
+        public event Func<Operation, bool> Operations;
 
         public void Apply(SwaggerDocument document,
             SchemaRegistry registry, IApiExplorer apiExplorer)
@@ -129,8 +129,10 @@
                         }
                     }
                 };
-           
-                Operations?.Invoke(operation);
+
+                if (Operations?.GetInvocationList().Cast<Func<Operation, bool>>()
+                        .Any(op => op(operation)) == false)
+                    return null;
 
                 return Tuple.Create($"/{resource}/{requestPath}", new PathItem
                 {

@@ -8,14 +8,22 @@
         public static SwaggerMediatesFilter RequireBasicToken(
             this SwaggerMediatesFilter filter)
         {
-            filter.Operations += op => op.parameters.Add(BasicTokenParameter);
+            filter.Operations += op =>
+            {
+                op.parameters.Add(BasicTokenParameter);
+                return true;
+            };
             return filter;
         }
 
         public static SwaggerMediatesFilter RequireBearerToken(
             this SwaggerMediatesFilter filter, Action<Parameter> configure = null)
         {
-            filter.Operations += op => op.parameters.Add(BearerTokenParameter);
+            filter.Operations += op =>
+            {
+                op.parameters.Add(BearerTokenParameter);
+                return true;
+            };
             return filter;
         }
 
@@ -23,7 +31,11 @@
             this SwaggerMediatesFilter filter, string description)
         {
             var token = CreateAuthorizationParameter(description);
-            filter.Operations += op => op.parameters.Add(token);
+            filter.Operations += op =>
+            {
+                op.parameters.Add(token);
+                return true;
+            };
             return filter;
         }
 
