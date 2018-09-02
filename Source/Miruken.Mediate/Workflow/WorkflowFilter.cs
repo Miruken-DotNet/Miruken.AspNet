@@ -14,7 +14,7 @@
         public int? Order { get; set; }
 
         public async Task<TResponse> Next(TRequest request,
-            MethodBinding method, IHandler composer,
+            MemberBinding method, IHandler composer,
             Next<TResponse> next, IFilterProvider provider)
         {
             var result = await next();

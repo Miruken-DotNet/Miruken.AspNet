@@ -67,7 +67,7 @@
         }
 
         private void AddPaths(SwaggerDocument document, SchemaRegistry registry,
-            string resource, IEnumerable<PolicyMethodBinding> bindings)
+            string resource, IEnumerable<PolicyMemberBinding> bindings)
         {
             foreach (var path in BuildPaths(resource, registry, bindings))
             {
@@ -77,7 +77,7 @@
         }
 
         private IEnumerable<Tuple<string, PathItem>> BuildPaths(
-            string resource, SchemaRegistry registry, IEnumerable<PolicyMethodBinding> bindings)
+            string resource, SchemaRegistry registry, IEnumerable<PolicyMemberBinding> bindings)
         {
             return bindings.Select(x =>
             {

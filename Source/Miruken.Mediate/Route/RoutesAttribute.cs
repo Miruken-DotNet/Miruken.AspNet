@@ -21,7 +21,7 @@
 
         public bool Required => true;
 
-        public IEnumerable<IFilter> GetFilters(MethodBinding binding, 
+        public IEnumerable<IFilter> GetFilters(MemberBinding binding, 
             Type callbackType, Type logicalResultType, IHandler composer)
         {
             return _filters;
@@ -38,7 +38,7 @@
                 _schemes = schemes;
             }
 
-            public Task<object> Next(Routed routed, MethodBinding method,
+            public Task<object> Next(Routed routed, MemberBinding method,
                 IHandler composer, Next<object> next,
                 IFilterProvider provider)
             {
