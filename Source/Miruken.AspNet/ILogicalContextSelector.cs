@@ -7,7 +7,7 @@
 
     public interface ILogicalContextSelector : IResolving
     {
-        IContext SelectApiContext(HttpRequestMessage request);
-        IContext SelectMvcContext(HttpContextBase request);
+        Context SelectApiContext(HttpRequestMessage request);
+        Context SelectMvcContext(HttpContextBase request);
     }
 }

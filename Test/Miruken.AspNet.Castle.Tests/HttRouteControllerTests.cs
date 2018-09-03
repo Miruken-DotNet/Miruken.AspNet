@@ -13,7 +13,6 @@
     using global::Castle.Services.Logging.NLogIntegration;
     using global::Castle.Windsor;
     using Http;
-    using Http.Delete;
     using Mediate;
     using Mediate.Cache;
     using Mediate.Route;

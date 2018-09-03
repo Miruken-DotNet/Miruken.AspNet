@@ -17,10 +17,10 @@
             IEnumerable<MediaTypeFormatter> formatters)
         {
             var scope     = request.GetDependencyScope();
-            var context   = (IContext)scope.GetService(typeof(IContext));
+            var context   = (Context)scope.GetService(typeof(Context));
             var formatter = context != null
                           ? new HttpRouteMediaTypeFormatter(
-                                context.Resolve(), HttpFormatters.Route)
+                                context.Infer(), HttpFormatters.Route)
                           : HttpFormatters.Route;
             return new ContentNegotiationResult(formatter, ContentType);
         }

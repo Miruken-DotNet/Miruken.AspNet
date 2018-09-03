@@ -5,9 +5,12 @@
 
     public class ContextualController : Controller, IContextual
     {
-        private IContext _context;
+        private Context _context;
 
-        public IContext Context
+        public event ContextChangingDelegate ContextChanging;
+        public event ContextChangedDelegate ContextChanged;
+
+        public Context Context
         {
             get => _context;
             set
@@ -22,8 +25,5 @@
                 ContextChanged?.Invoke(this, oldContext, _context);
             }
         }
-
-        public event ContextChangingDelegate<IContext> ContextChanging;
-        public event ContextChangedDelegate<IContext> ContextChanged;
     }
 }

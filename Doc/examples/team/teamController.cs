@@ -8,7 +8,7 @@
 
     public class TeamController : ApiController
     {
-        public IContext Context { get; set; }
+        public Context Context { get; set; }
 
         [HttpPost]
         public async Task<Team> CreateTeam(CreateTeam request)

@@ -7,7 +7,7 @@
     public static class HttpConfigurationExtensions
     {
         public static HttpConfiguration UseMiruken(
-            this HttpConfiguration configuration, IContext context)
+            this HttpConfiguration configuration, Context context)
         {
             var services  = configuration.Services;
             var activator = (IHttpControllerActivator)

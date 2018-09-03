@@ -62,7 +62,7 @@
         [TestMethod]
         public async Task Should_Send_Request_With_Response()
         {
-            var team = await _handler.Resolve()
+            var team = await _handler.Infer()
                 .Send(new CreateTeam
                 {
                     Team = new Team
@@ -77,7 +77,7 @@
         [TestMethod]
         public async Task Should_Send_Request_With_Response_Dynamic()
         {
-            var team = await _handler.Resolve()
+            var team = await _handler.Infer()
                 .Send<Team>((object)new CreateTeam
             {
                 Team = new Team
@@ -99,7 +99,7 @@
                 Active = true
             };
 
-            await _handler.Resolve()
+            await _handler.Infer()
                 .Send(new RemoveTeam { Team = team });
             Assert.IsFalse(team.Active);
         }
@@ -109,7 +109,7 @@
         {
             try
             {
-                await _handler.Resolve().Send(new CreateTeam());
+                await _handler.Infer().Send(new CreateTeam());
                 Assert.Fail("Should have rejected request");
             }
             catch (ValidationException vex)

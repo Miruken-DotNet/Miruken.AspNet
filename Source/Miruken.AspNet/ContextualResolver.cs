@@ -17,7 +17,7 @@
         private readonly IHttpControllerActivator _defaultActivator;
 
         public ContextualResolver(
-            IContext parent,
+            Context parent,
             IHttpControllerActivator defaultActivator)
             : base(parent)
         {
@@ -42,10 +42,10 @@
 
     public class ContextualScope : IDependencyScope
     {
-        protected IContext Context;
+        protected Context Context;
         private readonly object _guard = new object();
 
-        public ContextualScope(IContext parent)
+        public ContextualScope(Context parent)
         {
             if (parent == null)
                 throw new ArgumentNullException(nameof(parent));

@@ -10,19 +10,19 @@
         private const string RequestContextKey = "Miruken.Request.Context";
 
         public static HttpApplication UseMiruken(
-            this HttpApplication application, IContext context)
+            this HttpApplication application, Context context)
         {
             application.Application[RootContextKey] = context;
             return application;
         }
 
-        public static IContext UseMiruken(
-            this HttpContextBase request, IContext parent = null)
+        public static Context UseMiruken(
+            this HttpContextBase request, Context parent = null)
         {
             var items = request.Items;
             if (parent == null)
                 parent = request.ApplicationInstance.GetRootMirukenContext();
-            if (!(items[RequestContextKey] is IContext context))
+            if (!(items[RequestContextKey] is Context context))
             {
                 items[RequestContextKey] = context
                     = parent.BestEffort()?.Proxy<ILogicalContextSelector>()
@@ -33,20 +33,20 @@
             return context;
         }
 
-        public static IContext GetMirukenContext(this HttpContextBase request)
+        public static Context GetMirukenContext(this HttpContextBase request)
         {
             var items = request.Items;
-            if (items[RequestContextKey] is IContext context)
+            if (items[RequestContextKey] is Context context)
                 return context;
             var rootContext = request.ApplicationInstance.GetRootMirukenContext();
             return request.UseMiruken(rootContext);
         }
 
-        private static IContext GetRootMirukenContext(
+        private static Context GetRootMirukenContext(
             this HttpApplication application)
         {
             var appState = application.Application;
-            if (!(appState[RootContextKey] is IContext rootContext))
+            if (!(appState[RootContextKey] is Context rootContext))
                 appState[RootContextKey] = rootContext = new Context();
             return rootContext;
         }
