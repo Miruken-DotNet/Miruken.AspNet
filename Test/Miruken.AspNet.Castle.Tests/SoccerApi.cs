@@ -1,12 +1,19 @@
 ﻿namespace Miruken.AspNet.Castle.Tests
 {
+    using System;
     using FluentValidation;
     using Mediate.Api;
 
+    public class Person
+    {
+        public DateTime DOB { get; set; }
+    }
+
     public class Player
     {
-        public int    Id   { get; set; }
-        public string Name { get; set; }
+        public int    Id     { get; set; }
+        public string Name   { get; set; }
+        public Person Person { get; set; }
     }
 
     public class CreatePlayer : IRequest<PlayerResponse>

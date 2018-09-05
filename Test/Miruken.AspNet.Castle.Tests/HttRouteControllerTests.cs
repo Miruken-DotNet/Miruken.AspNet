@@ -2,6 +2,8 @@
 {
     using System;
     using System.Linq;
+    using System.Net.Http;
+    using System.Text;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using System.Web.Http;
@@ -414,6 +416,35 @@
                 Assert.AreEqual("http://localhost:9000", group.Item1);
                 Assert.AreEqual(2, group.Item2.Length);
                 Assert.IsTrue(completed);
+            }
+        }
+
+        [TestMethod]
+        public async Task Should_Propogate_Format_Errors()
+        {
+            using (WebApp.Start("http://localhost:9000/", Configuration))
+            {
+                var response = await _handler
+                    .Formatters(HttpFormatters.Route)
+                    .Post<string, Try<Message, Message>>(
+                    @"{
+                       'payload': {
+                           '$type': 'Miruken.AspNet.Castle.Tests.CreatePlayer, Miruken.AspNet.Castle.Tests',
+                           'player': {
+                              'id':   'ABC',
+                              'name': 'Namee3c27ad6-b812-46c1-9b60-d99c9d3e7ba6',
+                                  'person': {
+                                  'dob': 'XYZ'
+                              }
+                           }
+                        }
+                    }", "http://localhost:9000/Process",
+                    HttpFormatters.Route);
+                response.Match(error =>
+                {
+                    var errors = (ValidationErrors[])error.Payload;
+                    Assert.AreEqual(1, errors.Length);
+                }, success => { Assert.Fail("Should have failed"); });
             }
         }
     }

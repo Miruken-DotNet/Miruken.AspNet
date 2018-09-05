@@ -9,7 +9,6 @@ namespace Miruken.AspNet.TestWeb
     using Swashbuckle.Swagger;
     using System;
     using System.Globalization;
-    using System.Linq;
     using System.Net.Http;
 
     public class SwaggerConfig
@@ -22,11 +21,7 @@ namespace Miruken.AspNet.TestWeb
                 {
                     swagger.RootUrl(GetRootUrl);
                     swagger.SingleApiVersion("v1", nameof(WebApiApplication));
-                    swagger.UseMiruken(d =>
-                    {
-                        d.Operations += op => IncludeOperation(op);
-                        d.RequireBearerToken();
-                    });
+                    swagger.UseMiruken(d =>d.RequireBearerToken());
                 })
                 .EnableSwaggerUi();
         }
@@ -40,11 +35,6 @@ namespace Miruken.AspNet.TestWeb
                         CultureInfo.InvariantCulture)),
                     request.GetRequestContext().VirtualPathRoot).
                 Uri.AbsoluteUri.TrimEnd('/');
-        }
-
-        private static bool IncludeOperation(Operation operation)
-        {
-            return !operation.tags.Any(tag => tag.StartsWith("Miruken"));
         }
     }
 }
