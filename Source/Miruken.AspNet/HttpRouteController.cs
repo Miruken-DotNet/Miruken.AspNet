@@ -40,6 +40,9 @@
         [HttpPost, Route("publish/{*rest}", Name = "Publish")]
         public Task<HttpResponseMessage> Publish([FromBody]Message message)
         {
+            if (!ModelState.IsValid)
+                return Task.FromResult(CreateInvalidRequestResponse());
+
             var notification = message?.Payload;
             if (notification == null)
             {
