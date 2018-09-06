@@ -80,7 +80,10 @@
             foreach (var property in ModelState)
             foreach (var error in property.Value.Errors)
             {
-                outcome.AddError(property.Key,
+                var key = property.Key;
+                if (key.StartsWith("message."))
+                    key = key.Substring(8);
+                outcome.AddError(key,
                     error.Exception?.Message ?? error.ErrorMessage);
             }
             return CreateErrorResponse(
