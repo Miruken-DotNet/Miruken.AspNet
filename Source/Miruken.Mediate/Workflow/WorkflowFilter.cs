@@ -22,7 +22,7 @@
             {
                 var config   = provider as IWorkflowConfig;
                 var workflow = Orchestrate(request, result,
-                    composer.SkipFilters(false), config);
+                    composer.EnableFilters(), config);
                 if (workflow != null && config?.Join == true)
                 {
                     await workflow;

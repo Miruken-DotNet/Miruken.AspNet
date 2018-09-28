@@ -48,10 +48,10 @@
                     var batch = composer
                         .GetBatch<BatchRouter>();
                     if (batch != null)
-                        return batch.SkipFilters(false)
+                        return batch.EnableFilters()
                             .Send(routed);
                 }
-                return next(composer.SkipFilters(false), matches);
+                return next(composer.EnableFilters(), matches);
             }
 
             private static string GetScheme(Routed routed)

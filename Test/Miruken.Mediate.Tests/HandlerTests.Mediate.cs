@@ -23,7 +23,8 @@
         {
             HandlerDescriptor.ResetDescriptors();
             HandlerDescriptor.GetDescriptor<TeamHandler>();
-            Handles.Policy.AddFilters(typeof(IFilter<,>));
+            Handles.Policy.AddFilters(
+                typeof(MetricsFilter<,>), typeof(ValidateFilter<,>));
 
             _handler = new TeamHandler()
                      + new FilterProvider()
@@ -155,13 +156,21 @@
         private class FilterProvider : Handler
         {
             [Provides]
-            public IFilter<TReq, TResp>[] GetFilter<TReq, TResp>()
+            public ValidateFilter<TReq, TResp>[] GetValidateFilter<TReq, TResp>()
             {
-                 return new IFilter<TReq, TResp>[]
+                 return new []
                  {
-                    new ValidateFilter<TReq, TResp>(),
-                    new MetricsFilter<TReq, TResp>()
+                    new ValidateFilter<TReq, TResp>()
                  };
+            }
+
+            [Provides]
+            public MetricsFilter<TReq, TResp>[] GetMetricsFilter<TReq, TResp>()
+            {
+                return new []
+                {
+                    new MetricsFilter<TReq, TResp>()
+                };
             }
 
             [Provides]
