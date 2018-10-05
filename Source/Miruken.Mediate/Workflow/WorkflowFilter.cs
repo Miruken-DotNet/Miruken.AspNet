@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Callback;
-    using Callback.Policy;
+    using Callback.Policy.Bindings;
     using Schedule;
 
     public abstract class WorkflowFilter<TRequest, TResponse>

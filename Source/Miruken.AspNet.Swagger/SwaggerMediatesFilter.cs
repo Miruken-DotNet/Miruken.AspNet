@@ -8,7 +8,7 @@
     using AutoFixture;
     using AutoFixture.Kernel;
     using Callback;
-    using Callback.Policy;
+    using Callback.Policy.Bindings;
     using Http;
     using Http.Format;
     using Newtonsoft.Json;
