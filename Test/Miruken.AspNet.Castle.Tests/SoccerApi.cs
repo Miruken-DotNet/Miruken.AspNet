@@ -36,6 +36,16 @@
         public Player Player { get; set; }
     }
 
+    public class RemovePlayer : IRequest<PlayerResponse>
+    {
+        public Player Player { get; set; }
+    }
+
+    public class PlayerRemoved
+    {
+        public Player Player { get; set; }
+    }
+
     public class PlayerResponse
     {
         public Player Player { get; set; }

@@ -112,7 +112,7 @@
                     Name = "Philippe Coutinho"
                 };
                 await _handler
-                    .Send(new UpdatePlayer { Player = player }
+                    .Send(new RemovePlayer { Player = player }
                     .RouteTo("http://localhost:9000"));
             }
         }
@@ -375,37 +375,33 @@
         }
 
         [TestMethod]
-        public async Task Should_Propogate_Multiple_Unknown_Failures()
+        public async Task Should_Propagate_Multiple_Unknown_Failures()
         {
             var count     = 0;
             var completed = false;
             using (WebApp.Start("http://localhost:9000/", Configuration))
             {
                 var results = await _handler.Batch(batch => Promise.All(
-                    batch.Send(new UpdatePlayer { Player = new Player() }
+                    batch.Send(new RemovePlayer { Player = new Player() }
                         .RouteTo("http://localhost:9000"))
                         .Catch((NotSupportedException ex, bool s) =>
                         {
                             ++count;
                             Assert.AreEqual(
-                                "Miruken.AspNet.Castle.Tests.UpdatePlayer not handled",
+                                "Miruken.AspNet.Castle.Tests.RemovePlayer not handled",
                                 ex.Message);
                         })
                         .Catch((ex, s) => Assert.Fail("Unexpected exception")),
-                    batch.Send(new UpdatePlayer
+                    batch.Send(new RemovePlayer
                         {
-                            Player = new Player
-                            {
-                                Id   = 3,
-                                Name = "Sergio Ramos"
-                            }
+                            Player = new Player { Id   = 3 }
                         }
                         .RouteTo("http://localhost:9000"))
                         .Catch((NotSupportedException ex, bool s) =>
                         {
                             ++count;
                             Assert.AreEqual(
-                                "Miruken.AspNet.Castle.Tests.UpdatePlayer not handled",
+                                "Miruken.AspNet.Castle.Tests.RemovePlayer not handled",
                                 ex.Message);
                         })
                         .Catch((ex, s) => Assert.Fail("Unexpected exception")))
