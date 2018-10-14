@@ -2,12 +2,11 @@
 {
     using System;
     using System.Linq;
-    using System.Net.Http;
-    using System.Text;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using System.Web.Http;
     using Callback;
+    using Callback.Policy;
     using Concurrency;
     using Context;
     using global::Castle.Facilities.Logging;
@@ -15,6 +14,7 @@
     using global::Castle.Services.Logging.NLogIntegration;
     using global::Castle.Windsor;
     using Http;
+    using Http.Post;
     using Mediate;
     using Mediate.Cache;
     using Mediate.Route;
@@ -50,8 +50,7 @@
             _handler = new WindsorHandler(container => container
                 .AddFacility<LoggingFacility>(f => f.LogUsing(new NLogFactory(_config)))
                 .Install(new FeaturesInstaller(
-                    new HandleFeature().AddFilters(
-                        typeof(LogFilter<,>), typeof(ValidateFilter<,>)),
+                    new HandleFeature(),
                     new ValidateFeature()).Use(
                         Classes.FromAssemblyContaining<CachedHandler>(),
                         Classes.FromAssemblyContaining<HttpRouter>(),
@@ -142,6 +141,12 @@
         [TestMethod]
         public async Task Should_Log_Client_And_Server_Requests()
         {
+            foreach (var handler in new[] { typeof(HttpRouter), typeof(PostHandler) })
+            {
+                HandlerDescriptor.GetDescriptor(handler)
+                    .AddFilters(new FilterAttribute(typeof(LogFilter<,>)));
+            }
+            
             using (WebApp.Start("http://localhost:9000/", Configuration))
             {
                 var player = new Player

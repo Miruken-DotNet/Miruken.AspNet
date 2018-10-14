@@ -17,7 +17,7 @@
     public class MediateFeatureTests
     {
         protected IWindsorContainer _container;
-        protected Callback.IHandler _handler;
+        protected IHandler _handler;
 
         [TestInitialize]
         public void TestInitialize()
@@ -26,12 +26,12 @@
 
             _container = new WindsorContainer()
                 .Install(new FeaturesInstaller(
-                    new HandleFeature()
-                        .AddFilters(typeof(ValidateFilter <,>)),
+                    new HandleFeature(),
                     new ValidateFeature()).Use(
                         Types.From(typeof(TeamIntegrity),
                                    typeof(TeamActionIntegrity),
                                    typeof(RemoveTeamIntegrity),
+                                   typeof(HandlerMediateTests.MetricsFilter<,>),
                                    typeof(HandlerMediateTests.TeamHandler))));
             _container.Kernel.AddHandlersFilter(new ContravariantFilter());
             _handler = new WindsorHandler(_container);
@@ -47,9 +47,10 @@
         public void Should_Register_Filters_By_Interface()
         {
             var filters = _container.ResolveAll<IFilter<GetStockQuote, StockQuote>>();
-            Assert.AreEqual(2, filters.Length);
+            Assert.AreEqual(3, filters.Length);
             Assert.IsTrue(filters.Any(m => m is LogFilter<GetStockQuote, StockQuote>));
             Assert.IsTrue(filters.Any(m => m is ValidateFilter<GetStockQuote, StockQuote>));
+            Assert.IsTrue(filters.Any(m => m is HandlerMediateTests.MetricsFilter<GetStockQuote, StockQuote>));
         }
 
         [TestMethod]

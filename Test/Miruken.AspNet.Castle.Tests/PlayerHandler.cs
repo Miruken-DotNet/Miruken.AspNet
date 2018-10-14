@@ -3,7 +3,11 @@
     using System.Security.Principal;
     using System.Threading;
     using Callback;
+    using Miruken.Castle;
+    using Validate;
 
+    [Filter(typeof(LogFilter<,>)),
+     Filter(typeof(ValidateFilter<,>))]
     public class PlayerHandler : Handler
     {
         private static int _id;
@@ -15,6 +19,13 @@
             var player = create.Player;
             player.Id  = Interlocked.Increment(ref _id);
             return new PlayerResponse { Player = player };
+        }
+
+        [Handles]
+        public PlayerResponse Update(
+            UpdatePlayer update, IPrincipal principal)
+        {
+            return new PlayerResponse { Player = update.Player };
         }
 
         [Handles]

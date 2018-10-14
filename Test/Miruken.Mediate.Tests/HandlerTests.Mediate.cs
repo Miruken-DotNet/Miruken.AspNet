@@ -23,8 +23,6 @@
         {
             HandlerDescriptor.ResetDescriptors();
             HandlerDescriptor.GetDescriptor<TeamHandler>();
-            Handles.Policy.AddFilters(
-                typeof(MetricsFilter<,>), typeof(ValidateFilter<,>));
 
             _handler = new TeamHandler()
                      + new FilterProvider()
@@ -78,7 +76,8 @@
         public async Task Should_Publish_Notifiations()
         {
             var teams = new TeamHandler();
-            var team  = await teams.Send(new CreateTeam
+            var handler = teams + new FilterProvider();
+            var team  = await handler.Send(new CreateTeam
             {
                 Team = new Team
                 {
@@ -109,6 +108,8 @@
             }
         }
 
+        [Filter(typeof(MetricsFilter<,>)),
+         Filter(typeof(ValidateFilter<,>))]
         public class TeamHandler : Handler
         {
             public int _teamId;
@@ -142,7 +143,7 @@
             }
         }
 
-        private class MetricsFilter<TReq, TResp> 
+        public class MetricsFilter<TReq, TResp> 
             : DynamicFilter<TReq, TResp>, IFilter<TReq, TResp>
         {
             public Task<TResp> Next(TReq request, Next<TResp> next,
