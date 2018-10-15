@@ -100,6 +100,23 @@
             }
         }
 
+        [TestMethod]
+        public async Task Should_Route_Request_Without_Castle()
+        {
+            using (WebApp.Start("http://localhost:9000/", Configuration))
+            {
+                var player = new Player
+                {
+                    Name = "Philippe Coutinho"
+                };
+                var response = await HttpApiClient.Handler
+                    .Send(new CreatePlayer { Player = player }
+                        .RouteTo("http://localhost:9000"));
+                Assert.AreEqual("Philippe Coutinho", response.Player.Name);
+                Assert.IsTrue(response.Player.Id > 0);
+            }
+        }
+
         [TestMethod,
          ExpectedException(typeof(NotSupportedException))]
         public async Task Should_Fail_Unhandled_Requests()
