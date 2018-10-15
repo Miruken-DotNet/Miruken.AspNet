@@ -109,9 +109,9 @@
                 {
                     Name = "Philippe Coutinho"
                 };
-                var response = await HttpApiClient.Handler
-                    .Send(new CreatePlayer { Player = player }
-                        .RouteTo("http://localhost:9000"));
+                var response = await HttpApiClient.Send(
+                    new CreatePlayer {Player = player},
+                    "http://localhost:9000");
                 Assert.AreEqual("Philippe Coutinho", response.Player.Name);
                 Assert.IsTrue(response.Player.Id > 0);
             }
