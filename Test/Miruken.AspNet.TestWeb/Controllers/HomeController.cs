@@ -2,6 +2,7 @@
 namespace Miruken.AspNet.TestWeb.Controllers
 {
     using System;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
     using Castle.Tests;
     using Http;
@@ -12,12 +13,12 @@ namespace Miruken.AspNet.TestWeb.Controllers
         {
             ViewBag.Title = "Home Page";
 
-            TestMirukenHttpFromMVC();
+            var response = TestMirukenHttpFromMVC();
 
             return View();
         }
 
-        public void TestMirukenHttpFromMVC()
+        public async Task<PlayerResponse> TestMirukenHttpFromMVC()
         {
             var uri = $"{Request.Url.Scheme}://{Request.Url.Authority}/process";
 
@@ -33,8 +34,7 @@ namespace Miruken.AspNet.TestWeb.Controllers
                 }
             };
 
-            HttpApiClient.Send(message, uri)
-                .GetAwaiter().GetResult();
+            return await HttpApiClient.Send(message, uri);
         }
     }
 }
