@@ -3,7 +3,6 @@
     using System;
     using System.Threading.Tasks;
     using Callback;
-    using Callback.Policy;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Mediate.Cache;
 
@@ -15,9 +14,6 @@
         [TestInitialize]
         public void TestInitialize()
         {
-            HandlerDescriptor.GetDescriptor<StockQuoteHandler>();
-            HandlerDescriptor.GetDescriptor<CachedHandler>();
-
             _handler = new StockQuoteHandler()
                      + new CachedHandler();
 

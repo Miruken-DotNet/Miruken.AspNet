@@ -75,8 +75,6 @@
     <Compile Include="Cache\CacheHandlerTests.cs" />
     <Compile Include="GetStockQuote.cs" />
     <Compile Include="HandlerTests.Mediate.cs" />
-    <Compile Include="Workflow\PublishReturnTests.cs" />
-    <Compile Include="Workflow\SendReturnTests.cs" />
     <Compile Include="StashTests.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Oneway\OnewayHandlerTests.cs" />

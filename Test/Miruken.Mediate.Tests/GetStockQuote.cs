@@ -27,6 +27,11 @@
         {
             return Symbol == other?.Symbol;
         }
+
+        public override int GetHashCode()
+        {
+            return Symbol.GetHashCode();
+        }
     }
 
     public class SellStock

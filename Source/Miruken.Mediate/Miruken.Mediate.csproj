@@ -69,17 +69,7 @@
     <Compile Include="Schedule\ScheduleExtensions.cs" />
     <Compile Include="Schedule\Scheduler.cs" />
     <Compile Include="Schedule\Sequential.cs" />
-    <Compile Include="Workflow\PublishReturnAttribute.cs" />
-    <Compile Include="Workflow\PublishAllParallelReturnAttribute.cs" />
-    <Compile Include="Workflow\PublishAllReturnAttribute.cs" />
-    <Compile Include="Workflow\SendAllParallelReturnAttribute.cs" />
-    <Compile Include="Workflow\PublishAllSequentialReturnAttribute.cs" />
-    <Compile Include="Workflow\SendAllSequentialReturnAttribute.cs" />
-    <Compile Include="Workflow\SendAllReturnAttribute.cs" />
-    <Compile Include="Workflow\SendReturnAttribute.cs" />
     <Compile Include="Stash.cs" />
-    <Compile Include="Workflow\WorkflowAttribute.cs" />
-    <Compile Include="Workflow\WorkflowFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Miruken.Mediate.nuspec" />
