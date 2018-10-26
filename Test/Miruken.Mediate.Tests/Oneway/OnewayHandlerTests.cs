@@ -17,9 +17,6 @@
         [TestMethod]
         public async Task Should_Ignore_Response()
         {
-            HandlerDescriptor.GetDescriptor<StockQuoteHandler>();
-            HandlerDescriptor.GetDescriptor<OnewayHandler>();
-
             var handler = new StockQuoteHandler()
                         + new OnewayHandler();
             Assert.AreEqual(0, StockQuoteHandler.Called);

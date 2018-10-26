@@ -66,7 +66,7 @@
         }
 
         [TestMethod]
-        public async Task Should_Invalidate_Cache()
+        public async Task Should_Invalidate_Response()
         {
             Assert.AreEqual(0, StockQuoteHandler.Called);
             var getQuote = new GetStockQuote("AAPL");
