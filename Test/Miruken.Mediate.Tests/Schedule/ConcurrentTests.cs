@@ -12,6 +12,7 @@
         [TestInitialize]
         public void TestInitialize()
         {
+            HandlerDescriptor.ResetDescriptors();
             HandlerDescriptor.GetDescriptor<StockQuoteHandler>();
             HandlerDescriptor.GetDescriptor<Scheduler>();
             StockQuoteHandler.Called = 0;
@@ -105,6 +106,7 @@
             var handler = new StockQuoteHandler()
                         + new StockQuoteHandler()
                         + new Scheduler();
+
             var result = await handler.Send(new Concurrent
             {
                 Requests = new[]

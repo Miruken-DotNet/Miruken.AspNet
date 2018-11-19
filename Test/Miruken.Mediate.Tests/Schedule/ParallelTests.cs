@@ -13,6 +13,7 @@
         [TestInitialize]
         public void TestInitialize()
         {
+            HandlerDescriptor.ResetDescriptors();
             HandlerDescriptor.GetDescriptor<StockQuoteHandler>();
             HandlerDescriptor.GetDescriptor<Scheduler>();
             StockQuoteHandler.Called = 0;

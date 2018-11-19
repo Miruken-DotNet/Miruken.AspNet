@@ -60,17 +60,18 @@
         private HttpResponseMessage CreateErrorResponse(
             Exception exception, HttpStatusCode? code = null)
         {
-            object error = null;
-            Context.Infer().BestEffort().All(bundle =>
+            var bestEffort = Context.Infer().BestEffort();
+            var error      = bestEffort.Map<object>(exception, typeof(Exception));
+
+            if (!code.HasValue)
             {
-                bundle.Add(h => error = h.Map<object>(exception, typeof(Exception)));
-                if (!code.HasValue)
-                    bundle.Add(h => code = h.Map<HttpStatusCode>(exception));
-            });
+                code = bestEffort.Map<HttpStatusCode>(exception);
+                if (code == 0) code = HttpStatusCode.InternalServerError;
+            }
+
             if (error == null)
                 error = new HttpError(exception, true);
-            return Request.CreateResponse(
-                code ?? HttpStatusCode.InternalServerError,
+            return Request.CreateResponse((HttpStatusCode)code,
                 new Message(error));
         }
 
