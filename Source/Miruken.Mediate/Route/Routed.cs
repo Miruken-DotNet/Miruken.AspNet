@@ -25,13 +25,15 @@
 
             return other is Routed otherRouted
                    && Equals(Route, otherRouted.Route)
-                   && Equals(Tag, otherRouted.Tag);
+                   && Equals(Tag, otherRouted.Tag) &&
+                   Equals(Message, otherRouted.Message);
         }
 
         public override int GetHashCode()
         {
-            return (Route?.GetHashCode() ?? 0) * 31 +
-                   (Tag?.GetHashCode() ?? 0);
+            return ((Route?.GetHashCode() ?? 0) * 31 +
+                    (Tag?.GetHashCode() ?? 0)) * 31 +
+                    Message?.GetHashCode() ?? 0;
         }
     }
 
@@ -50,18 +52,6 @@
         {
             get => (IRequest<TResponse>) Message;
             set => Message = value;
-        }
-
-        public override bool Equals(object other)
-        {
-            if (!base.Equals(other)) return false;
-            return other is RoutedRequest<TResponse> otherRequest
-                   && Equals(Request, otherRequest.Request);
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode() * 31 + (Request?.GetHashCode() ?? 0);
         }
     }
 }

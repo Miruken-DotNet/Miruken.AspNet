@@ -47,11 +47,9 @@
                 var matches = Array.IndexOf(_schemes, GetScheme(routed)) >= 0;
                 if (matches)
                 {
-                    var batch = composer
-                        .GetBatch<BatchRouter>();
+                    var batch = composer.GetBatch<BatchRouter>();
                     if (batch != null)
-                        return batch.EnableFilters()
-                            .Send(routed);
+                        return composer.EnableFilters().Send(routed);
                 }
                 return next(composer.EnableFilters(), matches);
             }

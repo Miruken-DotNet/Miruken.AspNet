@@ -50,7 +50,8 @@
             _handler = new WindsorHandler(container => container
                 .AddFacility<LoggingFacility>(f => f.LogUsing(new NLogFactory(_config)))
                 .Install(new FeaturesInstaller(
-                    new HandleFeature(),
+                    new HandleFeature().AddFilters(
+                        new FilterAttribute(typeof(LogFilter<,>))),
                     new ValidateFeature()).Use(
                         Classes.FromAssemblyContaining<CachedHandler>(),
                         Classes.FromAssemblyContaining<HttpRouter>(),
@@ -109,9 +110,10 @@
                 {
                     Name = "Philippe Coutinho"
                 };
-                var response = await HttpApiClient.Send(
-                    new CreatePlayer {Player = player},
-                    "http://localhost:9000");
+                var handler = HttpApiClient.Handler + new FilterProvider();
+                var response = await handler.Send(
+                    new CreatePlayer {Player = player}.RouteTo(
+                    "http://localhost:9000"));
                 Assert.AreEqual("Philippe Coutinho", response.Player.Name);
                 Assert.IsTrue(response.Player.Id > 0);
             }
@@ -463,6 +465,15 @@
                     var errors = (ValidationErrors[])error.Payload;
                     Assert.AreEqual(1, errors.Length);
                 }, success => { Assert.Fail("Should have failed"); });
+            }
+        }
+
+        private class FilterProvider : Handler
+        {
+            [Provides]
+            public LogFilter<TReq, TResp> CreateLogFilter<TReq, TResp>()
+            {
+                return new LogFilter<TReq, TResp>();
             }
         }
     }
