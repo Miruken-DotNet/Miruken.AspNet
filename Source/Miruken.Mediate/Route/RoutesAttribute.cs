@@ -40,7 +40,8 @@
                 _schemes = schemes;
             }
 
-            public Task<object> Next(Routed routed, MemberBinding method,
+            public Task<object> Next(Routed routed,
+                object rawCallback, MemberBinding method,
                 IHandler composer, Next<object> next,
                 IFilterProvider provider)
             {
@@ -49,7 +50,8 @@
                 {
                     var batch = composer.GetBatch<BatchRouter>();
                     if (batch != null)
-                        return composer.EnableFilters().Send(routed);
+                        return composer.EnableFilters().CommandAsync(
+                            new Batched<Routed>(routed, rawCallback));
                 }
                 return next(composer.EnableFilters(), matches);
             }

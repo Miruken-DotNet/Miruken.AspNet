@@ -73,7 +73,7 @@
         }
 
         [TestMethod]
-        public async Task Should_Publish_Notifiations()
+        public async Task Should_Publish_Notifications()
         {
             var teams = new TeamHandler();
             var handler = teams + new FilterProvider();
@@ -137,9 +137,15 @@
             }
 
             [Handles]
-            public void Notify(object notification)
+            public void Notify(TeamCreated teamCreated)
             {
-                _notifications.Add(notification);
+                _notifications.Add(teamCreated);
+            }
+
+            [Handles]
+            public void Notify(TeamRemoved teamRemoved)
+            {
+                _notifications.Add(teamRemoved);
             }
         }
 
