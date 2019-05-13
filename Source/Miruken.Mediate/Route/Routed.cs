@@ -5,7 +5,7 @@
     public class Routed : MessageDecorator
     {
         public Routed()
-        {           
+        {
         }
 
         public Routed(object message) : base(message)
@@ -46,12 +46,6 @@
         public RoutedRequest(IRequest<TResponse> request)
             : base(request)
         {
-        }
-
-        public IRequest<TResponse> Request
-        {
-            get => (IRequest<TResponse>) Message;
-            set => Message = value;
         }
     }
 }

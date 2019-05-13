@@ -7,9 +7,9 @@
     public class OnewayHandler : Handler
     {
         [Handles]
-        public Promise Oneway(Oneway request, IHandler composer)
+        public Promise Oneway<TResp>(Oneway<TResp> oneway, IHandler composer)
         {
-            return composer.Send(((IDecorator)request).Decoratee);
+            return composer.Send(oneway.Request);
         }
     }
 

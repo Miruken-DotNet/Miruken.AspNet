@@ -3,53 +3,34 @@
     using System;
     using Api;
 
-    public abstract class Oneway : IDecorator
-    {
-        protected Oneway()
-        {
-        }
-
-        protected Oneway(object request)
-        {
-            Decoratee = request 
-                     ?? throw new ArgumentNullException(nameof(request));
-        }
-
-        public object Decoratee { get; protected set; }
-
-        public override bool Equals(object other)
-        {
-            if (ReferenceEquals(this, other))
-                return true;
-
-            if (other?.GetType() != GetType())
-                return false;
-
-            return other is Oneway otherOneway
-                   && Equals(Decoratee, otherOneway.Decoratee);
-        }
-
-        public override int GetHashCode()
-        {
-            return Decoratee?.GetHashCode() ?? 0;
-        }
-    }
-
-    public class Oneway<TResp> : Oneway
+    public class Oneway<TResp> : IDecorator
     {
         public Oneway()
         {
         }
 
         public Oneway(IRequest<TResp> request)
-            : base(request)
         {
+            Request = request
+                ?? throw new ArgumentNullException(nameof(request));
         }
 
-        public IRequest<TResp> Request
+        public IRequest<TResp> Request { get; set; }
+
+        object IDecorator.Decoratee => Request;
+
+        public override bool Equals(object other)
         {
-            get => (IRequest<TResp>)Decoratee;
-            set => Decoratee = value;
+            if (ReferenceEquals(this, other))
+                return true;
+
+            return other is Oneway<TResp> otherOneway
+                   && Equals(Request, otherOneway.Request);
+        }
+
+        public override int GetHashCode()
+        {
+            return Request?.GetHashCode() ?? 0;
         }
     }
 }

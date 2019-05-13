@@ -20,21 +20,20 @@
         object IDecorator.Decoratee => Message;
     }
 
-    public class RequestDecorator<TResponse> : MessageDecorator, IRequest<TResponse>
+    public class RequestDecorator<TResponse> : IRequest<TResponse>, IDecorator
     {
         public RequestDecorator()
         {
         }
 
         public RequestDecorator(IRequest<TResponse> request)
-            : base(request)
         {
+            Request = request
+                ?? throw new ArgumentNullException(nameof(request));
         }
 
-        public IRequest<TResponse> Request
-        {
-            get => (IRequest<TResponse>)Message;
-            set => Message = value;
-        }
+        public IRequest<TResponse> Request { get; set; }
+
+        object IDecorator.Decoratee => Request;
     }
 }
