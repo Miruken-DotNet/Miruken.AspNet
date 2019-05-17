@@ -88,20 +88,20 @@
     <Reference Include="Microsoft.Owin.Security.Twitter, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Owin.Security.Twitter.4.0.0\lib\net451\Microsoft.Owin.Security.Twitter.dll</HintPath>
     </Reference>
-    <Reference Include="Miruken, Version=2.1.4.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.2.1.4-Alpha.5\lib\net461\Miruken.dll</HintPath>
+    <Reference Include="Miruken, Version=2.1.4.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.2.1.4-Alpha.6\lib\net461\Miruken.dll</HintPath>
     </Reference>
-    <Reference Include="Miruken.Castle, Version=2.1.4.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.Castle.2.1.4-Alpha.5\lib\net461\Miruken.Castle.dll</HintPath>
+    <Reference Include="Miruken.Castle, Version=2.1.4.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.Castle.2.1.4-Alpha.6\lib\net461\Miruken.Castle.dll</HintPath>
     </Reference>
     <Reference Include="Miruken.Security, Version=1.12.23.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Miruken.Security.1.12.23\lib\net461\Miruken.Security.dll</HintPath>
     </Reference>
-    <Reference Include="Miruken.Validate, Version=2.1.4.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.Validate.2.1.4-Alpha.5\lib\net461\Miruken.Validate.dll</HintPath>
+    <Reference Include="Miruken.Validate, Version=2.1.4.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.Validate.2.1.4-Alpha.6\lib\net461\Miruken.Validate.dll</HintPath>
     </Reference>
-    <Reference Include="Miruken.Validate.Castle, Version=2.1.4.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.Validate.Castle.2.1.4-Alpha.5\lib\net461\Miruken.Validate.Castle.dll</HintPath>
+    <Reference Include="Miruken.Validate.Castle, Version=2.1.4.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.Validate.Castle.2.1.4-Alpha.6\lib\net461\Miruken.Validate.Castle.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
