@@ -33,8 +33,8 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Miruken, Version=2.1.4.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.2.1.4-Alpha.6\lib\net461\Miruken.dll</HintPath>
+    <Reference Include="Miruken, Version=2.1.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.2.1.4\lib\net461\Miruken.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">

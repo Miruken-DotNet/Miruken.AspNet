@@ -10,7 +10,7 @@
     using global::Castle.MicroKernel.Registration;
     using global::Castle.Windsor;
     using Miruken.Castle;
-    using Security;
+    using Secure;
     using Validate.Castle;
 
     public class WebApiApplication : System.Web.HttpApplication
