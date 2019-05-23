@@ -12,6 +12,7 @@
     using Callback.Policy;
     using Concurrency;
     using Context;
+    using Functional;
     using global::Castle.Facilities.Logging;
     using global::Castle.MicroKernel.Registration;
     using global::Castle.Services.Logging.NLogIntegration;
