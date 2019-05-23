@@ -1,8 +1,8 @@
 ﻿namespace Miruken.AspNet.Castle.Tests
 {
     using System;
+    using Api;
     using FluentValidation;
-    using Mediate.Api;
 
     public class Person
     {

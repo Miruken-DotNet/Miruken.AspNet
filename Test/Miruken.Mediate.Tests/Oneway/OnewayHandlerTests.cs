@@ -1,7 +1,6 @@
 ﻿namespace Miruken.Mediate.Tests.Oneway
 {
     using System.Threading.Tasks;
-    using Callback.Policy;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Mediate.Oneway;
 

@@ -75,12 +75,6 @@
     <None Include="Miruken.Mediate.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Miruken.Mediate.Api\Miruken.Mediate.Api.csproj">
-      <Project>{19449e0c-2617-440f-a0a6-e69d108f3ec6}</Project>
-      <Name>Miruken.Mediate.Api</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

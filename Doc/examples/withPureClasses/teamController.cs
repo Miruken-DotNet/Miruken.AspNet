@@ -3,8 +3,8 @@
     using System.Threading.Tasks;
     using System.Web.Http;
     using League.Api.Team;
+    using Miruken.Api;
     using Miruken.Context;
-    using Miruken.Mediate;
 
     public class TeamController : ApiController
     {

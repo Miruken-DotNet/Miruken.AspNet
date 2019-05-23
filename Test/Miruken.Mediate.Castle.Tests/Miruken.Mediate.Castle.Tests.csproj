@@ -122,20 +122,6 @@
     <Fakes Include="Fakes\Miruken.fakes" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Source\Miruken.Mediate.Api\Miruken.Mediate.Api.csproj">
-      <Project>{19449e0c-2617-440f-a0a6-e69d108f3ec6}</Project>
-      <Name>Miruken.Mediate.Api</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Source\Miruken.Mediate\Miruken.Mediate.csproj">
-      <Project>{96b8ac46-cd2a-4c72-b8b8-ff6151552df7}</Project>
-      <Name>Miruken.Mediate</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Miruken.Mediate.Tests\Miruken.Mediate.Tests.csproj">
-      <Project>{d0385fe6-c412-4921-8a66-38166d208461}</Project>
-      <Name>Miruken.Mediate.Tests</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

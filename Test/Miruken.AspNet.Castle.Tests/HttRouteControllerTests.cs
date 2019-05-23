@@ -5,6 +5,9 @@
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using System.Web.Http;
+    using Api;
+    using Api.Cache;
+    using Api.Route;
     using Callback;
     using Callback.Policy;
     using Concurrency;
@@ -15,9 +18,6 @@
     using global::Castle.Windsor;
     using Http;
     using Http.Post;
-    using Mediate;
-    using Mediate.Cache;
-    using Mediate.Route;
     using Microsoft.Owin.Hosting;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Miruken.Castle;
@@ -53,7 +53,6 @@
                     new HandleFeature().AddFilters(
                         new FilterAttribute(typeof(LogFilter<,>))),
                     new ValidateFeature()).Use(
-                        Classes.FromAssemblyContaining<CachedHandler>(),
                         Classes.FromAssemblyContaining<HttpRouter>(),
                         Classes.FromThisAssembly()))
             );
@@ -327,7 +326,7 @@
         }
 
         [TestMethod]
-        public async Task Should_Propogate_Failure()
+        public async Task Should_Propagate_Failure()
         {
             using (WebApp.Start("http://localhost:9000/", Configuration))
             {
@@ -353,7 +352,7 @@
         }
 
         [TestMethod]
-        public async Task Should_Propogate_Multiple_Failures()
+        public async Task Should_Propagate_Multiple_Failures()
         {
             using (WebApp.Start("http://localhost:9000/", Configuration))
             {
@@ -440,7 +439,7 @@
         }
 
         [TestMethod]
-        public async Task Should_Propogate_Format_Errors()
+        public async Task Should_Propagate_Format_Errors()
         {
             using (WebApp.Start("http://localhost:9000/", Configuration))
             {

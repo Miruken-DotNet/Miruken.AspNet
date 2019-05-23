@@ -6,10 +6,10 @@
     using System.Threading;
     using System.Threading.Tasks;
     using System.Web.Http;
+    using Api;
     using Callback;
     using Http;
     using Map;
-    using Mediate;
     using Validate;
 
     [HttpRoute]

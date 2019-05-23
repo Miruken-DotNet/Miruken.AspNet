@@ -1,8 +1,8 @@
 namespace Example.Handler.WithComposer
 {
     using League.Api.Team;
+    using Miruken.Api;
     using Miruken.Callback;
-    using Miruken.Mediate;
 
     public class TeamHandler
     {

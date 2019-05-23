@@ -9,7 +9,6 @@
     using global::Castle.MicroKernel.Registration;
     using global::Castle.MicroKernel.SubSystems.Configuration;
     using Http;
-    using Mediate.Schedule;
     using Miruken.Castle;
 
     public class AspNetFeature : FeatureInstaller
@@ -38,7 +37,6 @@
         {
             yield return Classes.FromAssemblyContaining<HttpRouteController>();
             yield return Classes.FromAssemblyContaining<HttpRouter>();
-            yield return Classes.FromAssemblyContaining<Scheduler>();
         }
 
         public override void InstallFeatures(FromDescriptor from)

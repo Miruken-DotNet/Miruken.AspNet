@@ -42,8 +42,8 @@
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Miruken, Version=2.1.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.2.1.5\lib\net461\Miruken.dll</HintPath>
+    <Reference Include="Miruken, Version=3.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.3.0.0-Alpha.1\lib\net461\Miruken.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -101,10 +101,6 @@
     <ProjectReference Include="..\Miruken.Http\Miruken.Http.csproj">
       <Project>{34893034-98ef-4768-bcea-c4f6a582732f}</Project>
       <Name>Miruken.Http</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Miruken.Mediate\Miruken.Mediate.csproj">
-      <Project>{96b8ac46-cd2a-4c72-b8b8-ff6151552df7}</Project>
-      <Name>Miruken.Mediate</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
