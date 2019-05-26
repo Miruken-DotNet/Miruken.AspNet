@@ -14,8 +14,7 @@
     <copyright>Copyright 2016</copyright>
     <tags>Miruken AspNet Swagger</tags>
     <dependencies>
-      <dependency id="Miruken.Http"     version="3.0"/>
-      <dependency id="Miruken.Mediate"  version="3.0"/>
+      <dependency id="Miruken.Http"     version="4.0"/>
       <dependency id="Swashbuckle"      version="5.6.0"/>
       <dependency id="Swashbuckle.Core" version="5.6.0"/>
       <dependency id="AutoFixture"      version="3.50.7"/>

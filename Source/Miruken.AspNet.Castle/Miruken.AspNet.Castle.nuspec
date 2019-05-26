@@ -14,10 +14,10 @@
     <copyright>Copyright 2016</copyright>
     <tags>Miruken AspNet Castle</tags>
     <dependencies>
-      <dependency id="Miruken"          version="2.0"/>
-      <dependency id="Miruken.Castle"   version="2.0"/>
-      <dependency id="Miruken.Validate" version="2.0"/>
-      <dependency id="Miruken.AspNet"   version="3.0"/>
+      <dependency id="Miruken"          version="3.0"/>
+      <dependency id="Miruken.Castle"   version="3.0"/>
+      <dependency id="Miruken.Validate" version="3.0"/>
+      <dependency id="Miruken.AspNet"   version="4s.0"/>
     </dependencies>
   </metadata>
 </package>

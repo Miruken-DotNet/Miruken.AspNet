@@ -14,10 +14,9 @@
     <copyright>Copyright 2016</copyright>
     <tags>Miruken AspNet</tags>
     <dependencies>
-      <dependency id="Miruken"          version="2.0"/>
-      <dependency id="Miruken.Validate" version="2.0"/>
-      <dependency id="Miruken.Http"     version="3.0"/>
-      <dependency id="Miruken.Mediate"  version="3.0"/>
+      <dependency id="Miruken"          version="3.0"/>
+      <dependency id="Miruken.Validate" version="3.0"/>
+      <dependency id="Miruken.Http"     version="4.0"/>
     </dependencies>
   </metadata>
 </package>
