@@ -15,7 +15,7 @@
         [TestMethod]
         public async Task CanCreateTeam()
         {
-            HandlerDescriptor.GetDescriptor<TeamHandler>();
+            HandlerDescriptorFactory.Current.GetDescriptor<TeamHandler>();
             var controller = new TeamController { Context = new Context() };
             controller.Context.AddHandlers(new TeamHandler());
             var team = await controller.CreateTeam(new CreateTeam { Team = new Team() });

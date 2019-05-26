@@ -6,7 +6,6 @@
     using System.Threading.Tasks;
     using System.Web.Http;
     using Api;
-    using Api.Cache;
     using Api.Route;
     using Callback;
     using Callback.Policy;
@@ -162,7 +161,7 @@
         {
             foreach (var handler in new[] { typeof(HttpRouter), typeof(PostHandler) })
             {
-                HandlerDescriptor.GetDescriptor(handler)
+                HandlerDescriptorFactory.Current.GetDescriptor(handler)
                     .AddFilters(new FilterAttribute(typeof(LogFilter<,>)));
             }
             

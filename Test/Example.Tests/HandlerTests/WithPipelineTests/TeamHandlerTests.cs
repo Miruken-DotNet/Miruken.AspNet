@@ -10,7 +10,7 @@
         [TestMethod]
         public async Task CanHandleMessages()
         {
-            HandlerDescriptor.GetDescriptor<Handler.WithPipeline.TeamHandler>();
+            HandlerDescriptorFactory.Current.GetDescriptor<Handler.WithPipeline.TeamHandler>();
             Controller.Context.AddHandlers(new Handler.WithPipeline.TeamHandler());
             await AssertCanCreateTeam();
             await AssertCanRemoveTeam();

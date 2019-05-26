@@ -10,7 +10,7 @@
         [TestMethod]
         public async Task CanCreateTeam()
         {
-            HandlerDescriptor.GetDescriptor<Handler.WithComposer.TeamHandler>();
+            HandlerDescriptorFactory.Current.GetDescriptor<Handler.WithComposer.TeamHandler>();
             Controller.Context.AddHandlers(new Handler.WithComposer.TeamHandler());
             await AssertCanCreateTeam();
         }

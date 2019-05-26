@@ -21,7 +21,7 @@
                 .Use(Classes.FromAssemblyContaining<CreateTeam>(),
                      Classes.FromAssemblyContaining<Pipeline.TeamHandler>()));
 
-            HandlerDescriptor.GetDescriptor<Pipeline.TeamHandler>();
+            HandlerDescriptorFactory.Current.GetDescriptor<Pipeline.TeamHandler>();
 
             Controller.Context.AddHandlers(
                 new WindsorHandler(container),
