@@ -42,16 +42,18 @@
 
     public class ContextualScope : IDependencyScope
     {
+        private Context _parent;
         protected Context Context;
         private readonly object _guard = new object();
 
         public ContextualScope(Context parent)
         {
-            if (parent == null)
-                throw new ArgumentNullException(nameof(parent));
-            lock (_guard)
+            _parent = parent 
+                   ?? throw new ArgumentNullException(nameof(parent));
+
+            lock (_parent)
             {
-                Context = parent.CreateChild();
+                Context = _parent.CreateChild();
             }
         }
 
@@ -77,19 +79,24 @@
             var context = Context.BestEffort()
                 .Proxy<ILogicalContextSelector>()
                 .SelectApiContext(request);
-            if (context != null && context != Context.Parent)
+            if (context != null && context != _parent)
             {
-                lock (_guard)
+                lock (_parent)
                 {
                     Context.End();
-                    Context = context.CreateChild();
+                    _parent = context;
+                }
+
+                lock (_parent)
+                {
+                    Context = _parent.CreateChild();
                 }
             }
         }
 
         public void Dispose()
         {
-            lock (_guard)
+            lock (_parent)
             {
                 Context.End();
             }
