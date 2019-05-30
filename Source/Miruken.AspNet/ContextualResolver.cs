@@ -44,7 +44,6 @@
     {
         private Context _parent;
         protected Context Context;
-        private readonly object _guard = new object();
 
         public ContextualScope(Context parent)
         {
