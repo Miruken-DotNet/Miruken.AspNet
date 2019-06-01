@@ -75,9 +75,7 @@
             var container = new WindsorContainer()
                   .AddFacility<LoggingFacility>(f => f.LogUsing(new NLogFactory(_config)))
                   .Install(new FeaturesInstaller(
-                      new HandleFeature(),
-                      new ValidateFeature(),
-                      new AspNetFeature())
+                      new HandleFeature(), new ValidateFeature(), new AspNetFeature())
                   .Use(Classes.FromThisAssembly()));
             container.Kernel.AddHandlersFilter(new ContravariantFilter());
             appContext.AddHandlers(new WindsorHandler(container));
@@ -103,6 +101,8 @@
         [TestMethod]
         public async Task Should_Route_Request_Without_Castle()
         {
+            HandlerDescriptorFactory.Current.RegisterDescriptor<FilterProvider>();
+
             using (WebApp.Start("http://localhost:9000/", Configuration))
             {
                 var player = new Player
@@ -161,7 +161,7 @@
         {
             foreach (var handler in new[] { typeof(HttpRouter), typeof(PostHandler) })
             {
-                HandlerDescriptorFactory.Current.GetDescriptor(handler)
+                HandlerDescriptorFactory.Current.RegisterDescriptor(handler)
                     .AddFilters(new FilterAttribute(typeof(LogFilter<,>)));
             }
             
