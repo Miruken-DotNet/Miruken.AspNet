@@ -445,7 +445,7 @@
             {
                 var response = await _handler
                     .Formatters(HttpFormatters.Route)
-                    .Post<string, Try<Message, Message>>(
+                    .HttpPost<string, Try<Message, Message>>(
                     @"{
                        'payload': {
                            '$type': 'Miruken.AspNet.Castle.Tests.CreatePlayer, Miruken.AspNet.Castle.Tests',
