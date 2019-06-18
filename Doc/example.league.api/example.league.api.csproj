@@ -31,8 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Miruken, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.3.0.1\lib\net461\Miruken.dll</HintPath>
+    <Reference Include="Miruken, Version=3.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.3.0.2\lib\net461\Miruken.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
