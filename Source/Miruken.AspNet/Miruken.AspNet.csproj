@@ -19,12 +19,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.7" />
-      <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
-      <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
-      <PackageReference Include="Miruken" Version="3.9.99-Alpha.83" />
-      <PackageReference Include="Miruken.Http" Version="3.9.99-Alpha.83" />
-      <PackageReference Include="Miruken.Validate" Version="3.9.99-Alpha.83" />
+      <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.6" />
+      <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.6" />
+      <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.6" />
+      <PackageReference Include="Miruken" Version="3.9.99-Alpha.85" />
+      <PackageReference Include="Miruken.Http" Version="3.9.99-Alpha.85" />
+      <PackageReference Include="Miruken.Validate" Version="3.9.99-Alpha.85" />
     </ItemGroup>
 
     <ItemGroup>

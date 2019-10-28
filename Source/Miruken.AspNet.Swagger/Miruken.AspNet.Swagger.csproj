@@ -20,10 +20,10 @@
 
   <ItemGroup>
     <PackageReference Include="AutoFixture" Version="4.2.0" />
-    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
-    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
-    <PackageReference Include="Miruken" Version="3.9.99-Alpha.83" />
-    <PackageReference Include="Miruken.Http" Version="3.9.99-Alpha.83" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.6" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.6" />
+    <PackageReference Include="Miruken" Version="3.9.99-Alpha.85" />
+    <PackageReference Include="Miruken.Http" Version="3.9.99-Alpha.85" />
     <PackageReference Include="Swashbuckle" Version="5.6.0" />
     <PackageReference Include="Swashbuckle.Core" Version="5.6.0" />
   </ItemGroup>
