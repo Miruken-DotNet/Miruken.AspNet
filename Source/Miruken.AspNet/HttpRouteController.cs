@@ -60,7 +60,7 @@
         private HttpResponseMessage CreateErrorResponse(
             Exception exception, HttpStatusCode? code = null)
         {
-            var bestEffort = Context.Infer().BestEffort();
+            var bestEffort = Context.BestEffort();
             var error      = bestEffort.Map<object>(exception, typeof(Exception));
 
             if (!code.HasValue)

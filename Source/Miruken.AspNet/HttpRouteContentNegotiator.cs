@@ -5,7 +5,6 @@
     using System.Net.Http;
     using System.Net.Http.Formatting;
     using System.Net.Http.Headers;
-    using Callback;
     using Context;
     using Http;
     using Http.Format;
@@ -19,8 +18,7 @@
             var scope     = request.GetDependencyScope();
             var context   = (Context)scope.GetService(typeof(Context));
             var formatter = context != null
-                          ? new HttpRouteMediaTypeFormatter(
-                                context.Infer(), HttpFormatters.Route)
+                          ? new HttpRouteMediaTypeFormatter(context, HttpFormatters.Route)
                           : HttpFormatters.Route;
             return new ContentNegotiationResult(formatter, ContentType);
         }
