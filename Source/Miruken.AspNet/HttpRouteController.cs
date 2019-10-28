@@ -70,7 +70,7 @@
             }
 
             if (error == null)
-                error = new HttpError(exception, true);
+                error = new ExceptionData(exception);
             return Request.CreateResponse((HttpStatusCode)code,
                 new Message(error));
         }
