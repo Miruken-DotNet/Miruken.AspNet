@@ -61,7 +61,6 @@
             Exception exception, HttpStatusCode? code = null)
         {
             var bestEffort = Context.BestEffort();
-            var error      = bestEffort.Map<object>(exception, typeof(Exception));
 
             if (!code.HasValue)
             {
@@ -69,8 +68,9 @@
                 if (code == 0) code = HttpStatusCode.InternalServerError;
             }
 
-            if (error == null)
-                error = new ExceptionData(exception);
+            var error = bestEffort.Map<object>(exception, typeof(Exception))
+                        ?? new ExceptionData(exception);
+
             return Request.CreateResponse((HttpStatusCode)code,
                 new Message(error));
         }
