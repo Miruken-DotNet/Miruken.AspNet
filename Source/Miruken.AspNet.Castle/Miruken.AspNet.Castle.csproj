@@ -1,11 +1,26 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>net48;net461</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <Authors>cneuwirt</Authors>
+    <Company>Miruken</Company>
+    <Description>Asp.Net Castle Integration with Miruken</Description>
+    <Copyright>Copyright 2019</Copyright>
+    <PackageLicenseUrl>https://github.com/Miruken-DotNet/Miruken.AspNet/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/Miruken-DotNet/Miruken.AspNet</PackageProjectUrl>
+    <PackageIconUrl>https://avatars0.githubusercontent.com/u/20844317</PackageIconUrl>
+    <PackageTags>Miruken Asp.Net Castle</PackageTags>
+    <PackageReleaseNotes>Summary of changes made in this release of the package.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Miruken" Version="3.9.99-Alpha.79" />
+    <PackageReference Include="Miruken" Version="3.9.99-Alpha.83" />
+    <PackageReference Include="Miruken.Castle" Version="3.9.99-Alpha.83" />
   </ItemGroup>
 
   <ItemGroup>
