@@ -60,20 +60,20 @@
       <HintPath>..\..\packages\FluentValidation.8.5.0\lib\net45\FluentValidation.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Miruken, Version=3.9.99.104, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.3.9.99-Alpha.104\lib\net48\Miruken.dll</HintPath>
+    <Reference Include="Miruken, Version=3.9.99.106, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.3.9.99-Alpha.106\lib\net48\Miruken.dll</HintPath>
     </Reference>
-    <Reference Include="Miruken.Castle, Version=3.9.99.104, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.Castle.3.9.99-Alpha.104\lib\net48\Miruken.Castle.dll</HintPath>
+    <Reference Include="Miruken.Castle, Version=3.9.99.106, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.Castle.3.9.99-Alpha.106\lib\net48\Miruken.Castle.dll</HintPath>
     </Reference>
-    <Reference Include="Miruken.Http, Version=3.9.99.104, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.Http.3.9.99-Alpha.104\lib\net48\Miruken.Http.dll</HintPath>
+    <Reference Include="Miruken.Http, Version=3.9.99.106, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.Http.3.9.99-Alpha.106\lib\net48\Miruken.Http.dll</HintPath>
     </Reference>
-    <Reference Include="Miruken.Validate, Version=3.9.99.104, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.Validate.3.9.99-Alpha.104\lib\net48\Miruken.Validate.dll</HintPath>
+    <Reference Include="Miruken.Validate, Version=3.9.99.106, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.Validate.3.9.99-Alpha.106\lib\net48\Miruken.Validate.dll</HintPath>
     </Reference>
-    <Reference Include="Miruken.Validate.Castle, Version=3.9.99.104, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.Validate.Castle.3.9.99-Alpha.104\lib\net48\Miruken.Validate.Castle.dll</HintPath>
+    <Reference Include="Miruken.Validate.Castle, Version=3.9.99.106, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.Validate.Castle.3.9.99-Alpha.106\lib\net48\Miruken.Validate.Castle.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -364,15 +364,12 @@
     <Error Condition="!Exists('..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
     <Error Condition="!Exists('..\..\packages\MSBuild.Microsoft.VisualStudio.Web.targets.14.0.0.3\build\MSBuild.Microsoft.VisualStudio.Web.targets.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\MSBuild.Microsoft.VisualStudio.Web.targets.14.0.0.3\build\MSBuild.Microsoft.VisualStudio.Web.targets.props'))" />
   </Target>
-
-
   <!-- 
     https://github.com/aspnet/RoslynCodeDomProvider/issues/51 
     This target fixes the following error
     The task factory "CodeTaskFactory" is not supported on the .NET Core version of MSBuild
   -->
   <Target Name="CheckIfShouldKillVBCSCompiler" />
-
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
