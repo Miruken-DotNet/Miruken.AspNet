@@ -19,8 +19,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Miruken" Version="3.99.2" />
-    <PackageReference Include="Miruken.Castle" Version="3.99.2" />
+    <PackageReference Include="Miruken" Version="3.99.7" />
+    <PackageReference Include="Miruken.Castle" Version="3.99.7" />
   </ItemGroup>
 
   <ItemGroup>
