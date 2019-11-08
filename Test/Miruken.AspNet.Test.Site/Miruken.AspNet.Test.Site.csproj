@@ -60,20 +60,20 @@
       <HintPath>..\..\packages\FluentValidation.8.5.0\lib\net45\FluentValidation.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Miruken, Version=3.9.99.106, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.3.9.99-Alpha.106\lib\net48\Miruken.dll</HintPath>
+    <Reference Include="Miruken, Version=3.99.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.3.99.7\lib\net48\Miruken.dll</HintPath>
     </Reference>
-    <Reference Include="Miruken.Castle, Version=3.9.99.106, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.Castle.3.9.99-Alpha.106\lib\net48\Miruken.Castle.dll</HintPath>
+    <Reference Include="Miruken.Castle, Version=3.99.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.Castle.3.99.7\lib\net48\Miruken.Castle.dll</HintPath>
     </Reference>
-    <Reference Include="Miruken.Http, Version=3.9.99.106, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.Http.3.9.99-Alpha.106\lib\net48\Miruken.Http.dll</HintPath>
+    <Reference Include="Miruken.Http, Version=3.99.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.Http.3.99.7\lib\net48\Miruken.Http.dll</HintPath>
     </Reference>
-    <Reference Include="Miruken.Validate, Version=3.9.99.106, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.Validate.3.9.99-Alpha.106\lib\net48\Miruken.Validate.dll</HintPath>
+    <Reference Include="Miruken.Validate, Version=3.99.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.Validate.3.99.7\lib\net48\Miruken.Validate.dll</HintPath>
     </Reference>
-    <Reference Include="Miruken.Validate.Castle, Version=3.9.99.106, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Miruken.Validate.Castle.3.9.99-Alpha.106\lib\net48\Miruken.Validate.Castle.dll</HintPath>
+    <Reference Include="Miruken.Validate.Castle, Version=3.99.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Miruken.Validate.Castle.3.99.7\lib\net48\Miruken.Validate.Castle.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
