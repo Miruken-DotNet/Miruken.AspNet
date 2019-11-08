@@ -12,10 +12,11 @@
     <PackageIconUrl>https://avatars0.githubusercontent.com/u/20844317</PackageIconUrl>
     <PackageTags>Miruken Asp.Net Swagger</PackageTags>
     <PackageReleaseNotes>Summary of changes made in this release of the package.</PackageReleaseNotes>
+    <LangVersion>latest</LangVersion>
+    <OutputPath>bin\</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>bin\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
